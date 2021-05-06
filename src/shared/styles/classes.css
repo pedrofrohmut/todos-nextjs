@@ -1,0 +1,22 @@
+.page-container {
+  max-width: 720px;
+  margin: auto;
+}
+
+.page-title {
+  margin: 1rem 0 0 0;
+  padding: 0;
+  text-align: center;
+  font-size: 3.2rem;
+  color: var(--mainOrange-400);
+}
+
+.form-group {
+  padding: 2rem;
+}
+
+.form-group label {
+  display: block;
+  margin-bottom: 0.4rem;
+  font-size: 1.2rem;
+}

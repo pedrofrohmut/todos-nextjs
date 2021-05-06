@@ -1,0 +1,21 @@
+:root {
+  --mainBlue-100: #ecf2f9;
+  --mainBlue-200: #c6d9ec;
+  --mainBlue-300: #9fbfdf;
+  --mainBlue-400: #79a6d2;
+  --mainBlue-500: #538cc6;
+  --mainBlue-600: #3973ac;
+  --mainBlue-700: #2d5986;
+  --mainBlue-800: #204060;
+  --mainBlue-900: #132639;
+
+  --mainOrange-100: #f9f2ec;
+  --mainOrange-200: #ecd9c6;
+  --mainOrange-300: #dfbf9f;
+  --mainOrange-400: #d2a679;
+  --mainOrange-500: #c68c53;
+  --mainOrange-600: #ac7339;
+  --mainOrange-700: #86592d;
+  --mainOrange-800: #604020;
+  --mainOrange-900: #392613;
+}
