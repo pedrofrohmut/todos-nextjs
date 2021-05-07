@@ -75,7 +75,6 @@
 }
 
 .task-details-container {
-  background-color: var(--mainBlue-600);
   padding: 2rem;
   margin: 4rem 0 1rem;
 }
@@ -114,10 +113,6 @@
 
 .todo-list div.todo-container:nth-child(2n) {
   background-color: var(--mainBlue-700);
-}
-
-.todo-list div.todo-container:nth-child(2n - 1) {
-  background-color: var(--mainBlue-600);
 }
 
 .todo-list div.todo-container:nth-child(2n) a {
