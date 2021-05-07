@@ -1,9 +1,9 @@
 import { ReactElement } from "react"
 
-const AddTaskPage = (): ReactElement => {
+const EditTodoPage = (): ReactElement => {
   return (
     <div className="page-container">
-      <h1 className="page-title">Add Task</h1>
+      <h1 className="page-title">Edit Todo</h1>
       <form>
         <div className="form-group">
           <label htmlFor="name">Name</label>
@@ -21,4 +21,4 @@ const AddTaskPage = (): ReactElement => {
   )
 }
 
-export default AddTaskPage
+export default EditTodoPage
