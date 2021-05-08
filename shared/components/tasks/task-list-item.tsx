@@ -10,12 +10,13 @@ export type TaskType = {
 
 type Props = {
   task: TaskType
+  className: string
 }
 
-const TaskListItem = ({ task: { id, name } }: Props): ReactElement => {
+const TaskListItem = ({ task: { id, name }, className }: Props): ReactElement => {
   return (
-    <div className="task-container">
-      <Link href={`/task-details/${id}`}>
+    <div className={className}>
+      <Link href={`/task/details/${id}`}>
         <a>{name}</a>
       </Link>
     </div>

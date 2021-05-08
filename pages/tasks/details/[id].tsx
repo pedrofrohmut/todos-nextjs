@@ -1,10 +1,12 @@
 import { ReactElement, useState } from "react"
 import Link from "next/link"
 
-import TodoListItem, { TodoType } from "../../shared/components/todos/todo-list-item"
+import TodoListItem, { TodoType } from "../../../shared/components/todos/todo-list-item"
 
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
 import { faPlus } from "@fortawesome/free-solid-svg-icons"
+
+import styles from "./styles.module.css"
 
 // PLACAHOLDER  VALUES
 const id = "1"
@@ -57,37 +59,36 @@ const TaskDetailsPage = (): ReactElement => {
   }
 
   return (
-    <div className="page-container">
-      <h1 className="page-title">Task Details</h1>
-      <div className="task-details-container">
-        <div className="details-header">
-          <div className="task-name">{name}</div>
-          <span className="incomplete-count">
-            <span className="number">{incompleteTodosCount}</span>
-            incomplete todos
-          </span>
-          <Link href="/task-list">
-            <a className="button-add">Choose Task</a>
-          </Link>
-        </div>
-        <div className="todo-list">
-          {todos.map(todo => (
-            <TodoListItem
-              key={todo.id}
-              todo={todo}
-              isOpen={todo.id === openTodoId}
-              setIsOpen={setIsOpen}
-            />
-          ))}
-        </div>
-        <Link href="/add-todo">
-          <a className="button-add">
-            <FontAwesomeIcon icon={faPlus} />
-            <span>Add New Todo</span>
-          </a>
+    <div className="pageContainer">
+      <h1 className="pageTitle">Task Details</h1>
+      <div className={styles.header}>
+        <div className={styles.name}>{name}</div>
+        <span className={styles.incomplete}>
+          <span className={styles.incompleteNumber}>{incompleteTodosCount}</span>
+          incomplete todos
+        </span>
+        <Link href="/tasks/list">
+          <a className="buttonAdd">Choose Task</a>
         </Link>
       </div>
-      <div className="task-details-bottom-links">
+      <div className="list">
+        {todos.map(todo => (
+          <TodoListItem
+            className="listItem"
+            key={todo.id}
+            todo={todo}
+            isOpen={todo.id === openTodoId}
+            setIsOpen={setIsOpen}
+          />
+        ))}
+      </div>
+      <Link href="/todos/add">
+        <a className="buttonAdd">
+          <FontAwesomeIcon icon={faPlus} />
+          <span>Add New Todo</span>
+        </a>
+      </Link>
+      <div className={styles.links}>
         <a>Clean completed todos</a>
         <a>Delete current task</a>
       </div>

@@ -1,9 +1,9 @@
-.page-container {
+.pageContainer {
   max-width: 720px;
   margin: auto;
 }
 
-.page-title {
+.pageTitle {
   margin: 1rem 0 0 0;
   padding: 0;
   text-align: center;
@@ -11,11 +11,11 @@
   color: var(--mainOrange-400);
 }
 
-.form-group {
+.formGroup {
   padding: 2rem;
 }
 
-.form-group label {
+.formGroup label {
   display: block;
   margin-bottom: 1rem;
   padding-left: 0.2rem;
@@ -23,33 +23,33 @@
   color: var(--mainOrange-400);
 }
 
-.question-and-link {
+.questionAndLink {
   text-align: center;
   font-size: 1.2rem;
   padding: 1rem 0;
 }
 
-.question-and-link a {
+.questionAndLink a {
   margin-left: 0.5rem;
 }
 
-.task-list {
+.list {
   margin-bottom: 2rem;
 }
 
-.task-list .task-container {
+.listItem {
   padding: 1rem;
 }
 
-.task-list div.task-container:nth-child(2n) {
+.listItem:nth-child(2n) {
   background-color: var(--mainBlue-700);
 }
 
-.task-list div.task-container:nth-child(2n) a {
+.listItem:nth-child(2n) a {
   color: var(--mainOrange-200);
 }
 
-.button-add {
+.buttonAdd {
   display: inline-block;
   padding: 1rem 2rem;
   border-radius: 0.3rem;
@@ -57,11 +57,11 @@
   color: var(--mainBlue-100);
 }
 
-.button-add span {
+.buttonAdd span {
   margin-left: 0.5rem;
 }
 
-.button-edit {
+.buttonEdit {
   display: inline-block;
   padding: 0.5rem 1rem;
   border-radius: 0.3rem;
@@ -70,69 +70,6 @@
   color: var(--mainBlue-100);
 }
 
-.button-edit span {
+.buttonEdit span {
   margin-left: 0.5rem;
-}
-
-.task-details-container {
-  padding: 2rem;
-  margin: 4rem 0 1rem;
-}
-
-.details-header {
-  display: flex;
-  flex-direction: row;
-  align-items: center;
-  justify-content: space-between;
-  /* margin: 4rem 0 2rem; */
-  margin-bottom: 2rem;
-}
-
-.details-header .task-name {
-  font-size: 2.3rem;
-  font-weight: 600;
-}
-
-.details-header .incomplete-count {
-  color: var(--mainBlue-200);
-}
-
-.details-header .incomplete-count .number {
-  position: relative;
-  top: -2px;
-  margin-right: 5px;
-}
-
-.todo-list {
-  margin-bottom: 2rem;
-}
-
-.todo-list .todo-container {
-  padding: 1rem;
-}
-
-.todo-list div.todo-container:nth-child(2n) {
-  background-color: var(--mainBlue-700);
-}
-
-.todo-list div.todo-container:nth-child(2n) a {
-  color: var(--mainOrange-200);
-}
-
-.todo-container .name {
-  margin-right: 1rem;
-}
-
-.todo-container .description {
-  padding: 1rem;
-  font-size: 1.2rem;
-  opacity: 0.9;
-}
-
-.task-details-bottom-links {
-  display: flex;
-  flex-direction: row;
-  justify-content: space-between;
-  align-items: center;
-  padding: 1rem;
 }

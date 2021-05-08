@@ -3,24 +3,24 @@ import Link from "next/link"
 
 const SignInPage = (): ReactElement => {
   return (
-    <div className="page-container">
-      <h1 className="page-title">Sign in</h1>
+    <div className="pageContainer">
+      <h1 className="pageTitle">Sign in</h1>
       <form>
-        <div className="form-group">
+        <div className="formGroup">
           <label htmlFor="email">E-mail address</label>
           <input id="email" type="email" />
         </div>
-        <div className="form-group">
+        <div className="formGroup">
           <label htmlFor="password">Password</label>
           <input id="password" type="password" />
         </div>
-        <div className="form-group">
+        <div className="formGroup">
           <input type="submit" value="Submit" />
         </div>
       </form>
-      <div className="question-and-link">
+      <div className="questionAndLink">
         Not registered yet?
-        <Link href="/sign-up">
+        <Link href="/users/signup">
           <a>Sign up</a>
         </Link>
       </div>

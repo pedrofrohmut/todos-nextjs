@@ -2,18 +2,18 @@ import { ReactElement } from "react"
 
 const AddTaskPage = (): ReactElement => {
   return (
-    <div className="page-container">
-      <h1 className="page-title">Add Task</h1>
+    <div className="pageContainer">
+      <h1 className="pageTitle">Add Task</h1>
       <form>
-        <div className="form-group">
+        <div className="formGroup">
           <label htmlFor="name">Name</label>
           <input id="name" type="text" />
         </div>
-        <div className="form-group">
+        <div className="formGroup">
           <label htmlFor="description">Description</label>
           <textarea id="description" rows={6}></textarea>
         </div>
-        <div className="form-group">
+        <div className="formGroup">
           <input type="submit" value="Submit" />
         </div>
       </form>

@@ -1,0 +1,9 @@
+- Style: use css modules for local styling
+
+- Form validation in general
+
+- api calls
+
+- api development
+
+- connect to database
