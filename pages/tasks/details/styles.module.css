@@ -29,3 +29,12 @@
   align-items: center;
   padding: 2.5rem 0 0;
 }
+
+.links a {
+  opacity: 0.8;
+}
+
+.links a:hover,
+.links a:focus {
+  opacity: 1;
+}

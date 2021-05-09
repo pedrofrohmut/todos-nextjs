@@ -1,0 +1,15 @@
+tasks\
+  - add
+  details\
+    - [id]
+  edit\
+    - [id]
+  -list
+todos\
+  - add
+  edit\
+    - [id]
+users\
+  - signin
+  - signup
+

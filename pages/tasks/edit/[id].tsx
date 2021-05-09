@@ -2,10 +2,10 @@ import { ReactElement } from "react"
 
 import SubmitButton from "../../../shared/components/buttons/submit"
 
-const AddTodoPage = (): ReactElement => {
+const EditTaskPage = (): ReactElement => {
   return (
     <div className="pageContainer">
-      <h1 className="pageTitle">Add Todo</h1>
+      <h1 className="pageTitle">Edit Task</h1>
       <form>
         <div className="formGroup">
           <label htmlFor="name">Name</label>
@@ -23,4 +23,4 @@ const AddTodoPage = (): ReactElement => {
   )
 }
 
-export default AddTodoPage
+export default EditTaskPage

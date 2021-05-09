@@ -3,8 +3,7 @@ import Link from "next/link"
 
 import TodoListItem, { TodoType } from "../../../shared/components/todos/todo-list-item"
 
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
-import { faPlus } from "@fortawesome/free-solid-svg-icons"
+import AddButton from "../../../shared/components/buttons/add"
 
 import styles from "./styles.module.css"
 
@@ -68,7 +67,7 @@ const TaskDetailsPage = (): ReactElement => {
           incomplete todos
         </span>
         <Link href="/tasks/list">
-          <a className="buttonAdd">Choose Task</a>
+          <a className="nav-link">Choose Task</a>
         </Link>
       </div>
       <div className="list">
@@ -83,14 +82,11 @@ const TaskDetailsPage = (): ReactElement => {
         ))}
       </div>
       <Link href="/todos/add">
-        <a className="buttonAdd">
-          <FontAwesomeIcon icon={faPlus} />
-          <span>Add New Todo</span>
-        </a>
+        <AddButton />
       </Link>
       <div className={styles.links}>
-        <a>Clean completed todos</a>
-        <a>Delete current task</a>
+        <a className="nav-link">Clean completed todos</a>
+        <a className="nav-link">Delete current task</a>
       </div>
     </div>
   )

@@ -16,7 +16,7 @@ type Props = {
 const TaskListItem = ({ task: { id, name }, className }: Props): ReactElement => {
   return (
     <div className={className}>
-      <Link href={`/task/details/${id}`}>
+      <Link href={`/tasks/details/${id}`}>
         <a>{name}</a>
       </Link>
     </div>

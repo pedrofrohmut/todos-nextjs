@@ -48,28 +48,3 @@
 .listItem:nth-child(2n) a {
   color: var(--mainOrange-200);
 }
-
-.buttonAdd {
-  display: inline-block;
-  padding: 1rem 2rem;
-  border-radius: 0.3rem;
-  background-color: var(--mainOrange-600);
-  color: var(--mainBlue-100);
-}
-
-.buttonAdd span {
-  margin-left: 0.5rem;
-}
-
-.buttonEdit {
-  display: inline-block;
-  padding: 0.5rem 1rem;
-  border-radius: 0.3rem;
-  font-size: 1rem;
-  background-color: transparent;
-  color: var(--mainBlue-100);
-}
-
-.buttonEdit span {
-  margin-left: 0.5rem;
-}

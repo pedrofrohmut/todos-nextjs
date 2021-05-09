@@ -1,9 +1,15 @@
-- Style: use css modules for local styling
+X - Style: use css modules for local styling
 
-- Form validation in general
+X - Change buttons from css classes to complete shared components (edit/submit/add)
 
-- api calls
+0 - Form validation in general
 
-- api development
+0 - api calls
 
-- connect to database
+0 - api development
+
+0 - connect to database
+
+
+0 for done
+X for NOT done

@@ -3,8 +3,7 @@ import Link from "next/link"
 
 import TaskListItem, { TaskType } from "../../../shared/components/tasks/task-list-item"
 
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
-import { faPlus } from "@fortawesome/free-solid-svg-icons"
+import AddButton from "../../../shared/components/buttons/add"
 
 const PLACAHOLDER_TASKS: TaskType[] = [
   { id: "1", name: "Routine", description: "", userId: "1" },
@@ -25,10 +24,7 @@ const TaskListPage = (): ReactElement => {
         ))}
       </div>
       <Link href="/task/add">
-        <a className="buttonAdd">
-          <FontAwesomeIcon icon={faPlus} />
-          <span>Add New Task</span>
-        </a>
+        <AddButton />
       </Link>
     </div>
   )

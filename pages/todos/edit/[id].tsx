@@ -1,9 +1,11 @@
 import { ReactElement } from "react"
 
-const EditTaskPage = (): ReactElement => {
+import SubmitButton from "../../../shared/components/buttons/submit"
+
+const EditTodoPage = (): ReactElement => {
   return (
     <div className="pageContainer">
-      <h1 className="pageTitle">Edit Task</h1>
+      <h1 className="pageTitle">Edit Todo</h1>
       <form>
         <div className="formGroup">
           <label htmlFor="name">Name</label>
@@ -14,11 +16,11 @@ const EditTaskPage = (): ReactElement => {
           <textarea id="description" rows={6}></textarea>
         </div>
         <div className="formGroup">
-          <input type="submit" value="Submit" />
+          <SubmitButton />
         </div>
       </form>
     </div>
   )
 }
 
-export default EditTaskPage
+export default EditTodoPage

@@ -1,5 +1,6 @@
 import { ReactElement } from "react"
 import Link from "next/link"
+import SubmitButton from "../../../shared/components/buttons/submit"
 
 const SignInPage = (): ReactElement => {
   return (
@@ -15,7 +16,7 @@ const SignInPage = (): ReactElement => {
           <input id="password" type="password" />
         </div>
         <div className="formGroup">
-          <input type="submit" value="Submit" />
+          <SubmitButton />
         </div>
       </form>
       <div className="questionAndLink">

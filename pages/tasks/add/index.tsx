@@ -1,5 +1,7 @@
 import { ReactElement } from "react"
 
+import SubmitButton from "../../../shared/components/buttons/submit"
+
 const AddTaskPage = (): ReactElement => {
   return (
     <div className="pageContainer">
@@ -14,7 +16,7 @@ const AddTaskPage = (): ReactElement => {
           <textarea id="description" rows={6}></textarea>
         </div>
         <div className="formGroup">
-          <input type="submit" value="Submit" />
+          <SubmitButton />
         </div>
       </form>
     </div>

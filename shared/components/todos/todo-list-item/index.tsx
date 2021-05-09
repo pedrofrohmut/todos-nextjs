@@ -1,8 +1,7 @@
 import { ReactElement } from "react"
 import Link from "next/link"
 
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
-import { faPencilAlt } from "@fortawesome/free-solid-svg-icons"
+import EditButton from "../../buttons/edit"
 
 import styles from "./styles.module.css"
 
@@ -36,10 +35,7 @@ const TodoListItem = ({
         </a>
         {isOpen && (
           <Link href={`/todos/edit/${id}`}>
-            <a className="buttonEdit">
-              <FontAwesomeIcon icon={faPencilAlt} />
-              <span>Edit</span>
-            </a>
+            <EditButton />
           </Link>
         )}
       </div>
