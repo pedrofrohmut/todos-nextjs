@@ -1,0 +1,5 @@
+process.env.PGUSER = "Database user for testing"
+process.env.PGHOST = "database host"
+process.env.PGPASSWORD = "password"
+process.env.PGDATABASE = "database name"
+process.env.PGPORT = "db port"

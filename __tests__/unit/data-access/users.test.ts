@@ -1,10 +1,3 @@
-import dotenv from "dotenv"
-import path from "path"
-
-dotenv.config({
-  path: path.resolve(__dirname + "/../../../.env.test.local")
-})
-
 import UserDataAccess from "../../../server/data-access/user"
 import ConnectionFactory from "../../../server/utils/connection-factory"
 
