@@ -4,3 +4,11 @@
 # Except web-app:
 !/pages
 !/shared
+
+!/server
+
+!/__tests__
+
+!jest.config;ts
+!babel.config.js
+!tsconfig.json
