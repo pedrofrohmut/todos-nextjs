@@ -9,15 +9,23 @@ export default class ConnectionFactory {
     return new Client()
   }
 
-  public static async connect(connection: Connection): Promise<boolean> {
+  public static async connect(connection: Connection): Promise<void> {
     if (connection instanceof Client) {
       try {
         await connection.connect()
-        return true
       } catch (err) {
         throw new DataBaseConnectionError(err.message)
       }
     }
-    return false
+  }
+
+  public static async closeConnection(connection: Connection): Promise<void> {
+    if (connection instanceof Client) {
+      try {
+        await connection.end()
+      } catch (err) {
+        throw new DataBaseConnectionError(err.message)
+      }
+    }
   }
 }

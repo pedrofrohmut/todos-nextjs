@@ -1,11 +1,15 @@
 import UserDataAccess from "../../../server/data-access/user"
 import ConnectionFactory from "../../../server/utils/connection-factory"
 
-const conn = ConnectionFactory.getConnection()
+describe("[Data Access] User", () => {
+  const conn = ConnectionFactory.getConnection()
 
-describe("USER DATA ACCESS", () => {
   beforeAll(async () => {
-    await conn.connect()
+    await ConnectionFactory.connect(conn)
+  })
+
+  afterAll(async () => {
+    await ConnectionFactory.closeConnection(conn)
   })
 
   test("Find user by e-mail", async () => {

@@ -2,11 +2,15 @@ import ConnectionFactory from "../../../../server/utils/connection-factory"
 import createUserService from "../../../../server/services/users/create"
 import { hash } from "bcryptjs"
 
-const conn = ConnectionFactory.getConnection()
+describe("[Service] Create User Service", () => {
+  const conn = ConnectionFactory.getConnection()
 
-describe("Create User Service", () => {
   beforeAll(async () => {
-    await conn.connect()
+    await ConnectionFactory.connect(conn)
+  })
+
+  afterAll(async () => {
+    await ConnectionFactory.closeConnection(conn)
   })
 
   test("Create a user with valid credentials", async () => {
@@ -19,7 +23,6 @@ describe("Create User Service", () => {
     await createUserService(conn, {
       name: "John Doe 3",
       email: "john_doe3@mail.com",
-      password: "1234",
       passwordHash
     })
     // Evaluation

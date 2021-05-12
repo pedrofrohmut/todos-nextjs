@@ -12,7 +12,7 @@ const createUserService = async (
   { name, email, passwordHash }: UserArgs
 ): Promise<void> => {
   try {
-    new UserDataAccess(connection).create({ name, email, passwordHash })
+    await new UserDataAccess(connection).create({ name, email, passwordHash })
   } catch (err) {
     throw new Error("[Service] Error to create an user: " + err.message)
   }

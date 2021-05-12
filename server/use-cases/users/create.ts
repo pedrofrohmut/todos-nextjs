@@ -20,5 +20,6 @@ export default class CreateUserUseCase {
     }
     const passwordHash = await generatePasswordHashService(password)
     await createUserService(this.connection, { name, email, passwordHash })
+    await ConnectionFactory.closeConnection(this.connection)
   }
 }

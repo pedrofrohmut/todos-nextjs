@@ -2,7 +2,11 @@ X - Style: use css modules for local styling
 
 X - Change buttons from css classes to complete shared components (edit/submit/add)
 
-X - Remove as many awaits as possible from Services and DataAccess. Return promise instead
+X - Change id to uuidv4
+
+0 - Test all functionalities related to Create an user
+  - deleteUserByEmailService
+  - Validation
 
 0 - Form validation in general
 

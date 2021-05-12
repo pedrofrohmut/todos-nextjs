@@ -1,11 +1,15 @@
 import findUserByEmailService from "../../../../server/services/users/find-by-email"
 import ConnectionFactory from "../../../../server/utils/connection-factory"
 
-const conn = ConnectionFactory.getConnection()
+describe("[Service] Find user by e-mail", () => {
+  const conn = ConnectionFactory.getConnection()
 
-describe("Find user by e-mail", () => {
   beforeAll(async () => {
-    await conn.connect()
+    await ConnectionFactory.connect(conn)
+  })
+
+  afterAll(async () => {
+    await ConnectionFactory.closeConnection(conn)
   })
 
   test("Find a existing user by its e-mail address", async () => {
