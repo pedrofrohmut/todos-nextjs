@@ -1,19 +1,10 @@
 import { hash } from "bcryptjs"
 
-import { getValidationMessageForPassword } from "../../validation/user"
-
-const generatePasswordHashService = async (password?: string): Promise<string> => {
-  const passwordValidationMessage = getValidationMessageForPassword(password)
-  if (passwordValidationMessage !== "") {
-    throw new Error(
-      "Cannot generate password hash with invalid password: " + passwordValidationMessage
-    )
-  }
+const generatePasswordHashService = async (password: string): Promise<string> => {
   try {
-    const passwordHash = await hash(password, 8)
-    return passwordHash
+    return hash(password, 8)
   } catch (err) {
-    throw new Error("Error to generate password hash: " + err)
+    throw new Error("Error to generate password hash: " + err.message)
   }
 }
 

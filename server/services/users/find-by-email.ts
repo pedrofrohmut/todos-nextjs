@@ -1,18 +1,12 @@
-import { Client } from "pg"
-
-import { getValidationMessageForEmail } from "../../validation/user"
+import { Connection } from "../../utils/connection-factory"
 import { UserType } from "../../types/user"
 import UserDataAccess from "../../data-access/user"
 
-const findUserByEmailService = async (connection: Client, email?: string): Promise<UserType> => {
-  const emailValidationMessage = getValidationMessageForEmail(email)
-  if (emailValidationMessage)
-    throw new Error("Cannot find user with invalid e-mail: " + emailValidationMessage)
+const findUserByEmailService = async (connection: Connection, email: string): Promise<UserType> => {
   try {
-    const foundUser = await new UserDataAccess(connection).findByEmail(email)
-    return foundUser
+    return new UserDataAccess(connection).findByEmail(email)
   } catch (err) {
-    throw new Error("Error to find user by e-mail: " + err)
+    throw new Error("Error to find user by e-mail: " + err.message)
   }
 }
 

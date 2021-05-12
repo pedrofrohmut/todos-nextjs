@@ -2,6 +2,8 @@ X - Style: use css modules for local styling
 
 X - Change buttons from css classes to complete shared components (edit/submit/add)
 
+X - Remove as many awaits as possible from Services and DataAccess. Return promise instead
+
 0 - Form validation in general
 
 0 - api calls
