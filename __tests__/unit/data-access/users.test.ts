@@ -1,6 +1,7 @@
 import UserDataAccess from "../../../server/data-access/user"
 import ConnectionFactory from "../../../server/utils/connection-factory"
 
+// Case 14
 describe("[Data Access] User", () => {
   const conn = ConnectionFactory.getConnection()
 
@@ -14,43 +15,34 @@ describe("[Data Access] User", () => {
 
   test("Find user by e-mail", async () => {
     // Setup - Create user to be found
-    const result = await conn.query(
-      "INSERT INTO app.users (name, email, password_hash) VALUES ($1, $2, $3) RETURNING id",
-      ["John Doe 1", "john_doe1@mail.com", "password_hash1"]
-    )
-    // Test
+    const email = "john_doe141@mail.com"
     const userDataAccess = new UserDataAccess(conn)
-    const foundUser = await userDataAccess.findByEmail("john_doe1@mail.com")
+    await userDataAccess.create({ name: "John Doe 141", email, passwordHash: "password_hash141" })
+    // Test
+    const foundUser = await userDataAccess.findByEmail(email)
     // Expectations
-    expect(result.rows[0].id).toBe(foundUser.id)
-    expect(foundUser.name).toBe("John Doe 1")
-    expect(foundUser.email).toBe("john_doe1@mail.com")
-    expect(foundUser.passwordHash).toBe("password_hash1")
+    expect(foundUser).not.toBeNull()
+    expect(foundUser.name).toBe("John Doe 141")
+    expect(foundUser.email).toBe("john_doe141@mail.com")
+    expect(foundUser.passwordHash).toBe("password_hash141")
     // Clean Up
-    await conn.query("DELETE FROM app.users WHERE email = $1", ["john_doe1@mail.com"])
+    await userDataAccess.deleteByEmail(email)
   })
 
   test("Create user", async () => {
     // Setup
-    const foundUser1 = await conn.query("SELECT * FROM app.users WHERE email = $1", [
-      "john_doe2@mail.com"
-    ])
-    // Test
+    const email = "john_doe142@mail.com"
     const userDataAccess = new UserDataAccess(conn)
-    await userDataAccess.create({
-      name: "John Doe 2",
-      email: "john_doe2@mail.com",
-      passwordHash: "password_hash2"
-    })
+    const foundUser1 = await userDataAccess.findByEmail(email)
+    // Test
+    await userDataAccess.create({ name: "John Doe 142", email, passwordHash: "password_hash142" })
     // Evaluation
-    const foundUser2 = await conn.query("SELECT * FROM app.users WHERE email = $1", [
-      "john_doe2@mail.com"
-    ])
-    expect(foundUser1.rows.length).toBe(0)
-    expect(foundUser2.rows[0].name).toBe("John Doe 2")
-    expect(foundUser2.rows[0].email).toBe("john_doe2@mail.com")
-    expect(foundUser2.rows[0].password_hash).toBe("password_hash2")
+    const foundUser2 = await userDataAccess.findByEmail(email)
+    expect(foundUser1).toBeNull()
+    expect(foundUser2.name).toBe("John Doe 142")
+    expect(foundUser2.email).toBe("john_doe142@mail.com")
+    expect(foundUser2.passwordHash).toBe("password_hash142")
     // Clean Up
-    await conn.query("DELETE FROM app.users WHERE email = $1", ["john_doe2@mail.com"])
+    await userDataAccess.deleteByEmail(email)
   })
 })

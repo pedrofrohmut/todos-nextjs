@@ -29,7 +29,7 @@ yarn-error.log*
 .env.development.local
 .env.test.local
 .env.production.local
-__tests__/set-env.js
+__tests__/test-env.js
 
 # vercel
 .vercel

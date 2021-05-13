@@ -4,9 +4,27 @@ import { DataBaseConnectionError } from "../errors/database"
 
 export type Connection = Client
 
+export type ConnectionParamsType = {
+  user: string
+  host: string
+  database: string
+  password: string
+  port: number
+}
+
 export default class ConnectionFactory {
-  public static getConnection(): Connection {
-    return new Client()
+  public static getConnection(connectionParams?: ConnectionParamsType): Connection {
+    let connection = null
+    try {
+      if (connectionParams) {
+        connection = new Client(connectionParams)
+      } else {
+        connection = new Client()
+      }
+    } catch (err) {
+      throw new DataBaseConnectionError(err.message)
+    }
+    return connection
   }
 
   public static async connect(connection: Connection): Promise<void> {

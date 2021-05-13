@@ -27,10 +27,6 @@ describe("[Use Case] Create User", () => {
       expect(err).not.toBe(null)
       expect(err instanceof EmailAlreadyInUseError).toBe(true)
     }
-    // expect(
-    //   new CreateUserUseCase().execute({ name: "John Doe 102", email, password: "123456" })
-    // ).toThrowError()
-    
     // Clean Up
     await deleteUserByEmailService(conn, email)
   })

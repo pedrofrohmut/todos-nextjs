@@ -12,6 +12,13 @@ export type CreateUserType = {
   password: string
 }
 
+export type UserDatabaseType = {
+  id: string
+  name: string
+  email: string
+  passwordHash: string
+}
+
 export type CreateUserDatabaseType = {
   name: string
   email: string

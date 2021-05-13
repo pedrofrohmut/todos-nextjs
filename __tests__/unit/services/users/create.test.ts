@@ -1,7 +1,9 @@
 import ConnectionFactory from "../../../../server/utils/connection-factory"
 import createUserService from "../../../../server/services/users/create"
 import { hash } from "bcryptjs"
+import UserDataAccess from "../../../../server/data-access/user"
 
+// Case 12
 describe("[Service] Create User Service", () => {
   const conn = ConnectionFactory.getConnection()
 
@@ -15,25 +17,19 @@ describe("[Service] Create User Service", () => {
 
   test("Create a user with valid credentials", async () => {
     // Setup
-    const foundUser1 = await conn.query("SELECT * FROM app.users WHERE email = $1", [
-      "john_doe3@mail.com"
-    ])
+    const userDataAccess = new UserDataAccess(conn)
     const passwordHash = await hash("1234", 8)
+    const validCredentials = { name: "John Doe 121", email: "john_doe121@mail.com", passwordHash }
+    const foundUser1 = await userDataAccess.findByEmail(validCredentials.email)
     // Test
-    await createUserService(conn, {
-      name: "John Doe 3",
-      email: "john_doe3@mail.com",
-      passwordHash
-    })
+    await createUserService(conn, validCredentials)
     // Evaluation
-    const foundUser2 = await conn.query("SELECT * FROM app.users WHERE email = $1", [
-      "john_doe3@mail.com"
-    ])
-    expect(foundUser1.rows.length).toBe(0)
-    expect(foundUser2.rows[0].name).toBe("John Doe 3")
-    expect(foundUser2.rows[0].email).toBe("john_doe3@mail.com")
-    expect(foundUser2.rows[0].password_hash).toBe(passwordHash)
+    const foundUser2 = await userDataAccess.findByEmail(validCredentials.email)
+    expect(foundUser1).toBeNull()
+    expect(foundUser2.name).toBe("John Doe 121")
+    expect(foundUser2.email).toBe("john_doe121@mail.com")
+    expect(foundUser2.passwordHash).toBe(passwordHash)
     // Clean Up
-    await conn.query("DELETE FROM app.users WHERE email = $1", ["john_doe3@mail.com"])
+    await userDataAccess.deleteByEmail(validCredentials.email)
   })
 })

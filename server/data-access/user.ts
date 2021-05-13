@@ -1,5 +1,5 @@
 import { Connection } from "../utils/connection-factory"
-import { CreateUserDatabaseType, UserType } from "../types/user"
+import { CreateUserDatabaseType, UserDatabaseType } from "../types/user"
 
 export default class UserDataAccess {
   private connection: Connection
@@ -19,7 +19,7 @@ export default class UserDataAccess {
     await this.connection.query("DELETE FROM app.users WHERE email = $1", [email])
   }
 
-  public async findByEmail(email: string): Promise<UserType> {
+  public async findByEmail(email: string): Promise<UserDatabaseType> {
     const result = await this.connection.query("SELECT * FROM app.users WHERE email = $1", [email])
     if (result.rows.length === 0) {
       return null

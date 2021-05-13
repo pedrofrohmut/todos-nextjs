@@ -1,0 +1,14 @@
+
+case 10 = use-cases\users\create
+
+case 11 = controllers\users\create
+
+case 12 = services\users\create
+
+case 13 = servicesa\users\find-by-email
+
+case 14 = data-access\users
+
+case 15 = services\users\generate-password-hash
+
+case 16 = validation\user

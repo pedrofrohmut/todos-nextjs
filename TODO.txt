@@ -4,9 +4,7 @@ X - Change buttons from css classes to complete shared components (edit/submit/a
 
 X - Change id to uuidv4
 
-0 - Test all functionalities related to Create an user
-  - deleteUserByEmailService
-  - Validation
+X - Test all functionalities related to Create an user
 
 0 - Form validation in general
 
