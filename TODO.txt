@@ -6,6 +6,15 @@ X - Change id to uuidv4
 
 X - Test all functionalities related to Create an user
 
+0 - Program to interfaces for controllers, use-cases, services and data-access
+  0 - Create interfaces 
+  0 - Create implementations
+  0 - Contructors receives interfaces as args
+  0 - Test if it is working
+
+0 - Create express adapter between routes and controllers
+  0 - Remodel controllers to be framework agnostic
+
 0 - Form validation in general
 
 0 - api calls

@@ -1,6 +1,6 @@
-import UserDataAccess from "../../../../server/data-access/user"
-import findUserByEmailService from "../../../../server/services/users/find-by-email"
 import ConnectionFactory from "../../../../server/utils/connection-factory"
+import UserDataAccess from "../../../../server/data-access/users/implementation"
+import FindUserByEmailService from "../../../../server/services/users/find-by-email/implementation"
 
 // Case 13
 describe("[Service] Find user by e-mail", () => {
@@ -15,12 +15,13 @@ describe("[Service] Find user by e-mail", () => {
   })
 
   test("Find a existing user by its e-mail address", async () => {
+    const userDataAccess = new UserDataAccess(conn)
+    const findUserByEmailService = new FindUserByEmailService(userDataAccess)
     // Setup
     const email = "john_doe131@mail.com"
-    const userDataAccess = new UserDataAccess(conn)
     await userDataAccess.create({ name: "John Doe 131", email, passwordHash: "1234" })
     // Test
-    const foundUser = await findUserByEmailService(conn, email)
+    const foundUser = await findUserByEmailService.execute(email)
     // Evaluation
     expect(foundUser.name).toBe("John Doe 131")
     expect(foundUser.email).toBe("john_doe131@mail.com")

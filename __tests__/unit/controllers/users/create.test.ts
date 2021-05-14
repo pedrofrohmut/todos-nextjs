@@ -1,8 +1,9 @@
 import axios from "axios"
 
-import deleteUserByEmailService from "../../../../server/services/users/delete-by-email"
-import ConnectionFactory from "../../../../server/utils/connection-factory"
 import { SERVER_URL } from "../../../constants"
+import ConnectionFactory from "../../../../server/utils/connection-factory"
+import UserDataAccess from "../../../../server/data-access/users/implementation"
+import DeleteUserByEmailService from "../../../../server/services/users/delete-by-email/implementation"
 
 const URL = SERVER_URL + "/api/users"
 
@@ -46,6 +47,6 @@ describe("[Controller] Create User", () => {
     // Evaluation
     expect(response.status).toBe(201)
     // Clean Up
-    await deleteUserByEmailService(conn, email)
+    await new DeleteUserByEmailService(new UserDataAccess(conn)).execute(email)
   })
 })

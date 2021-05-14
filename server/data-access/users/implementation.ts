@@ -1,7 +1,8 @@
-import { Connection } from "../utils/connection-factory"
-import { CreateUserDatabaseType, UserDatabaseType } from "../types/user"
+import IUserDataAccess from "./interface"
+import { Connection } from "../../utils/connection-factory"
+import { CreateUserDatabaseType, UserDatabaseType } from "../../types/users"
 
-export default class UserDataAccess {
+export default class UserDataAccess implements IUserDataAccess {
   private connection: Connection
 
   public constructor(connection: Connection) {

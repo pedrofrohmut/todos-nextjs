@@ -2,7 +2,7 @@ import {
   getValidationMessageForEmail,
   getValidationMessageForName,
   getValidationMessageForPassword
-} from "../../../server/validation/user"
+} from "../../../server/validation/users"
 
 // Case 16
 describe("[Validation] User", () => {
