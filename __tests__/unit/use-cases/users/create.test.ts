@@ -1,4 +1,4 @@
-import { EmailAlreadyInUseError } from "../../../../server/errors/user"
+import { EmailAlreadyInUseError } from "../../../../server/errors/users/email-already-in-use"
 import ConnectionFactory from "../../../../server/utils/connection-factory"
 import createUserService from "../../../../server/services/users/create"
 import deleteUserByEmailService from "../../../../server/services/users/delete-by-email"

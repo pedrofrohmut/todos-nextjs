@@ -7,7 +7,7 @@ import {
   getValidationMessageForName,
   getValidationMessageForPassword
 } from "../../validation/user"
-import { EmailAlreadyInUseError } from "../../errors/user"
+import { EmailAlreadyInUseError } from "../../errors/users/email-already-in-use"
 
 export default class CreateUserController {
   private validateBody({ name, email, password }: CreateUserType): string {

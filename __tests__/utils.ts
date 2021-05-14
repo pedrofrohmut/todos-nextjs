@@ -13,7 +13,7 @@ export const truncateDatabase = async (): Promise<void> => {
     await ConnectionFactory.connect(conn)
     await conn.query("DELETE FROM app.users")
     await ConnectionFactory.closeConnection(conn)
-    console.log("Database Truncated")
+    console.log("\nDatabase Truncated\n")
   } catch (err) {
     console.error("Error to truncate database: " + err.message)
   }

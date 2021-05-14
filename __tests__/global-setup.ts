@@ -11,6 +11,7 @@ process.env.PGDATABASE = env.PGDATABASE
 process.env.PGPORT = env.PGPORT
 
 export default async () => {
+  console.log("")
   try {
     await truncateDatabase()
   } catch (err) {
