@@ -10,8 +10,8 @@ export default class ExpressAdapter {
   }
 
   // eslint-disable-next-line
-  public async callController(controller: any): Promise<void> {
-    const { status, body } = await controller.execute(this.request)
+  public async callControllerWrapper(controllerWrapper: any): Promise<void> {
+    const { status, body } = await controllerWrapper.execute(this.request)
     if (body) {
       this.response.status(status).send(body)
     } else {
