@@ -1,16 +1,16 @@
 import axios from "axios"
 
-import ConnectionFactory from "../../server/utils/connection-factory.util"
-import UserDataAccess from "../../server/data-access/implementations/users.data-access"
-import GeneratePasswordHashService from "../../server/services/users/implementations/generate-password-hash.service"
-import CreateUserService from "../../server/services/users/implementations/create.service"
-import { SERVER_URL } from "../constants"
-import FindUserByEmailService from "../../server/services/users/implementations/find-by-email.service"
+import { SERVER_URL } from "../../constants"
+import ConnectionFactory from "../../../server/utils/connection-factory.util"
+import UserDataAccess from "../../../server/data-access/implementations/users.data-access"
+import GeneratePasswordHashService from "../../../server/services/users/implementations/generate-password-hash.service"
+import CreateUserService from "../../../server/services/users/implementations/create.service"
+import FindUserByEmailService from "../../../server/services/users/implementations/find-by-email.service"
 import {
   getValidationMessageForEmail,
   getValidationMessageForPassword
-} from "../../server/validators/users.validator"
-import DeleteUserByEmailService from "../../server/services/users/implementations/delete-by-email.service"
+} from "../../../server/validators/users.validator"
+import DeleteUserByEmailService from "../../../server/services/users/implementations/delete-by-email.service"
 
 // BDD02
 describe("[BDD] Sign In", () => {

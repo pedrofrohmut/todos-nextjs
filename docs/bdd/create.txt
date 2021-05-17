@@ -2,6 +2,7 @@ Feature: Create users
 
   Scenario 1: valid credentials
     Given: the name, email and password are valid
+      and the email is not already registered
     When: the user submits the user data
     Then: a new user should be added to database
       and positive response should be returned
@@ -9,24 +10,20 @@ Feature: Create users
   Scenario 2: invalid name (value validation)
     Given: the name is not valid
     When: the user submits the user data
-    Then: the name should be validated
-      and a negative response should be returned
+    Then: a negative response should be returned
 
   Scenario 3: invalid email (value validation)
     Given: the email is not valid
     When: the user submits the user data
-    Then: the email should be validated
-      and a negative response should be returned
+    Then: a negative response should be returned
 
   Scenario 4: invalid password (value validation)
     Given: the password is not valid
     When: the user submits the user data
-    Then: the password should be validated
-      and a negative response should be returned
+    Then: a negative response should be returned
 
   Scenario 5: E-mail is already registered
     Given: the name, email and password are valid
       and the e-mail is already registered
     When: the user submites the user data
-    Then: a user should be found by email
-      and a negative response should be returned
+    Then: a negative response should be returned
