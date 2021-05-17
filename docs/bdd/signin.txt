@@ -1,0 +1,36 @@
+Feature: SignIn
+
+  Scenario 1: valid credentials
+    Given: the user is registered 
+      and the email and the password are valid
+    When: the user submits the credentials
+    Then: A new authentication token should be generated 
+      and User info should be retrieve
+
+  Scenario 2: invalid email (value validation)
+    Given: the email is not valid
+    When: the user submits the credentials
+    Then: the email should be validated 
+      and a negative response should be returned
+
+  Scenario 3: invalid password (value validation)
+    Given: the password is not valid
+    When: the user submits the credentials
+    Then: the password should be validated 
+      and a negative response should be returned
+
+  Scenario 4: email not registered
+    Given: the email and password are valid 
+      and the email is not registered
+    When: the user submits the credentials
+    Then: a user should not be found by email 
+      and a negative response should be returned
+
+  Scenario 5: password is not a match
+    Given: the email and password are valid 
+      and the user is registered
+    When: the user submits the credentials
+    Then: a user should be found by email
+      and the password hash should be retrieve
+      and the comparison should fail 
+      and a negative response should be returned
