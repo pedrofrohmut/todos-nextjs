@@ -1,4 +1,4 @@
-import ConnectionFactory from "../server/utils/connection-factory"
+import ConnectionFactory from "../server/utils/connection-factory.util"
 import env from "./test-env"
 
 export const truncateDatabase = async (): Promise<void> => {

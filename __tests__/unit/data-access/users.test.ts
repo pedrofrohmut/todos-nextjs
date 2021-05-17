@@ -1,5 +1,5 @@
-import ConnectionFactory from "../../../server/utils/connection-factory"
-import UserDataAccess from "../../../server/data-access/users/implementation"
+import ConnectionFactory from "../../../server/utils/connection-factory.util"
+import UserDataAccess from "../../../server/data-access/implementations/users.data-access"
 
 // Case 14
 describe("[Data Access] User", () => {

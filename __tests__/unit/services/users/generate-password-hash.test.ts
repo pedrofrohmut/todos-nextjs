@@ -1,5 +1,6 @@
 import { compare } from "bcryptjs"
-import GeneratePasswordHashService from "../../../../server/services/users/generate-password-hash/implementation"
+
+import GeneratePasswordHashService from "../../../../server/services/users/implementations/generate-password-hash.service"
 
 // Case 15
 describe("[Service] Generate password hash", () => {

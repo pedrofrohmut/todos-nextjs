@@ -12,3 +12,11 @@ case 14 = data-access\users
 case 15 = services\users\generate-password-hash
 
 case 16 = validation\user
+
+case 17 = controllers\users\signin
+
+case 18 = use-cases\users\signin
+
+case 19 = services\users\check-password
+
+case 20 = services\users\generate-authentication-token

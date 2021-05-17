@@ -1,6 +1,6 @@
 import { hash } from "bcryptjs"
 
-import IGeneratePasswordHashService from "./interface"
+import IGeneratePasswordHashService from "../generate-password-hash.interface"
 
 export default class GeneratePasswordHashService implements IGeneratePasswordHashService {
   constructor() {}

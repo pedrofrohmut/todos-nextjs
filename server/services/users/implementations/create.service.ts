@@ -1,7 +1,7 @@
-import ICreateUserService from "./interface"
-import IUserDataAccess from "../../../data-access/users/interface"
-import { CreateUserType } from "../../../types/users"
-import IGeneratePasswordHashService from "../generate-password-hash/interface"
+import ICreateUserService from "../create.interface"
+import IUserDataAccess from "../../../data-access/users.interface"
+import IGeneratePasswordHashService from "../generate-password-hash.interface"
+import { CreateUserType } from "../../../types/users.types"
 
 export default class CreateUserService implements ICreateUserService {
   private generatePasswordHashService: IGeneratePasswordHashService

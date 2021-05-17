@@ -1,11 +1,11 @@
-import UserDataAccess from "../../../../server/data-access/users/implementation"
-import { EmailAlreadyInUseError } from "../../../../server/errors/users/email-already-in-use"
-import CreateUserService from "../../../../server/services/users/create/implementation"
-import DeleteUserByEmailService from "../../../../server/services/users/delete-by-email/implementation"
-import FindUserByEmailService from "../../../../server/services/users/find-by-email/implementation"
-import GeneratePasswordHashService from "../../../../server/services/users/generate-password-hash/implementation"
-import CreateUserUseCase from "../../../../server/use-cases/users/create/implementation"
-import ConnectionFactory from "../../../../server/utils/connection-factory"
+import ConnectionFactory from "../../../../server/utils/connection-factory.util"
+import UserDataAccess from "../../../../server/data-access/implementations/users.data-access"
+import CreateUserService from "../../../../server/services/users/implementations/create.service"
+import DeleteUserByEmailService from "../../../../server/services/users/implementations/delete-by-email.service"
+import FindUserByEmailService from "../../../../server/services/users/implementations/find-by-email.service"
+import GeneratePasswordHashService from "../../../../server/services/users/implementations/generate-password-hash.service"
+import CreateUserUseCase from "../../../../server/use-cases/users/implementations/create.use-case"
+import { EmailAlreadyInUseError } from "../../../../server/errors/users/email-already-in-use.error"
 
 // case 10
 describe("[Use Case] Create User", () => {

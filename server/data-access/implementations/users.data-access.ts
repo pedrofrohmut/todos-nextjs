@@ -1,6 +1,6 @@
-import IUserDataAccess from "./interface"
-import { Connection } from "../../utils/connection-factory"
-import { CreateUserDatabaseType, UserDatabaseType } from "../../types/users"
+import IUserDataAccess from "../users.interface"
+import { Connection } from "../../utils/connection-factory.util"
+import { CreateUserDatabaseType, UserDatabaseType } from "../../types/users.types"
 
 export default class UserDataAccess implements IUserDataAccess {
   private connection: Connection

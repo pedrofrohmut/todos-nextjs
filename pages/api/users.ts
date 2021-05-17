@@ -1,7 +1,7 @@
 import { NextApiRequest, NextApiResponse } from "next"
-import ExpressAdapter from "../../server/adapter/express"
+import ExpressAdapter from "../../server/adapter/express.adapter"
 
-import CreateUserController from "../../server/controllers/users/create/implementation"
+import CreateUserController from "../../server/controllers/users/implementations/create.controller"
 
 const UsersRoute = (request: NextApiRequest, response: NextApiResponse): void => {
   switch (request.method) {

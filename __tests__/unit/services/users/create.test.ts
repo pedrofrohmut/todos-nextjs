@@ -1,8 +1,9 @@
-import ConnectionFactory from "../../../../server/utils/connection-factory"
-import UserDataAccess from "../../../../server/data-access/users/implementation"
-import CreateUserService from "../../../../server/services/users/create/implementation"
-import GeneratePasswordHashService from "../../../../server/services/users/generate-password-hash/implementation"
-import {compare} from "bcryptjs"
+import { compare } from "bcryptjs"
+
+import ConnectionFactory from "../../../../server/utils/connection-factory.util"
+import UserDataAccess from "../../../../server/data-access/implementations/users.data-access"
+import CreateUserService from "../../../../server/services/users/implementations/create.service"
+import GeneratePasswordHashService from "../../../../server/services/users/implementations/generate-password-hash.service"
 
 // Case 12
 describe("[Service] Create User Service", () => {
@@ -21,7 +22,11 @@ describe("[Service] Create User Service", () => {
     const generatePasswordHashService = new GeneratePasswordHashService()
     const createUserService = new CreateUserService(generatePasswordHashService, userDataAccess)
     // Setup
-    const validCredentials = { name: "John Doe 121", email: "john_doe121@mail.com", password: "password121" }
+    const validCredentials = {
+      name: "John Doe 121",
+      email: "john_doe121@mail.com",
+      password: "password121"
+    }
     const foundUser1 = await userDataAccess.findByEmail(validCredentials.email)
     // Test
     await createUserService.execute(validCredentials)

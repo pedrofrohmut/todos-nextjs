@@ -1,5 +1,5 @@
-import IDeleteUserByEmailService from "./interface"
-import IUserDataAccess from "../../../data-access/users/interface"
+import IDeleteUserByEmailService from "../delete-by-email.interface"
+import IUserDataAccess from "../../../data-access/users.interface"
 
 export default class DeleteUserByEmailService implements IDeleteUserByEmailService {
   private userDataAccess: IUserDataAccess

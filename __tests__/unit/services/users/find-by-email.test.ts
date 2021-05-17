@@ -1,6 +1,6 @@
-import ConnectionFactory from "../../../../server/utils/connection-factory"
-import UserDataAccess from "../../../../server/data-access/users/implementation"
-import FindUserByEmailService from "../../../../server/services/users/find-by-email/implementation"
+import ConnectionFactory from "../../../../server/utils/connection-factory.util"
+import UserDataAccess from "../../../../server/data-access/implementations/users.data-access"
+import FindUserByEmailService from "../../../../server/services/users/implementations/find-by-email.service"
 
 // Case 13
 describe("[Service] Find user by e-mail", () => {

@@ -1,17 +1,17 @@
-import ICreateUserController, { Request, RequestBody, Response } from "./interface"
+import ICreateUserController, { Request, RequestBody, Response } from "../create.interface"
 import {
   getValidationMessageForEmail,
   getValidationMessageForName,
   getValidationMessageForPassword
-} from "../../../validation/users"
-import ConnectionFactory, { Connection } from "../../../utils/connection-factory"
-import UserDataAccess from "../../../data-access/users/implementation"
-import FindUserByEmailService from "../../../services/users/find-by-email/implementation"
-import CreateUserService from "../../../services/users/create/implementation"
-import GeneratePasswordHashService from "../../../services/users/generate-password-hash/implementation"
-import ICreateUserUseCase from "../../../use-cases/users/create/interface"
-import CreateUserUseCase from "../../../use-cases/users/create/implementation"
-import { EmailAlreadyInUseError } from "../../../errors/users/email-already-in-use"
+} from "../../../validators/users.validator"
+import ConnectionFactory, { Connection } from "../../../utils/connection-factory.util"
+import UserDataAccess from "../../../data-access/implementations/users.data-access"
+import FindUserByEmailService from "../../../services/users/implementations/find-by-email.service"
+import CreateUserService from "../../../services/users/implementations/create.service"
+import GeneratePasswordHashService from "../../../services/users/implementations/generate-password-hash.service"
+import ICreateUserUseCase from "../../../use-cases/users/create.interface"
+import CreateUserUseCase from "../../../use-cases/users/implementations/create.use-case"
+import { EmailAlreadyInUseError } from "../../../errors/users/email-already-in-use.error"
 
 export default class CreateUserController implements ICreateUserController {
   private connection: Connection

@@ -1,6 +1,6 @@
 import { Client } from "pg"
 
-import { DataBaseConnectionError } from "../errors/database/connection"
+import { DataBaseConnectionError } from "../errors/database/connection.error"
 
 export type Connection = Client
 

@@ -1,9 +1,9 @@
 import axios from "axios"
 
 import { SERVER_URL } from "../../../constants"
-import ConnectionFactory from "../../../../server/utils/connection-factory"
-import UserDataAccess from "../../../../server/data-access/users/implementation"
-import DeleteUserByEmailService from "../../../../server/services/users/delete-by-email/implementation"
+import ConnectionFactory from "../../../../server/utils/connection-factory.util"
+import UserDataAccess from "../../../../server/data-access/implementations/users.data-access"
+import DeleteUserByEmailService from "../../../../server/services/users/implementations/delete-by-email.service"
 
 const URL = SERVER_URL + "/api/users"
 

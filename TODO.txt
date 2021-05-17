@@ -6,14 +6,22 @@ X - Change id to uuidv4
 
 X - Test all functionalities related to Create an user
 
-0 - Program to interfaces for controllers, use-cases, services and data-access
-  0 - Create interfaces 
-  0 - Create implementations
-  0 - Contructors receives interfaces as args
-  0 - Test if it is working
+X - Program to interfaces for controllers, use-cases, services and data-access
+  X - Create interfaces 
+  X - Create implementations
+  X - Contructors receives interfaces as args
+  X - Test if it is working
 
-0 - Create express adapter between routes and controllers
-  0 - Remodel controllers to be framework agnostic
+X - Create express adapter between routes and controllers
+  X - Remodel controllers to be framework agnostic
+
+0 - Test all functionalities related to SignIn an user
+
+0 - Testing env using sqlite
+
+0 - readonly for classes dependency
+
+0 - Remove BCryptJS coupling
 
 0 - Form validation in general
 
