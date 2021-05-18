@@ -30,9 +30,29 @@ X - readonly for classes dependency
 
 X - Test all functionalities related to SignIn an user
 
-0 - Testing env using sqlite
+X - Create Functionality for get signed user by authToken
+
+0 - Unit and Bdd for Signed user by Token
+
+0 - Filters to request for global use (filter bodyIsDefined, AuthTokenIsValid)
+
+0 - Authentication Context for logged in users (useReducer, and logout button in layout)
+
+0 - CRUD for Tasks
+
+0 - CRUD for TODOs
+
+0 - Connect cruds to views
 
 0 - Form validation in general
+
+0 - HATEOAS to api routes
+
+0 - SWAGGER
+
+0 - Testing env using sqlite
+
+0 - Deploy as Heroku App
 
 -----------------
 

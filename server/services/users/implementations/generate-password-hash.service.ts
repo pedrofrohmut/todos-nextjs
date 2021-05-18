@@ -3,8 +3,6 @@ import { hash } from "bcryptjs"
 import IGeneratePasswordHashService from "../generate-password-hash.interface"
 
 export default class GeneratePasswordHashService implements IGeneratePasswordHashService {
-  constructor() {}
-
   public async execute(password: string): Promise<string> {
     try {
       const passwordHash = await hash(password, 8)

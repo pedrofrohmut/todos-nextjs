@@ -1,6 +1,6 @@
 import UserDataAccess from "../../../../server/data-access/implementations/users.data-access"
-import { PasswordIsNotAMatchError } from "../../../../server/errors/users/password-is-not-a-match.error"
-import { UserNotFoundByEmailError } from "../../../../server/errors/users/user-not-found-by-email.error"
+import PasswordIsNotAMatchError from "../../../../server/errors/users/password-is-not-a-match.error"
+import UserNotFoundByEmailError from "../../../../server/errors/users/user-not-found-by-email.error"
 import CheckPasswordService from "../../../../server/services/users/implementations/check-password.service"
 import CreateUserService from "../../../../server/services/users/implementations/create.service"
 import DeleteUserByEmailService from "../../../../server/services/users/implementations/delete-by-email.service"

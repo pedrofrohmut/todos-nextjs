@@ -4,8 +4,8 @@ import IGeneratePasswordHashService from "../generate-password-hash.interface"
 import { CreateUserType } from "../../../types/users.types"
 
 export default class CreateUserService implements ICreateUserService {
-  private generatePasswordHashService: IGeneratePasswordHashService
-  private userDataAccess: IUserDataAccess
+  private readonly generatePasswordHashService: IGeneratePasswordHashService
+  private readonly userDataAccess: IUserDataAccess
 
   constructor(
     generatePasswordHashService: IGeneratePasswordHashService,

@@ -12,6 +12,16 @@ export type CreateUserType = {
   password: string
 }
 
+export type SignedUserType = {
+  id: string
+  name: string
+  email: string
+}
+
+export type AuthenticationToken = {
+  userId: string
+}
+
 export type UserDatabaseType = {
   id: string
   name: string

@@ -1,15 +1,15 @@
+import { UserDatabaseType } from "../../../types/users.types"
 import IFindUserByEmailService from "../find-by-email.interface"
-import { UserType } from "../../../types/users.types"
 import IUserDataAccess from "../../../data-access/users.interface"
 
 export default class FindUserByEmailService implements IFindUserByEmailService {
-  private userDataAccess: IUserDataAccess
+  private readonly userDataAccess: IUserDataAccess
 
   constructor(userDataAccess: IUserDataAccess) {
     this.userDataAccess = userDataAccess
   }
 
-  public async execute(email: string): Promise<UserType> {
+  public async execute(email: string): Promise<UserDatabaseType> {
     try {
       const foundUser = await this.userDataAccess.findByEmail(email)
       return foundUser

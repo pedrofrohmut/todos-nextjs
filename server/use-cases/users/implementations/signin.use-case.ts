@@ -2,8 +2,8 @@ import ISignInUseCase, { CredentialsType, SignInDataType } from "../signin.inter
 import ICheckPasswordService from "../../../services/users/check-password.interface"
 import IFindUserByEmailService from "../../../services/users/find-by-email.interface"
 import IGenerateTokenService from "../../../services/users/generate-authentication-token.interface"
-import { UserNotFoundByEmailError } from "../../../errors/users/user-not-found-by-email.error"
-import { PasswordIsNotAMatchError } from "../../../errors/users/password-is-not-a-match.error"
+import UserNotFoundByEmailError from "../../../errors/users/user-not-found-by-email.error"
+import PasswordIsNotAMatchError from "../../../errors/users/password-is-not-a-match.error"
 
 export default class SignInUseCase implements ISignInUseCase {
   private readonly findUserByEmailService: IFindUserByEmailService

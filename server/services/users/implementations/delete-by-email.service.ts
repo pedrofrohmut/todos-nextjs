@@ -2,7 +2,7 @@ import IDeleteUserByEmailService from "../delete-by-email.interface"
 import IUserDataAccess from "../../../data-access/users.interface"
 
 export default class DeleteUserByEmailService implements IDeleteUserByEmailService {
-  private userDataAccess: IUserDataAccess
+  private readonly userDataAccess: IUserDataAccess
 
   constructor(userDataAccess: IUserDataAccess) {
     this.userDataAccess = userDataAccess

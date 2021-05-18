@@ -1,3 +1,4 @@
+import IControllerWrapper from "../controller-wrapper.interface"
 import SignInController from "../../controllers/users/implementations/signin.controller"
 import ISignInController, {
   Request,
@@ -15,7 +16,7 @@ import {
   getValidationMessageForPassword
 } from "../../validators/users.validator"
 
-export default class SignInWrapper {
+export default class SignInWrapper implements IControllerWrapper {
   private connection: Connection
   private signinController: ISignInController
 
@@ -53,6 +54,7 @@ export default class SignInWrapper {
   }
 
   public async execute(request: Request): Promise<Response> {
+    // TODO: use a filter for BodyIsDefined
     if (!request.body) {
       return { status: 400, body: "Missing the request body" }
     }

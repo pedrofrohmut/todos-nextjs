@@ -3,7 +3,7 @@ import { Connection } from "../../utils/connection-factory.util"
 import { CreateUserDatabaseType, UserDatabaseType } from "../../types/users.types"
 
 export default class UserDataAccess implements IUserDataAccess {
-  private connection: Connection
+  private readonly connection: Connection
 
   public constructor(connection: Connection) {
     this.connection = connection
@@ -28,6 +28,20 @@ export default class UserDataAccess implements IUserDataAccess {
     const { id, name, password_hash } = result.rows[0]
     return {
       id,
+      name,
+      email,
+      passwordHash: password_hash
+    }
+  }
+
+  public async findById(userId: string): Promise<UserDatabaseType> {
+    const result = await this.connection.query("SELECT * FROM app.users WHERE id = $1", [userId])
+    if (result.rows.length === 0) {
+      return null
+    }
+    const { name, email, password_hash } = result.rows[0]
+    return {
+      id: userId,
       name,
       email,
       passwordHash: password_hash

@@ -5,7 +5,7 @@ import DeleteUserByEmailService from "../../../../server/services/users/implemen
 import FindUserByEmailService from "../../../../server/services/users/implementations/find-by-email.service"
 import GeneratePasswordHashService from "../../../../server/services/users/implementations/generate-password-hash.service"
 import CreateUserUseCase from "../../../../server/use-cases/users/implementations/create.use-case"
-import { EmailAlreadyInUseError } from "../../../../server/errors/users/email-already-in-use.error"
+import EmailAlreadyInUseError from "../../../../server/errors/users/email-already-in-use.error"
 
 // case 10
 describe("[Use Case] Create User", () => {

@@ -1,3 +1,4 @@
+import IControllerWrapper from "../controller-wrapper.interface"
 import ICreateUserController, {
   Request,
   RequestBody,
@@ -16,7 +17,7 @@ import {
   getValidationMessageForPassword
 } from "../../validators/users.validator"
 
-export default class CreateUserWrapper {
+export default class CreateUserWrapper implements IControllerWrapper {
   private connection: Connection
   private createUserController: ICreateUserController
 

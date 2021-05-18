@@ -1,4 +1,4 @@
-export class DataBaseConnectionError extends Error {
+export default class DataBaseConnectionError extends Error {
   public static message = "Could not connect to database"
 
   public constructor(message?: string) {

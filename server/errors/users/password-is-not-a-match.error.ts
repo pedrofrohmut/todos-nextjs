@@ -1,4 +1,4 @@
-export class PasswordIsNotAMatchError extends Error {
+export default class PasswordIsNotAMatchError extends Error {
   public static message = "Password does not match the hashed password"
 
   constructor(msg?: string) {

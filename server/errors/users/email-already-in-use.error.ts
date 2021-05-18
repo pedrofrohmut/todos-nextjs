@@ -1,4 +1,4 @@
-export class EmailAlreadyInUseError extends Error {
+export default class EmailAlreadyInUseError extends Error {
   public static message = "E-mail is already taken and must be unique"
 
   constructor(msg?: string) {

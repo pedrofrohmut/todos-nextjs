@@ -1,6 +1,6 @@
 import ICreateUserController, { Request, Response } from "../create.interface"
 import ICreateUserUseCase from "../../../use-cases/users/create.interface"
-import { EmailAlreadyInUseError } from "../../../errors/users/email-already-in-use.error"
+import EmailAlreadyInUseError from "../../../errors/users/email-already-in-use.error"
 
 export default class CreateUserController implements ICreateUserController {
   private readonly createUserUseCase: ICreateUserUseCase
