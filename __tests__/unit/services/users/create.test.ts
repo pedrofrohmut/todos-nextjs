@@ -8,6 +8,9 @@ import GeneratePasswordHashService from "../../../../server/services/users/imple
 // Case 12
 describe("[Service] Create User Service", () => {
   const conn = ConnectionFactory.getConnection()
+  const userDataAccess = new UserDataAccess(conn)
+  const generatePasswordHashService = new GeneratePasswordHashService()
+  const createUserService = new CreateUserService(generatePasswordHashService, userDataAccess)
 
   beforeAll(async () => {
     await ConnectionFactory.connect(conn)
@@ -18,9 +21,6 @@ describe("[Service] Create User Service", () => {
   })
 
   test("Create a user with valid credentials", async () => {
-    const userDataAccess = new UserDataAccess(conn)
-    const generatePasswordHashService = new GeneratePasswordHashService()
-    const createUserService = new CreateUserService(generatePasswordHashService, userDataAccess)
     // Setup
     const validCredentials = {
       name: "John Doe 121",

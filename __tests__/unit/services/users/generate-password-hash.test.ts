@@ -4,8 +4,9 @@ import GeneratePasswordHashService from "../../../../server/services/users/imple
 
 // Case 15
 describe("[Service] Generate password hash", () => {
+  const generatePasswordHashService = new GeneratePasswordHashService()
+
   test("Generated hash to match the password that is provided", async () => {
-    const generatePasswordHashService = new GeneratePasswordHashService()
     // Setup
     const password = "123456"
     // Test
@@ -16,7 +17,6 @@ describe("[Service] Generate password hash", () => {
   })
 
   test("Generated hash NOT to match a different password", async () => {
-    const generatePasswordHashService = new GeneratePasswordHashService()
     // Setup
     const password = "123456"
     const differentPassword = "@@@@@@"

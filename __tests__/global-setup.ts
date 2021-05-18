@@ -9,6 +9,7 @@ process.env.PGHOST = env.PGHOST
 process.env.PGPASSWORD = env.PGPASSWORD
 process.env.PGDATABASE = env.PGDATABASE
 process.env.PGPORT = env.PGPORT
+process.env.JWT_SECRET = env.JWT_SECRET
 
 export default async () => {
   console.log("")

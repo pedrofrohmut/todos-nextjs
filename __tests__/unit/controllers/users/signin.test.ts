@@ -14,6 +14,10 @@ const URL = SERVER_URL + "/api/users/signin"
 // Case 17
 describe("[Controller] SignIn User", () => {
   const conn = ConnectionFactory.getConnection()
+  const userDataAccess = new UserDataAccess(conn)
+  const generatePasswordHashService = new GeneratePasswordHashService()
+  const createUserService = new CreateUserService(generatePasswordHashService, userDataAccess)
+  const findUserByEmailService = new FindUserByEmailService(userDataAccess)
 
   beforeAll(async () => {
     ConnectionFactory.connect(conn)
@@ -44,10 +48,6 @@ describe("[Controller] SignIn User", () => {
   })
 
   test("Return status ok with valid credentials", async () => {
-    const userDataAccess = new UserDataAccess(conn)
-    const generatePasswordHashService = new GeneratePasswordHashService()
-    const createUserService = new CreateUserService(generatePasswordHashService, userDataAccess)
-    const findUserByEmailService = new FindUserByEmailService(userDataAccess)
     // Setup
     const name = "John Doe 171"
     const email = "john_doe171@mail.com"

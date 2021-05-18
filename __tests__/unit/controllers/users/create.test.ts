@@ -10,6 +10,8 @@ const URL = SERVER_URL + "/api/users"
 // Case 11
 describe("[Controller] Create User", () => {
   const conn = ConnectionFactory.getConnection()
+  const userDataAccess = new UserDataAccess(conn)
+  const deleteUserByEmailService = new DeleteUserByEmailService(userDataAccess)
 
   beforeAll(async () => {
     await ConnectionFactory.connect(conn)
@@ -47,6 +49,6 @@ describe("[Controller] Create User", () => {
     // Evaluation
     expect(response.status).toBe(201)
     // Clean Up
-    await new DeleteUserByEmailService(new UserDataAccess(conn)).execute(email)
+    await deleteUserByEmailService.execute(email)
   })
 })

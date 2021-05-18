@@ -3,10 +3,10 @@ import ExpressAdapter from "../../server/adapter/express.adapter"
 
 import CreateUserWrapper from "../../server/wrappers/users/create.wrapper"
 
-const UsersRoute = (request: NextApiRequest, response: NextApiResponse): void => {
+const UsersRoute = async (request: NextApiRequest, response: NextApiResponse): Promise<void> => {
   switch (request.method) {
     case "POST": 
-      new ExpressAdapter(request, response).callControllerWrapper(new CreateUserWrapper())
+      await new ExpressAdapter(request, response).callControllerWrapper(new CreateUserWrapper())
       break
     default:
       response.status(405).end()

@@ -4,6 +4,12 @@ X - Change buttons from css classes to complete shared components (edit/submit/a
 
 X - Change id to uuidv4
 
+X - api calls
+
+X - api development
+
+X - connect to database
+
 X - Test all functionalities related to Create an user
 
 X - Program to interfaces for controllers, use-cases, services and data-access
@@ -15,22 +21,23 @@ X - Program to interfaces for controllers, use-cases, services and data-access
 X - Create express adapter between routes and controllers
   X - Remodel controllers to be framework agnostic
 
-0 - Test all functionalities related to SignIn an user
+X - BDD tests for signin and create
+
+X - Wrappers for controllers (initialize depedencies, validate request, open/close 
+database connection, handles no-business errors)
+
+X - readonly for classes dependency
+
+X - Test all functionalities related to SignIn an user
 
 0 - Testing env using sqlite
 
-0 - readonly for classes dependency
-
-0 - Remove BCryptJS coupling
-
 0 - Form validation in general
 
-0 - api calls
+-----------------
 
-0 - api development
+ 0 for done
 
-0 - connect to database
+ X for NOT done
 
-
-0 for done
-X for NOT done
+-----------------
