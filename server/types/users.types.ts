@@ -19,7 +19,8 @@ export type SignedUserType = {
 }
 
 export type AuthenticationToken = {
-  userId: string
+  userId: string,
+  exp: number
 }
 
 export type UserDatabaseType = {

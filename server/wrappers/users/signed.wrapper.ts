@@ -6,6 +6,7 @@ import FindUserByIdService from "../../services/users/implementations/find-by-id
 import UserDataAccess from "../../data-access/implementations/users.data-access"
 import ConnectionFactory, { Connection } from "../../utils/connection-factory.util"
 import AuthenticationTokenDecoderService from "../../services/users/implementations/authentication-token-decoder.service"
+import UnauthorizedRequestError from "../../errors/request/unauthorized.error"
 
 export default class SignedWrapper implements IControllerWrapper {
   private connection: Connection
@@ -28,9 +29,8 @@ export default class SignedWrapper implements IControllerWrapper {
   }
 
   public async execute(request: Request): Promise<Response> {
-    // TODO: use a filter for authToken
-    if (!request.headers || !request.headers.authentication_token) {
-      return { status: 401, body: `Missing the authentication token. Please add the header: ["authentication_token": "<your_authentication_token>"] to your request` }
+    if (request.headers === undefined || request.headers.authentication_token === undefined) {
+      return { status: 401, body: UnauthorizedRequestError.message }
     }
     try {
       await this.init()

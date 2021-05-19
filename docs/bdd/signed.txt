@@ -1,0 +1,60 @@
+BD003
+
+Feature: GetSigned
+
+  Scenario 1: valid authToken
+    Given: the authToken is valid
+      and the request has authentication headers properly set
+      and the authToken contains and userId
+      and the userId in valid (value validation)
+      and there is a user registered with token's userId
+    When: request submitted
+    Then: a positive response should be returned 
+     and contain: userId, name and email
+     and to match the user from token payload
+
+  Scenario 2: user from authToken is not registered
+    Given: the authToken is valid
+      and the request has authentication headers properly set
+      and the authToken contains and userId
+      and the userId in valid (value validation)
+      and there is NO user registered with token's userId
+    When: request submitted
+    Then: a negative response should be returned with a message
+
+  Scenario 3: authToken is not valid
+    Given: the authToken cannot be validated as a JWT
+      and the request has authentication headers properly set
+    When: request submitted
+    Then: a negative response should be returned with a message
+
+  Scenario 4: authToken without userId
+    Given: the authToken is valid
+      and the request has authentication headers properly set
+      and there is NOT a userId in the token
+    When: request submitted
+    Then: a negative response should be returned with a message
+
+  Scenario 5: authToken experied
+    Given: the authToken is valid
+      and the request has authentication headers properly set
+      and authToken is expired
+    When: request submitted
+    Then: a negative response should be returned with a message
+
+  Scenario 6: invalid userId in the authToken
+    Given: the authToken is valid
+      and the request has authentication headers properly set
+      and the authToken contains and userId
+      and the userId in the token is invalid
+    When: request is submitted
+    Then: a negative response should be returned with a message
+
+  Scenario 7: authToken request header not defined
+    Given: the request has no authentication headers defined
+    When: request is submitted
+    Then: a negative response should be returned with a message
+
+DIC:
+  authToken = an authentication token, JWT, with userId and iat as payload
+  iat = issue at timestamp for token creation (created_at like)

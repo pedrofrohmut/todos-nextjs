@@ -1,5 +1,14 @@
 import validator from "validator"
 
+export const getValidationMessageForUserId = (id?: string): string =>
+  id === undefined
+    ? "Please inform the user id. It is required"
+    : id === ""
+    ? "Please inform the user id. It cannot be blank"
+    : !validator.isUUID(id, 4)
+    ? "Please inform a valid user id in the uuidv4 format"
+    : null
+
 export const getValidationMessageForName = (name?: string): string =>
   name === undefined
     ? "Please inform the user name. It is required"

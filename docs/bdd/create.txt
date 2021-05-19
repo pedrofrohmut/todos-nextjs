@@ -1,29 +1,34 @@
+BD001
+
 Feature: Create users
 
   Scenario 1: valid credentials
     Given: the name, email and password are valid
-      and the email is not already registered
-    When: the user submits the user data
+      and the email is NOT already registered
+    When: user data is submitted
     Then: a new user should be added to database
       and positive response should be returned
 
   Scenario 2: invalid name (value validation)
     Given: the name is not valid
-    When: the user submits the user data
-    Then: a negative response should be returned
+    When: user data is submitted
+    Then: a negative response should be returned with a message
 
   Scenario 3: invalid email (value validation)
     Given: the email is not valid
-    When: the user submits the user data
-    Then: a negative response should be returned
+    When: user data is submitted
+    Then: a negative response should be returned with a message
 
   Scenario 4: invalid password (value validation)
     Given: the password is not valid
-    When: the user submits the user data
-    Then: a negative response should be returned
+    When: user data is submitted
+    Then: a negative response should be returned with a message
 
   Scenario 5: E-mail is already registered
     Given: the name, email and password are valid
       and the e-mail is already registered
-    When: the user submites the user data
-    Then: a negative response should be returned
+    When: user data is submitted
+    Then: a negative response should be returned with a message
+
+DIC:
+  user data: name, email and password
