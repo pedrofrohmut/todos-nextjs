@@ -26,7 +26,7 @@ export default class SignedController implements ISignedController {
         return { status: 400, body: ExpiredTokenError.message }
       }
       if (err instanceof TokenWithoutUserIdError) {
-        return { status: 401, body: TokenWithoutUserIdError.message }
+        return { status: 400, body: TokenWithoutUserIdError.message }
       }
       if (err instanceof TokenWithInvalidUserIdError) {
         return { status: 400, body: TokenWithInvalidUserIdError.message }

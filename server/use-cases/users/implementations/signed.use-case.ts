@@ -10,15 +10,15 @@ import ExpiredTokenError from "../../../errors/users/expired-token.error"
 import InvalidTokenError from "../../../errors/users/invalid-token.error"
 
 export default class SignedUseCase implements ISignedUseCase {
-  private readonly authenticationTokenDecoderService: IAuthenticationTokenDecoderService
   private readonly findUserByIdService: IFindUserByIdService
+  private readonly authenticationTokenDecoderService: IAuthenticationTokenDecoderService
 
   constructor(
     findUserByIdService: IFindUserByIdService,
     authenticationTokenDecoderService: IAuthenticationTokenDecoderService
   ) {
-    this.authenticationTokenDecoderService = authenticationTokenDecoderService
     this.findUserByIdService = findUserByIdService
+    this.authenticationTokenDecoderService = authenticationTokenDecoderService
   }
 
   public async execute(token: string): Promise<SignedUserType> {

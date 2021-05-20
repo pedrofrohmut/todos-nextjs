@@ -32,7 +32,15 @@ X - Test all functionalities related to SignIn an user
 
 X - Create Functionality for get signed user by authToken
 
-0 - Unit and Bdd for Signed user by Token
+X - Unit and Bdd for Signed user by Token
+
+0 - Review UserDataAccess tests and add the missing ones
+
+0 - Review all the custom Errors
+
+0 - Review all tests to see if there are no expects inside conditionals or catch blocks
+
+0 - Wipe the external dependencies in the tests (use adapters when needed)
 
 0 - Filters to request for global use (filter bodyIsDefined, AuthTokenIsValid)
 

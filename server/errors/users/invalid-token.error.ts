@@ -1,9 +1,9 @@
 export default class InvalidTokenError extends Error {
-  public static message = "JSON Web Token has a invalid format and could not be decoded"
+  public static readonly message = "JSON Web Token has a invalid format and could not be decoded"
 
-  constructor(msg?: string) {
-    if (InvalidTokenError.message + ": " + msg) {
-      super(msg)
+  constructor(message?: string) {
+    if (message) {
+      super(InvalidTokenError.message + ". " +  message)
     } else {
       super(InvalidTokenError.message)
     }

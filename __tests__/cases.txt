@@ -20,3 +20,11 @@ case 18 = use-cases\users\signin
 case 19 = services\users\check-password
 
 case 20 = services\users\generate-authentication-token
+
+case 21 = services\users\authentication-token-decoder
+
+case 22 = services\users\find-by-id
+ 
+case 23 = use-cases\users\signed
+
+case 24 = controllers\users\signed

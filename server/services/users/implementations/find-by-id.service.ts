@@ -2,7 +2,7 @@ import { UserDatabaseType } from "../../../types/users.types"
 import IFindUserByIdService from "../find-by-id.interface"
 import IUserDataAccess from "../../../data-access/users.interface"
 
-export default class FindUserByEmailService implements IFindUserByIdService {
+export default class FindUserByIdService implements IFindUserByIdService {
   private readonly userDataAccess: IUserDataAccess
 
   constructor(userDataAccess: IUserDataAccess) {

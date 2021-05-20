@@ -18,7 +18,7 @@ import TokenWithoutUserIdError from "../../../server/errors/users/token-without-
 import ExpiredTokenError from "../../../server/errors/users/expired-token.error"
 import TokenWithInvalidUserIdError from "../../../server/errors/users/token-with-invalid-user-id.error"
 import { getValidationMessageForUserId } from "../../../server/validators/users.validator"
-import UnauthorizedRequestError from "../../../server/errors/request/unauthorized.error"
+import UnauthenticatedRequestError from "../../../server/errors/request/unauthenticated-request.error"
 
 // BDD03
 describe("[BDD] Get Signed User", () => {
@@ -171,7 +171,7 @@ describe("[BDD] Get Signed User", () => {
       // Then
       expect(err).toBeDefined()
       expect(err.response).toBeDefined()
-      expect(err.response.status).toBe(401)
+      expect(err.response.status).toBe(400)
       expect(err.response.data).toBeDefined()
       expect(err.response.data).toBe(TokenWithoutUserIdError.message)
     }
@@ -261,6 +261,6 @@ describe("[BDD] Get Signed User", () => {
     expect(noHeadersErr.response).toBeDefined()
     expect(noHeadersErr.response.status).toBe(401)
     expect(noHeadersErr.response.data).toBeDefined()
-    expect(noHeadersErr.response.data).toBe(UnauthorizedRequestError.message)
+    expect(noHeadersErr.response.data).toBe(UnauthenticatedRequestError.message)
   })
 })

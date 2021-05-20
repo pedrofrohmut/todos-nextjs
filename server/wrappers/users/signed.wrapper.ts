@@ -6,7 +6,7 @@ import FindUserByIdService from "../../services/users/implementations/find-by-id
 import UserDataAccess from "../../data-access/implementations/users.data-access"
 import ConnectionFactory, { Connection } from "../../utils/connection-factory.util"
 import AuthenticationTokenDecoderService from "../../services/users/implementations/authentication-token-decoder.service"
-import UnauthorizedRequestError from "../../errors/request/unauthorized.error"
+import UnauthenticatedRequestError from "../../errors/request/unauthenticated-request.error"
 
 export default class SignedWrapper implements IControllerWrapper {
   private connection: Connection
@@ -30,7 +30,7 @@ export default class SignedWrapper implements IControllerWrapper {
 
   public async execute(request: Request): Promise<Response> {
     if (request.headers === undefined || request.headers.authentication_token === undefined) {
-      return { status: 401, body: UnauthorizedRequestError.message }
+      return { status: 401, body: UnauthenticatedRequestError.message }
     }
     try {
       await this.init()

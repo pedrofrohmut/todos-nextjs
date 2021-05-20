@@ -1,59 +1,87 @@
 import {
   getValidationMessageForEmail,
   getValidationMessageForName,
-  getValidationMessageForPassword
+  getValidationMessageForPassword,
+  getValidationMessageForUserId
 } from "../../../server/validators/users.validator"
+import FakeUserService from "../../fakes/services/user.fake"
 
 // Case 16
+// 1 - userIdValidation
+// 2 - nameValidation
+// 3 - emailValidation
+// 4 - passwordValidation
 describe("[Validation] User", () => {
-  test("it returns a message for invalid name", () => {
+  // 1
+  test("UserId validation", () => {
     // Setup
-    const nameValidationMessage1 = getValidationMessageForName(undefined)
-    const nameValidationMessage2 = getValidationMessageForName("")
-    const nameValidationMessage3 = getValidationMessageForName("ab")
-    const nameValidationMessage4 = getValidationMessageForName(
+    const invalidUserId = FakeUserService.getInvalidUserId()
+    const { id: validUserId } = FakeUserService.getNew("161")
+    // Test
+    const msg1 = getValidationMessageForUserId(undefined)
+    const msg2 = getValidationMessageForUserId("")
+    const msg3 = getValidationMessageForUserId(invalidUserId)
+    const msg4 = getValidationMessageForUserId(validUserId)
+    // Evaluation
+    expect(msg1).not.toBeNull()
+    expect(msg2).not.toBeNull()
+    expect(msg3).not.toBeNull()
+    expect(msg4).toBeNull()
+  })
+
+  // 2
+  test("Name validation", () => {
+    // Setup
+    const { name: validName } = FakeUserService.getNew("162")
+    // Test
+    const msg1 = getValidationMessageForName(undefined)
+    const msg2 = getValidationMessageForName("")
+    const msg3 = getValidationMessageForName("ab")
+    const msg4 = getValidationMessageForName(
       "Adipisicing ipsum repellat consectetur in sequi officia sapiente! Itaque quos unde nihil omnis assumenda deleniti Magni libero ipsam iure quia laborum Officia cum harum dolores alias odit molestias? Excepturi aperiam libero nisi ratione in?"
     )
-    expect(nameValidationMessage1).not.toBeNull()
-    expect(nameValidationMessage2).not.toBeNull()
-    expect(nameValidationMessage3).not.toBeNull()
-    expect(nameValidationMessage4).not.toBeNull()
+    const msg5 = getValidationMessageForName(validName)
+    // Evaluation
+    expect(msg1).not.toBeNull()
+    expect(msg2).not.toBeNull()
+    expect(msg3).not.toBeNull()
+    expect(msg4).not.toBeNull()
+    expect(msg5).toBeNull()
   })
 
-  test("it returns a message for invalid email", () => {
-    const emailValidationMessage1 = getValidationMessageForEmail(undefined)
-    const emailValidationMessage2 = getValidationMessageForEmail("")
-    const emailValidationMessage3 = getValidationMessageForEmail("john_doe161")
-    expect(emailValidationMessage1).not.toBeNull()
-    expect(emailValidationMessage2).not.toBeNull()
-    expect(emailValidationMessage3).not.toBeNull()
+  // 3
+  test("E-mail validation", () => {
+    // Setup
+    const { email: validEmail } = FakeUserService.getNew("163")
+    // Test
+    const msg1 = getValidationMessageForEmail(undefined)
+    const msg2 = getValidationMessageForEmail("")
+    const msg3 = getValidationMessageForEmail("john_doe161")
+    const msg4 = getValidationMessageForEmail(validEmail)
+    // Evaluation
+    expect(msg1).not.toBeNull()
+    expect(msg2).not.toBeNull()
+    expect(msg3).not.toBeNull()
+    expect(msg4).toBeNull()
   })
 
+  // 4
   test("it returns a message for invalid password", () => {
-    const passwordValidationMessage1 = getValidationMessageForPassword(undefined)
-    const passwordValidationMessage2 = getValidationMessageForPassword("")
-    const passwordValidationMessage3 = getValidationMessageForPassword("12")
-    const passwordValidationMessage4 = getValidationMessageForPassword(
+    // Setup
+    const { password: validPassword } = FakeUserService.getNew("164")
+    // Test
+    const msg1 = getValidationMessageForPassword(undefined)
+    const msg2 = getValidationMessageForPassword("")
+    const msg3 = getValidationMessageForPassword("12")
+    const msg4 = getValidationMessageForPassword(
       "Lorem autem sapiente modi aliquam animi? Neque fugiat minus ea nihil pariatur repudiandae? Quod delectus saepe labore vitae pariatur. Laborum."
     )
-    expect(passwordValidationMessage1).not.toBeNull()
-    expect(passwordValidationMessage2).not.toBeNull()
-    expect(passwordValidationMessage3).not.toBeNull()
-    expect(passwordValidationMessage4).not.toBeNull()
-  })
-
-  test("it returns no message for a valid name", () => {
-    const nameValidationMessage = getValidationMessageForName("John Doe 162")
-    expect(nameValidationMessage).toBeNull()
-  })
-
-  test("it returns no message for a valid email", () => {
-    const emailValidationMessage = getValidationMessageForEmail("john_doe162@mail.com")
-    expect(emailValidationMessage).toBeNull()
-  })
-
-  test("it returns no message for a valid password", () => {
-    const passwordValidationMessage = getValidationMessageForPassword("password162")
-    expect(passwordValidationMessage).toBeNull()
+    const msg5 = getValidationMessageForPassword(validPassword)
+    // Evaluation
+    expect(msg1).not.toBeNull()
+    expect(msg2).not.toBeNull()
+    expect(msg3).not.toBeNull()
+    expect(msg4).not.toBeNull()
+    expect(msg5).toBeNull()
   })
 })
