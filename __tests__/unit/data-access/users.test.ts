@@ -1,5 +1,6 @@
 import ConnectionFactory from "../../../server/utils/connection-factory.util"
 import UserDataAccess from "../../../server/data-access/implementations/users.data-access"
+import FakeUserService from "../../fakes/services/user.fake"
 
 // Case 14
 // 1 - create
@@ -21,67 +22,95 @@ describe("[Data Access] User", () => {
     await ConnectionFactory.closeConnection(conn)
   })
 
-  // 2
-  test("Create user", async () => {
+  // 1
+  test("Create", async () => {
     // Setup
-    const email = "john_doe142@mail.com"
-    const foundUser1 = await userDataAccess.findByEmail(email)
+    const { name, email, passwordHash } = FakeUserService.getNew("141")
+    const foundUser = await userDataAccess.findByEmail(email)
     // Test
-    await userDataAccess.create({ name: "John Doe 142", email, passwordHash: "password_hash142" })
+    await userDataAccess.create({ name, email, passwordHash })
     // Evaluation
-    const foundUser2 = await userDataAccess.findByEmail(email)
-    expect(foundUser1).toBeNull()
-    expect(foundUser2.name).toBe("John Doe 142")
-    expect(foundUser2.email).toBe("john_doe142@mail.com")
-    expect(foundUser2.passwordHash).toBe("password_hash142")
+    const createdUser = await userDataAccess.findByEmail(email)
+    expect(foundUser).toBeNull()
+    expect(createdUser.id).toBeDefined()
+    expect(createdUser.name).toBeDefined()
+    expect(createdUser.name).toBe(name)
+    expect(createdUser.email).toBeDefined()
+    expect(createdUser.email).toBe(email)
+    expect(createdUser.passwordHash).toBeDefined()
+    expect(createdUser.passwordHash).toBe(passwordHash)
     // Clean Up
     await userDataAccess.deleteByEmail(email)
+  })
+
+  // 2
+  test("Create and return", async () => {
+    // Setup
+    const { name, email, passwordHash } = FakeUserService.getNew("142")
+    const foundUser = await userDataAccess.findByEmail(email)
+    // Test
+    const createdUser = await userDataAccess.createAndReturn({ name, email, passwordHash })
+    // Evaluation
+    expect(foundUser).toBeNull()
+    expect(createdUser.id).toBeDefined()
+    expect(createdUser.name).toBeDefined()
+    expect(createdUser.name).toBe(name)
+    expect(createdUser.email).toBeDefined()
+    expect(createdUser.email).toBe(email)
+    expect(createdUser.passwordHash).toBeDefined()
+    expect(createdUser.passwordHash).toBe(passwordHash)
   })
 
   // 3
-  test("Delete user by e-mail", async () => {
+  test("Delete by email", async () => {
     // Setup
-    const email = "john_doe143@mail.com"
-    await userDataAccess.create({ name: "John Doe 143", email, passwordHash: "password_hash143" })
+    const { name, email, passwordHash } = FakeUserService.getNew("143")
+    const createdUser = await userDataAccess.createAndReturn({ name, email, passwordHash })
     // Test
     await userDataAccess.deleteByEmail(email)
     // Evaluation
-    const foundUser = await userDataAccess.findByEmail(email)
-    expect(foundUser).toBeNull()
-  })
-
-  // 1
-  test("Find user by e-mail", async () => {
-    // Setup
-    const email = "john_doe141@mail.com"
-    await userDataAccess.create({ name: "John Doe 141", email, passwordHash: "password_hash141" })
-    // Test
-    const foundUser = await userDataAccess.findByEmail(email)
-    // Evaluation
-    expect(foundUser).not.toBeNull()
-    expect(foundUser.name).toBe("John Doe 141")
-    expect(foundUser.email).toBe("john_doe141@mail.com")
-    expect(foundUser.passwordHash).toBe("password_hash141")
-    // Clean Up
-    await userDataAccess.deleteByEmail(email)
+    const deletedUser = await userDataAccess.findByEmail(email)
+    expect(createdUser).not.toBeNull()
+    expect(deletedUser).toBeNull()
   })
 
   // 4
-  test("Find user by id", async () => {
+  test("Delete by id", async () => {
     // Setup
-    const name = "John Doe 144"
-    const email = "john_doe144@mail.com"
-    const passwordHash = "password_hash144"
-    await userDataAccess.create({ name, email, passwordHash })
-    const { id: userId } = await userDataAccess.findByEmail(email)
+    const { name, email, passwordHash } = FakeUserService.getNew("144")
+    const createdUser = await userDataAccess.createAndReturn({ name, email, passwordHash })
     // Test
-    const foundUser = await userDataAccess.findById(userId)
+    await userDataAccess.deleteById(createdUser.id)
     // Evaluation
-    expect(foundUser).not.toBeNull()
-    expect(foundUser.name).toBe(name)
-    expect(foundUser.email).toBe(email)
-    expect(foundUser.passwordHash).toBe(passwordHash)
-    // Clean Up
-    await userDataAccess.deleteByEmail(email)
+    const deletedUser = await userDataAccess.findByEmail(email)
+    expect(createdUser).not.toBeNull()
+    expect(deletedUser).toBeNull()
+  })
+
+  // 5
+  test("Find by email", async () => {
+    // Setup
+    const { name, email, passwordHash } = FakeUserService.getNew("145")
+    // Test
+    const findUserBeforeCreate = await userDataAccess.findByEmail(email)
+    await userDataAccess.create({ name, email, passwordHash })
+    const findUserAfterCreate = await userDataAccess.findByEmail(email)
+    // Evaluation
+    expect(findUserBeforeCreate).toBeNull()
+    expect(findUserAfterCreate).not.toBeNull()
+  })
+
+  // 6
+  test("Find by email", async () => {
+    // Setup
+    const { name, email, passwordHash } = FakeUserService.getNew("146")
+    const { id: userId } = await userDataAccess.createAndReturn({ name, email, passwordHash })
+    // Test
+    const foundUserBeforeDelete = await userDataAccess.findById(userId)
+    await userDataAccess.deleteById(userId)
+    const foundUserAfterDelete = await userDataAccess.findById(userId)
+    // Evaluation
+    expect(foundUserBeforeDelete).not.toBeNull()
+    expect(foundUserAfterDelete).toBeNull()
   })
 })
