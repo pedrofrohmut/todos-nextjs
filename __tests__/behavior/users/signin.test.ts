@@ -13,6 +13,9 @@ import {
 import DeleteUserByEmailService from "../../../server/services/users/implementations/delete-by-email.service"
 import UserNotFoundByEmailError from "../../../server/errors/users/user-not-found-by-email.error"
 import PasswordIsNotAMatchError from "../../../server/errors/users/password-is-not-a-match.error"
+import ApiCaller, {ApiCallerError, ApiCallerResponse} from "../../utils/api-caller.util"
+import {SignInDataType} from "../../../server/types/users.types"
+import FakeUserService from "../../fakes/services/user.fake"
 
 // BDD02
 describe("[BDD] Sign In", () => {
@@ -35,27 +38,37 @@ describe("[BDD] Sign In", () => {
   // 21
   test("Scenario 1 - valid credentiasl", async () => {
     // Setup
-    const email = "john_doeBDD021@mail.com"
-    const password = "passwordBDD021"
-    await createUserService.execute({ name: "John Doe BDD021", email, password })
+    const { name, email, password } = FakeUserService.getNew("BDD021")
+    const passwordHash = await generatePasswordHashService.execute(password)
+    const createdUser = await userDataAccess.createAndReturn({ name, email, passwordHash })
     const emailValidationMessage = getValidationMessageForEmail(email)
     const passwordValidationMessage = getValidationMessageForPassword(password)
-    const registeredUser = await findUserByEmailService.execute(email)
     // Given
     expect(emailValidationMessage).toBeNull()
     expect(passwordValidationMessage).toBeNull()
-    expect(registeredUser).not.toBeNull()
+    expect(createdUser).not.toBeNull()
     // When
-    const response = await axios.post(URL, { email, password })
+    let response: ApiCallerResponse<SignInDataType> = undefined
+    let requestErr: ApiCallerError = undefined
+    try {
+      response = await ApiCaller.signinUser({ email, password })
+    } catch (err) {
+      requestErr = err
+    }
     // Then
-    const { user, token } = response.data
-    expect(user.id).toBeDefined()
-    expect(user.id).toBe(registeredUser.id)
-    expect(user.name).toBeDefined()
-    expect(user.name).toBe(registeredUser.name)
-    expect(user.email).toBeDefined()
-    expect(user.email).toBe(registeredUser.email)
-    expect(token).toBeDefined()
+    expect(requestErr).not.toBeDefined()
+    expect(response).toBeDefined()
+    expect(response.status).toBeDefined()
+    expect(response.status).toBe(200)
+    expect(response.body).toBeDefined()
+    expect(response.body.user).toBeDefined()
+    expect(response.body.user.id).toBeDefined()
+    expect(response.body.user.id).toBe(createdUser.id)
+    expect(response.body.user.name).toBeDefined()
+    expect(response.body.user.name).toBe(createdUser.name)
+    expect(response.body.user.email).toBeDefined()
+    expect(response.body.user.email).toBe(createdUser.email)
+    expect(response.body.token).toBeDefined()
     // Clean Up
     await deleteUserByEmailService.execute(email)
   })

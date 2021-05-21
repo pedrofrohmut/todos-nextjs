@@ -12,6 +12,8 @@ import {
 import CreateUserService from "../../../server/services/users/implementations/create.service"
 import GeneratePasswordHashService from "../../../server/services/users/implementations/generate-password-hash.service"
 import EmailAlreadyInUseError from "../../../server/errors/users/email-already-in-use.error"
+import ApiCaller, { ApiCallerError, ApiCallerResponse } from "../../utils/api-caller.util"
+import FakeUserService from "../../fakes/services/user.fake"
 
 // BDD01
 describe("[BDD] Create users", () => {
@@ -30,27 +32,36 @@ describe("[BDD] Create users", () => {
     await ConnectionFactory.closeConnection(conn)
   })
 
-  //11
+  // 11
   test("Scenario 1 - valid credentials", async () => {
     // Setup
-    const name = "John Doe BDD011"
-    const email = "jhon_doeBDD011@mail.com"
-    const password = "passwordBDD011"
+    const { name, email, password } = FakeUserService.getNew("BDD011")
     const nameValidationMessage = getValidationMessageForName(name)
     const emailValidationMessage = getValidationMessageForEmail(email)
     const passwordValidationMessage = getValidationMessageForPassword(password)
-    const registeredUser = await findUserByEmailService.execute(email)
+    const foundUserByEmail = await userDataAccess.findByEmail(email)
     // Given
     expect(nameValidationMessage).toBeNull()
     expect(emailValidationMessage).toBeNull()
     expect(passwordValidationMessage).toBeNull()
-    expect(registeredUser).toBeNull()
+    expect(foundUserByEmail).toBeNull()
     // When
-    const response = await axios.post(URL, { name, email, password })
+    let response: ApiCallerResponse<void> = undefined
+    let requestErr: ApiCallerError = undefined
+    try {
+      response = await ApiCaller.createUser({ name, email, password })
+    } catch (err) {
+      requestErr = err
+    }
+    // Setup 2
+    const createdUser = await userDataAccess.findByEmail(email)
     // Then
-    const createdUser = await findUserByEmailService.execute(email)
-    expect(createdUser).not.toBeNull()
+    expect(requestErr).not.toBeDefined()
+    expect(response).toBeDefined()
+    expect(response.status).toBeDefined()
     expect(response.status).toBe(201)
+    expect(response.body).not.toBeDefined()
+    expect(createdUser).not.toBeNull()
   })
 
   // 12
@@ -84,7 +95,7 @@ describe("[BDD] Create users", () => {
     let requestErr: AxiosError = undefined
     // Given
     expect(emailValidationMessage).not.toBeNull()
-      // When
+    // When
     try {
       await axios.post(URL, { name: "John Doe BDD013", email, password: "passwordBDD013" })
     } catch (err) {
@@ -107,7 +118,7 @@ describe("[BDD] Create users", () => {
     let requestErr: AxiosError = undefined
     // Given
     expect(passwordValidationMessage).not.toBeNull()
-      // When
+    // When
     try {
       await axios.post(URL, { name: "John Doe BDD014", email: "john_doeBDD014@mail.com", password })
     } catch (err) {
@@ -143,7 +154,7 @@ describe("[BDD] Create users", () => {
     expect(emailValidationMessage).toBeNull()
     expect(passwordValidationMessage).toBeNull()
     expect(registeredUser).not.toBeNull()
-      // When
+    // When
     try {
       await axios.post(URL, { name, email, password })
     } catch (err) {

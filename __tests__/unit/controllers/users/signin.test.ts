@@ -1,11 +1,7 @@
 import ConnectionFactory from "../../../../server/utils/connection-factory.util"
 import UserDataAccess from "../../../../server/data-access/implementations/users.data-access"
 import CreateUserService from "../../../../server/services/users/implementations/create.service"
-import DeleteUserByEmailService from "../../../../server/services/users/implementations/delete-by-email.service"
 import GeneratePasswordHashService from "../../../../server/services/users/implementations/generate-password-hash.service"
-
-import { SERVER_URL } from "../../../constants"
-import FindUserByEmailService from "../../../../server/services/users/implementations/find-by-email.service"
 import ApiCaller, { ApiCallerError, ApiCallerResponse } from "../../../utils/api-caller.util"
 import UserNotFoundByEmailError from "../../../../server/errors/users/user-not-found-by-email.error"
 import FakeUserService from "../../../fakes/services/user.fake"
@@ -17,8 +13,6 @@ import PasswordIsNotAMatchError from "../../../../server/errors/users/password-i
 import CheckPasswordService from "../../../../server/services/users/implementations/check-password.service"
 import { SignInDataType } from "../../../../server/types/users.types"
 
-const URL = SERVER_URL + "/api/users/signin"
-
 // Case 17
 // 1 - User not registered return 400 and message
 // 2 - Password is not match return 400 and message
@@ -28,7 +22,6 @@ describe("[Controller] SignIn User", () => {
   const userDataAccess = new UserDataAccess(conn)
   const generatePasswordHashService = new GeneratePasswordHashService()
   const createUserService = new CreateUserService(generatePasswordHashService, userDataAccess)
-  const findUserByEmailService = new FindUserByEmailService(userDataAccess)
   const checkPasswordService = new CheckPasswordService()
 
   beforeAll(async () => {

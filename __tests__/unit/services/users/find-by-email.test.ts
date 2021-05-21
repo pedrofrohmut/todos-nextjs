@@ -2,6 +2,8 @@ import ConnectionFactory from "../../../../server/utils/connection-factory.util"
 import UserDataAccess from "../../../../server/data-access/implementations/users.data-access"
 import FindUserByEmailService from "../../../../server/services/users/implementations/find-by-email.service"
 import DeleteUserByEmailService from "../../../../server/services/users/implementations/delete-by-email.service"
+import {UserDatabaseType} from "../../../../server/types/users.types"
+import FakeUserService from "../../../fakes/services/user.fake"
 
 // Case 13
 describe("[Service] Find user by e-mail", () => {
@@ -18,27 +20,43 @@ describe("[Service] Find user by e-mail", () => {
     await ConnectionFactory.closeConnection(conn)
   })
 
+  // 131
   test("Find a existing user by its e-mail address", async () => {
     // Setup
-    const email = "john_doe131@mail.com"
-    await userDataAccess.create({ name: "John Doe 131", email, passwordHash: "1234" })
+    const { name, email, passwordHash } = FakeUserService.getNew("131")
+    await userDataAccess.create({ name, email, passwordHash })
     // Test
-    const foundUser = await findUserByEmailService.execute(email)
+    let foundUser: UserDatabaseType = undefined
+    let findErr: Error = undefined
+    try {
+      foundUser = await findUserByEmailService.execute(email)
+    } catch (err) {
+      findErr = err
+    }
     // Evaluation
-    expect(foundUser.name).toBe("John Doe 131")
-    expect(foundUser.email).toBe("john_doe131@mail.com")
-    expect(foundUser.passwordHash).toBe("1234")
+    expect(findErr).not.toBeDefined()
+    expect(foundUser.name).toBe(name)
+    expect(foundUser.email).toBe(email)
+    expect(foundUser.passwordHash).toBe(passwordHash)
     // Clean Up
     await userDataAccess.deleteByEmail(email)
   })
 
+  // 132
   test("Return null for a non-existing user", async () => {
     // Setup
-    const email = "john_doe132@mail.com"
+    const { email } = FakeUserService.getNew("132")
     await deleteUserByEmailService.execute(email)
     // Test
-    const foundUser = await findUserByEmailService.execute(email)
+    let foundUser: UserDatabaseType = undefined
+    let findErr: Error = undefined
+    try {
+      foundUser = await findUserByEmailService.execute(email)
+    } catch (err) {
+      findErr = err
+    }
     // Evaluation
+    expect(findErr).not.toBeDefined()
     expect(foundUser).toBeNull()
   })
 })

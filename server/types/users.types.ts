@@ -25,7 +25,7 @@ export type SignInCredentialsType = {
 
 export type SignInDataType = {
   user: SignedUserType
-  token: AuthenticationToken
+  token: string
 }
 
 export type AuthenticationToken = {

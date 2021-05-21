@@ -3,11 +3,11 @@ BD003
 Feature: GetSigned
 
   Scenario 1: valid authToken
-    Given: the authToken is valid
+    Given: the user is registered
+      and the userId is valid (value validation)
+      and the token is valid
+      and the token has an userId and expiration date as payload
       and the request has authentication headers properly set
-      and the authToken contains and userId
-      and the userId in valid (value validation)
-      and there is a user registered with token's userId
     When: request submitted
     Then: a positive response should be returned 
      and contain: userId, name and email

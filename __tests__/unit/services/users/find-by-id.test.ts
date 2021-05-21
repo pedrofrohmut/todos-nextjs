@@ -1,5 +1,6 @@
 import UserDataAccess from "../../../../server/data-access/implementations/users.data-access"
 import FindUserByIdService from "../../../../server/services/users/implementations/find-by-id.service"
+import { UserDatabaseType } from "../../../../server/types/users.types"
 import ConnectionFactory from "../../../../server/utils/connection-factory.util"
 import FakeUserService from "../../../fakes/services/user.fake"
 
@@ -22,8 +23,15 @@ describe("[Service] Find user by id", () => {
     const { name, email, passwordHash } = FakeUserService.getNew("221")
     const created = await userDataAccess.createAndReturn({ name, email, passwordHash })
     // Test
-    const foundUser = await findUserByIdService.execute(created.id)
+    let foundUser: UserDatabaseType = undefined
+    let findErr: Error = undefined
+    try {
+      foundUser = await findUserByIdService.execute(created.id)
+    } catch (err) {
+      findErr = err
+    }
     // Evaluation
+    expect(findErr).not.toBeDefined()
     expect(foundUser).not.toBeNull()
     expect(foundUser.id).toBe(created.id)
     expect(foundUser.name).toBe(name)
@@ -39,8 +47,15 @@ describe("[Service] Find user by id", () => {
     const created = await userDataAccess.createAndReturn({ name, email, passwordHash })
     await userDataAccess.deleteByEmail(email)
     // Test
-    const foundUser = await findUserByIdService.execute(created.id)
+    let foundUser: UserDatabaseType = undefined
+    let findErr: Error = undefined
+    try {
+      foundUser = await findUserByIdService.execute(created.id)
+    } catch (err) {
+      findErr = err
+    }
     // Evaluation
+    expect(findErr).not.toBeDefined()
     expect(foundUser).toBeNull()
   })
 })

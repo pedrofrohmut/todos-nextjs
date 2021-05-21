@@ -1,6 +1,7 @@
 import ConnectionFactory from "../../../server/utils/connection-factory.util"
 import UserDataAccess from "../../../server/data-access/implementations/users.data-access"
 import FakeUserService from "../../fakes/services/user.fake"
+import { UserDatabaseType } from "../../../server/types/users.types"
 
 // Case 14
 // 1 - create
@@ -28,9 +29,16 @@ describe("[Data Access] User", () => {
     const { name, email, passwordHash } = FakeUserService.getNew("141")
     const foundUser = await userDataAccess.findByEmail(email)
     // Test
-    await userDataAccess.create({ name, email, passwordHash })
-    // Evaluation
+    let createErr: Error = undefined
+    try {
+      await userDataAccess.create({ name, email, passwordHash })
+    } catch (err) {
+      createErr = err
+    }
+    // Setup 2
     const createdUser = await userDataAccess.findByEmail(email)
+    // Evaluation
+    expect(createErr).not.toBeDefined()
     expect(foundUser).toBeNull()
     expect(createdUser.id).toBeDefined()
     expect(createdUser.name).toBeDefined()
@@ -49,8 +57,15 @@ describe("[Data Access] User", () => {
     const { name, email, passwordHash } = FakeUserService.getNew("142")
     const foundUser = await userDataAccess.findByEmail(email)
     // Test
-    const createdUser = await userDataAccess.createAndReturn({ name, email, passwordHash })
+    let createErr: Error = undefined
+    let createdUser: UserDatabaseType = undefined
+    try {
+      createdUser = await userDataAccess.createAndReturn({ name, email, passwordHash })
+    } catch (err) {
+      createErr = err
+    }
     // Evaluation
+    expect(createErr).not.toBeDefined()
     expect(foundUser).toBeNull()
     expect(createdUser.id).toBeDefined()
     expect(createdUser.name).toBeDefined()
@@ -67,9 +82,16 @@ describe("[Data Access] User", () => {
     const { name, email, passwordHash } = FakeUserService.getNew("143")
     const createdUser = await userDataAccess.createAndReturn({ name, email, passwordHash })
     // Test
-    await userDataAccess.deleteByEmail(email)
-    // Evaluation
+    let deleteErr: Error = undefined
+    try {
+      await userDataAccess.deleteByEmail(email)
+    } catch (err) {
+      deleteErr = err
+    }
+    // Setup 2
     const deletedUser = await userDataAccess.findByEmail(email)
+    // Evaluation
+    expect(deleteErr).not.toBeDefined()
     expect(createdUser).not.toBeNull()
     expect(deletedUser).toBeNull()
   })
@@ -80,22 +102,36 @@ describe("[Data Access] User", () => {
     const { name, email, passwordHash } = FakeUserService.getNew("144")
     const createdUser = await userDataAccess.createAndReturn({ name, email, passwordHash })
     // Test
-    await userDataAccess.deleteById(createdUser.id)
+    let deleteErr: Error = undefined
+    try {
+      await userDataAccess.deleteById(createdUser.id)
+    } catch (err) {
+      deleteErr = err
+    }
+    // Setup 2
+    const foundUserAfterDelete = await userDataAccess.findByEmail(email)
     // Evaluation
-    const deletedUser = await userDataAccess.findByEmail(email)
+    expect(deleteErr).not.toBeDefined()
     expect(createdUser).not.toBeNull()
-    expect(deletedUser).toBeNull()
+    expect(foundUserAfterDelete).toBeNull()
   })
 
   // 5
   test("Find by email", async () => {
     // Setup
     const { name, email, passwordHash } = FakeUserService.getNew("145")
-    // Test
     const findUserBeforeCreate = await userDataAccess.findByEmail(email)
-    await userDataAccess.create({ name, email, passwordHash })
+    // Test
+    let findErr: Error = undefined
+    try {
+      await userDataAccess.create({ name, email, passwordHash })
+    } catch (err) {
+      findErr = err
+    }
+    // Setup 2
     const findUserAfterCreate = await userDataAccess.findByEmail(email)
     // Evaluation
+    expect(findErr).not.toBeDefined()
     expect(findUserBeforeCreate).toBeNull()
     expect(findUserAfterCreate).not.toBeNull()
   })
@@ -105,11 +141,18 @@ describe("[Data Access] User", () => {
     // Setup
     const { name, email, passwordHash } = FakeUserService.getNew("146")
     const { id: userId } = await userDataAccess.createAndReturn({ name, email, passwordHash })
-    // Test
     const foundUserBeforeDelete = await userDataAccess.findById(userId)
-    await userDataAccess.deleteById(userId)
+    // Test
+    let findErr: Error = undefined
+    try {
+      await userDataAccess.deleteById(userId)
+    } catch (err) {
+      findErr = err
+    }
+    // Setup 2
     const foundUserAfterDelete = await userDataAccess.findById(userId)
     // Evaluation
+    expect(findErr).not.toBeDefined()
     expect(foundUserBeforeDelete).not.toBeNull()
     expect(foundUserAfterDelete).toBeNull()
   })

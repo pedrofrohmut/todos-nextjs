@@ -40,7 +40,7 @@ X - Review all the custom Errors
 
 0 - Review all tests: to see if there are 
     X - No expects inside conditionals or catch blocks
-    0 - use try/catch form success tests too
+    X - use try/catch form success tests too
     0 - Use ApiCaller for api requests
     0 - Change to Given/When/Then
 

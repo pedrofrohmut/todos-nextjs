@@ -3,8 +3,8 @@ BDD02
 Feature: SignIn
 
   Scenario 1: valid credentials
-    Given: the user is registered 
-      and the email and the password are valid
+    Given: the email and the password are valid
+      and the user is registered
     When: credentials are submitted
     Then: a positive response should be returned with a new authentication token
     and the user: id, name and email

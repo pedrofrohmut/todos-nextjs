@@ -4,6 +4,7 @@ import ConnectionFactory from "../../../../server/utils/connection-factory.util"
 import UserDataAccess from "../../../../server/data-access/implementations/users.data-access"
 import CreateUserService from "../../../../server/services/users/implementations/create.service"
 import GeneratePasswordHashService from "../../../../server/services/users/implementations/generate-password-hash.service"
+import FakeUserService from "../../../fakes/services/user.fake"
 
 // Case 12
 describe("[Service] Create User Service", () => {
@@ -22,21 +23,24 @@ describe("[Service] Create User Service", () => {
 
   test("Create a user with valid credentials", async () => {
     // Setup
-    const validCredentials = {
-      name: "John Doe 121",
-      email: "john_doe121@mail.com",
-      password: "password121"
-    }
-    const foundUser1 = await userDataAccess.findByEmail(validCredentials.email)
+    const { name, email, password } = FakeUserService.getNew("121")
+    const foundUser1 = await userDataAccess.findByEmail(email)
     // Test
-    await createUserService.execute(validCredentials)
+    let createErr: Error = undefined
+    try {
+      await createUserService.execute({ name, email, password })
+    } catch (err) {
+      createErr = err
+    }
+    // Setup 2
+    const foundUser2 = await userDataAccess.findByEmail(email)
     // Evaluation
-    const foundUser2 = await userDataAccess.findByEmail(validCredentials.email)
+    expect(createErr).not.toBeDefined()
     expect(foundUser1).toBeNull()
-    expect(foundUser2.name).toBe("John Doe 121")
-    expect(foundUser2.email).toBe("john_doe121@mail.com")
-    expect(await compare(validCredentials.password, foundUser2.passwordHash)).toBe(true)
+    expect(foundUser2.name).toBe(name)
+    expect(foundUser2.email).toBe(email)
+    expect(await compare(password, foundUser2.passwordHash)).toBe(true)
     // Clean Up
-    await userDataAccess.deleteByEmail(validCredentials.email)
+    await userDataAccess.deleteByEmail(email)
   })
 })

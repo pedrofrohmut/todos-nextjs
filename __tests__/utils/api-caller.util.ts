@@ -24,10 +24,7 @@ export default class ApiCaller {
   ): Promise<ApiCallerResponse<SignedUserType>> {
     let response: AxiosResponse
     try {
-      response = await axios.get(SERVER_URL + "/api/users/signed", {
-        method: "GET",
-        headers: authHeaders
-      })
+      response = await axios.get(SERVER_URL + "/api/users/signed", { headers: authHeaders })
     } catch (err) {
       if (
         err.response &&

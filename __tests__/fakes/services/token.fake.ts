@@ -32,7 +32,7 @@ export default class FakeTokenService {
       const decoded = verify(token, process.env.JWT_SECRET) as AuthenticationToken
       return decoded
     } catch (err) {
-      if (err instanceof ExpiredTokenError) {
+      if (err instanceof TokenExpiredError) {
         throw new ExpiredTokenError()
       }
       if (err instanceof JsonWebTokenError || err instanceof NotBeforeError) {
