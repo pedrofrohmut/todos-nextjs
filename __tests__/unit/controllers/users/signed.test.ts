@@ -38,8 +38,8 @@ describe("[Controller] Get Signed User", () => {
   test("No auth headers", async () => {
     // Setup
     const emptyHeaders = {}
-    let requestErr: ApiCallerError = undefined
     // Test
+    let requestErr: ApiCallerError = undefined
     try {
       // @ts-ignore
       await ApiCaller.getSignedUser(emptyHeaders)
@@ -59,8 +59,8 @@ describe("[Controller] Get Signed User", () => {
     // Setup
     const invalidToken = FakeTokenService.getInvalid()
     const headers = { authentication_token: invalidToken }
-    let requestErr: ApiCallerError = undefined
     // Test
+    let requestErr: ApiCallerError = undefined
     try {
       await ApiCaller.getSignedUser(headers)
     } catch (err) {
@@ -79,8 +79,8 @@ describe("[Controller] Get Signed User", () => {
     // Setup
     const expiredToken = FakeTokenService.getExpired()
     const headers = { authentication_token: expiredToken }
-    let requestErr: ApiCallerError = undefined
     // Test
+    let requestErr: ApiCallerError = undefined
     try {
       await ApiCaller.getSignedUser(headers)
     } catch (err) {
@@ -99,8 +99,8 @@ describe("[Controller] Get Signed User", () => {
     // Setup
     const tokenWithoutUserId = FakeTokenService.getWithoutUserId()
     const headers = { authentication_token: tokenWithoutUserId }
-    let requestErr: ApiCallerError = undefined
     // Test
+    let requestErr: ApiCallerError = undefined
     try {
       await ApiCaller.getSignedUser(headers)
     } catch (err) {
@@ -119,8 +119,8 @@ describe("[Controller] Get Signed User", () => {
     // Setup
     const tokenWithInvalidUserId = FakeTokenService.getWithIvalidUserId()
     const headers = { authentication_token: tokenWithInvalidUserId }
-    let requestErr: ApiCallerError = undefined
     // Test
+    let requestErr: ApiCallerError = undefined
     try {
       await ApiCaller.getSignedUser(headers)
     } catch (err) {
@@ -142,8 +142,8 @@ describe("[Controller] Get Signed User", () => {
     await userDataAccess.deleteById(userId)
     const tokenWithUserNotRegistered = generateAuthenticationTokenService.execute(userId)
     const headers = { authentication_token: tokenWithUserNotRegistered }
-    let requestErr: ApiCallerError = undefined
     // Test
+    let requestErr: ApiCallerError = undefined
     try {
       await ApiCaller.getSignedUser(headers)
     } catch (err) {
@@ -164,8 +164,8 @@ describe("[Controller] Get Signed User", () => {
     const { id: userId } = await userDataAccess.createAndReturn({ name, email, passwordHash })
     const validToken = generateAuthenticationTokenService.execute(userId)
     const headers = { authentication_token: validToken }
-    let requestErr: ApiCallerError = undefined
     // Test
+    let requestErr: ApiCallerError = undefined
     let response: ApiCallerResponse<SignedUserType> = undefined
     try {
       response = await ApiCaller.getSignedUser(headers)

@@ -1,8 +1,7 @@
-import { verify } from "jsonwebtoken"
-
 import GenerateAuthenticationTokenService from "../../../../server/services/users/implementations/generate-authentication-token.service"
-
-type DecodedTokenType = { userId: string; iat: number }
+import { AuthenticationToken } from "../../../../server/types/users.types"
+import FakeTokenService from "../../../fakes/services/token.fake"
+import FakeUserService from "../../../fakes/services/user.fake"
 
 // Case 20
 describe("[Service] Generate authentication token service", () => {
@@ -12,27 +11,35 @@ describe("[Service] Generate authentication token service", () => {
   // 1
   test("Auth token can be decoded without error", async () => {
     // Setup
-    const userId = "userId201"
-    const token = await generateAuthenticationTokenService.execute(userId)
+    const { id: userId } = FakeUserService.getNew("201")
+    const token = generateAuthenticationTokenService.execute(userId)
+    // Test
+    let decodeTokenErr: Error = undefined
     try {
-      // Test
-      const decoded = verify(token, process.env.JWT_SECRET)
-      // Evaluation
-      expect(decoded).toBeDefined()
+      FakeTokenService.decodeToken(token)
     } catch (err) {
-      // Evaluation
-      expect(err).not.toBeDefined()
+      decodeTokenErr = err
     }
+    // Evaluation
+    expect(decodeTokenErr).not.toBeDefined()
   })
 
   // 2
   test("Auth token userId is the same provided to generation", async () => {
     // Setup
-    const userId = "userId202"
+    const { id: userId } = FakeUserService.getNew("202")
+    const token = generateAuthenticationTokenService.execute(userId)
     // Test
-    const token = await generateAuthenticationTokenService.execute(userId)
+    let decodeTokenErr: Error = undefined
+    let decoded: AuthenticationToken = undefined
+    try {
+      decoded = FakeTokenService.decodeToken(token)
+    } catch (err) {
+      decodeTokenErr = err
+    }
     // Evaluation
-    const decoded = verify(token, process.env.JWT_SECRET) as DecodedTokenType
+    expect(decodeTokenErr).not.toBeDefined()
+    expect(decoded).toBeDefined()
     expect(decoded.userId).toBe(userId)
   })
 })

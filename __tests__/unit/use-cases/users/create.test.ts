@@ -6,6 +6,7 @@ import FindUserByEmailService from "../../../../server/services/users/implementa
 import GeneratePasswordHashService from "../../../../server/services/users/implementations/generate-password-hash.service"
 import CreateUserUseCase from "../../../../server/use-cases/users/implementations/create.use-case"
 import EmailAlreadyInUseError from "../../../../server/errors/users/email-already-in-use.error"
+import FakeUserService from "../../../fakes/services/user.fake"
 
 // case 10
 describe("[Use Case] Create User", () => {
@@ -28,15 +29,19 @@ describe("[Use Case] Create User", () => {
   // 1
   test("Must not create user with an e-mail already in use", async () => {
     // Setup
-    const email = "test@mail.com"
-    await createUserService.execute({ name: "John Doe 101", email, password: "123456" })
+    const { name, email, password } = FakeUserService.getNew("101A")
+    const { name: otherName, password: otherPassword } = FakeUserService.getNew("101B")
+    await createUserService.execute({ name, email, password })
     // Test and Evaluation
+    let useCaseErr: Error = undefined
     try {
-      await createUserUseCase.execute({ name: "John Doe 102", email, password: "123456" })
+      await createUserUseCase.execute({ name: otherName, email, password: otherPassword })
     } catch (err) {
-      expect(err).not.toBe(null)
-      expect(err instanceof EmailAlreadyInUseError).toBe(true)
+      useCaseErr = err
     }
+    // Evaluation
+    expect(useCaseErr).toBeDefined()
+    expect(useCaseErr.message).toBe(EmailAlreadyInUseError.message)
     // Clean Up
     await deleteUserByEmailService.execute(email)
   })
@@ -44,13 +49,18 @@ describe("[Use Case] Create User", () => {
   // 2
   test("Create an user with valid credentials an e-mail not registered", async () => {
     // Setup
-    const name = "John Doe 102"
-    const email = "john_doe@mail.com"
-    const password = "password102"
+    const { name, email, password } = FakeUserService.getNew("102")
     // Test
+    let useCaseErr: Error = undefined
+    try {
     await createUserService.execute({ name, email, password })
+    } catch (err) {
+      useCaseErr = err
+    }
     // Evaluation
     const foundUser = await findUserByEmailService.execute(email)
+    expect(useCaseErr).not.toBeDefined()
+    expect(foundUser).not.toBeNull()
     expect(foundUser.id).toBeDefined()
     expect(foundUser.name).toBe(name)
     expect(foundUser.email).toBe(email)

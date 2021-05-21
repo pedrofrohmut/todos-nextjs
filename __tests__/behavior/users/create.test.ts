@@ -1,4 +1,4 @@
-import axios from "axios"
+import axios, { AxiosError } from "axios"
 
 import { SERVER_URL } from "../../constants"
 import ConnectionFactory from "../../../server/utils/connection-factory.util"
@@ -11,6 +11,7 @@ import {
 } from "../../../server/validators/users.validator"
 import CreateUserService from "../../../server/services/users/implementations/create.service"
 import GeneratePasswordHashService from "../../../server/services/users/implementations/generate-password-hash.service"
+import EmailAlreadyInUseError from "../../../server/errors/users/email-already-in-use.error"
 
 // BDD01
 describe("[BDD] Create users", () => {
@@ -57,18 +58,22 @@ describe("[BDD] Create users", () => {
     // Setup
     const name = ""
     const nameValidationMessage = getValidationMessageForName(name)
+    let requestErr: AxiosError = undefined
     // Given
     expect(nameValidationMessage).not.toBeNull()
+    // When
     try {
-      // When
       await axios.post(URL, { name, email: "john_doeBDD012@mail.com", password: "passwordBDD012" })
     } catch (err) {
-      // Then
-      expect(err).toBeDefined()
-      expect(err.response).toBeDefined()
-      expect(err.response.status).toBe(400)
-      expect(err.response.body).not.toBeNull()
+      requestErr = err
     }
+    // Then
+    expect(requestErr).toBeDefined()
+    expect(requestErr.response).toBeDefined()
+    expect(requestErr.response.status).toBeDefined()
+    expect(requestErr.response.status).toBe(400)
+    expect(requestErr.response.data).toBeDefined()
+    expect(requestErr.response.data).toBe(nameValidationMessage)
   })
 
   // 13
@@ -76,18 +81,22 @@ describe("[BDD] Create users", () => {
     // Setup
     const email = ""
     const emailValidationMessage = getValidationMessageForEmail(email)
+    let requestErr: AxiosError = undefined
     // Given
     expect(emailValidationMessage).not.toBeNull()
-    try {
       // When
+    try {
       await axios.post(URL, { name: "John Doe BDD013", email, password: "passwordBDD013" })
     } catch (err) {
-      // Then
-      expect(err).toBeDefined()
-      expect(err.response).toBeDefined()
-      expect(err.response.status).toBe(400)
-      expect(err.response.body).not.toBeNull()
+      requestErr = err
     }
+    // Then
+    expect(requestErr).toBeDefined()
+    expect(requestErr.response).toBeDefined()
+    expect(requestErr.response.status).toBeDefined()
+    expect(requestErr.response.status).toBe(400)
+    expect(requestErr.response.data).toBeDefined()
+    expect(requestErr.response.data).toBe(emailValidationMessage)
   })
 
   // 14
@@ -95,18 +104,22 @@ describe("[BDD] Create users", () => {
     // Setup
     const password = ""
     const passwordValidationMessage = getValidationMessageForPassword(password)
+    let requestErr: AxiosError = undefined
     // Given
     expect(passwordValidationMessage).not.toBeNull()
-    try {
       // When
+    try {
       await axios.post(URL, { name: "John Doe BDD014", email: "john_doeBDD014@mail.com", password })
     } catch (err) {
-      // Then
-      expect(err).toBeDefined()
-      expect(err.response).toBeDefined()
-      expect(err.response.status).toBe(400)
-      expect(err.response.body).not.toBeNull()
+      requestErr = err
     }
+    // Then
+    expect(requestErr).toBeDefined()
+    expect(requestErr.response).toBeDefined()
+    expect(requestErr.response.status).toBeDefined()
+    expect(requestErr.response.status).toBe(400)
+    expect(requestErr.response.data).toBeDefined()
+    expect(requestErr.response.data).toBe(passwordValidationMessage)
   })
 
   // 15
@@ -124,20 +137,24 @@ describe("[BDD] Create users", () => {
       password: "passwordBDD015A"
     })
     const registeredUser = await findUserByEmailService.execute(email)
+    let requestErr: AxiosError = undefined
     // Given
     expect(nameValidationMessage).toBeNull()
     expect(emailValidationMessage).toBeNull()
     expect(passwordValidationMessage).toBeNull()
     expect(registeredUser).not.toBeNull()
-    try {
       // When
+    try {
       await axios.post(URL, { name, email, password })
     } catch (err) {
-      // Then
-      expect(err).toBeDefined()
-      expect(err.response).toBeDefined()
-      expect(err.response.status).toBe(400)
-      expect(err.response.body).not.toBeNull()
+      requestErr = err
     }
+    // Then
+    expect(requestErr).toBeDefined()
+    expect(requestErr.response).toBeDefined()
+    expect(requestErr.response.status).toBeDefined()
+    expect(requestErr.response.status).toBe(400)
+    expect(requestErr.response.data).toBeDefined()
+    expect(requestErr.response.data).toBe(EmailAlreadyInUseError.message)
   })
 })

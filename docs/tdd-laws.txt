@@ -1,0 +1,9 @@
+THE LAWS OF TESTING
+
+1 - You shall NOT put expects inside conditionals blocks (if, else, catch, switch case, etc).
+
+2 - You shall use try/catch on errors testing and success testing as well
+
+3 - You shall NOT have lib dependencies in your tests. Use helper classes as adapters
+
+4 - You shall make behavior tests and unit tests too

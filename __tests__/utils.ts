@@ -11,7 +11,7 @@ export const truncateDatabase = async (): Promise<void> => {
       port: parseInt(env.PGPORT)
     })
     await ConnectionFactory.connect(conn)
-    await conn.query("DELETE FROM app.users")
+    await conn.query(`DELETE FROM app.users`)
     await ConnectionFactory.closeConnection(conn)
     console.log("\nDatabase Truncated\n")
   } catch (err) {

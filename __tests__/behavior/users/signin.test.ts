@@ -1,4 +1,4 @@
-import axios from "axios"
+import axios, { AxiosError } from "axios"
 
 import { SERVER_URL } from "../../constants"
 import ConnectionFactory from "../../../server/utils/connection-factory.util"
@@ -11,11 +11,18 @@ import {
   getValidationMessageForPassword
 } from "../../../server/validators/users.validator"
 import DeleteUserByEmailService from "../../../server/services/users/implementations/delete-by-email.service"
+import UserNotFoundByEmailError from "../../../server/errors/users/user-not-found-by-email.error"
+import PasswordIsNotAMatchError from "../../../server/errors/users/password-is-not-a-match.error"
 
 // BDD02
 describe("[BDD] Sign In", () => {
   const URL = SERVER_URL + "/api/users/signin"
   const conn = ConnectionFactory.getConnection()
+  const userDataAccess = new UserDataAccess(conn)
+  const generatePasswordHashService = new GeneratePasswordHashService()
+  const createUserService = new CreateUserService(generatePasswordHashService, userDataAccess)
+  const findUserByEmailService = new FindUserByEmailService(userDataAccess)
+  const deleteUserByEmailService = new DeleteUserByEmailService(userDataAccess)
 
   beforeAll(async () => {
     await ConnectionFactory.connect(conn)
@@ -27,12 +34,6 @@ describe("[BDD] Sign In", () => {
 
   // 21
   test("Scenario 1 - valid credentiasl", async () => {
-    // Dependencies
-    const userDataAccess = new UserDataAccess(conn)
-    const generatePasswordHashService = new GeneratePasswordHashService()
-    const createUserService = new CreateUserService(generatePasswordHashService, userDataAccess)
-    const findUserByEmailService = new FindUserByEmailService(userDataAccess)
-    const deleteUserByEmailService = new DeleteUserByEmailService(userDataAccess)
     // Setup
     const email = "john_doeBDD021@mail.com"
     const password = "passwordBDD021"
@@ -67,16 +68,20 @@ describe("[BDD] Sign In", () => {
     const emailValidationMessage = getValidationMessageForEmail(email)
     // Given
     expect(emailValidationMessage).not.toBeNull()
+    // When
+    let requestErr: AxiosError = undefined
     try {
-      // When
       await axios.post(URL, { email, password })
     } catch (err) {
-      // Then
-      expect(err).toBeDefined()
-      expect(err.response).toBeDefined()
-      expect(err.response.status).toBe(400)
-      expect(err.response.body).not.toBeNull()
+      requestErr = err
     }
+    // Then
+    expect(requestErr).toBeDefined()
+    expect(requestErr.response).toBeDefined()
+    expect(requestErr.response.status).toBeDefined()
+    expect(requestErr.response.status).toBe(400)
+    expect(requestErr.response.data).not.toBeNull()
+    expect(requestErr.response.data).toBe(emailValidationMessage)
   })
 
   // 23
@@ -87,23 +92,24 @@ describe("[BDD] Sign In", () => {
     const passwordValidationMessage = getValidationMessageForPassword(password)
     // Given
     expect(passwordValidationMessage).not.toBeNull()
+    // When
+    let requestErr: AxiosError = undefined
     try {
-      // When
       await axios.post(URL, { email, password })
     } catch (err) {
-      // Then
-      expect(err).toBeDefined()
-      expect(err.response).toBeDefined()
-      expect(err.response.status).toBe(400)
-      expect(err.response.body).not.toBeNull()
+      requestErr = err
     }
+    // Then
+    expect(requestErr).toBeDefined()
+    expect(requestErr.response).toBeDefined()
+    expect(requestErr.response.status).toBeDefined()
+    expect(requestErr.response.status).toBe(400)
+    expect(requestErr.response.data).toBeDefined()
+    expect(requestErr.response.data).toBe(passwordValidationMessage)
   })
 
   // 24
   test("Scenario 4 - e-mail is not registered", async () => {
-    // Dependencies
-    const userDataAccess = new UserDataAccess(conn)
-    const findUserByEmailService = new FindUserByEmailService(userDataAccess)
     // Setup
     const email = "john_doeBDD024@mail.com"
     const password = "passwordBDD024"
@@ -114,25 +120,24 @@ describe("[BDD] Sign In", () => {
     expect(emailValidationMessage).toBeNull()
     expect(passwordValidationMessage).toBeNull()
     expect(registeredUser).toBeNull()
+    // When
+    let requestErr: AxiosError = undefined
     try {
-      // When
       await axios.post(URL, { email, password })
     } catch (err) {
-      // Then
-      expect(err).toBeDefined()
-      expect(err.response).toBeDefined()
-      expect(err.response.status).toBe(400)
-      expect(err.response.body).not.toBeNull()
+      requestErr = err
     }
+    // Then
+    expect(requestErr).toBeDefined()
+    expect(requestErr.response).toBeDefined()
+    expect(requestErr.response.status).toBeDefined()
+    expect(requestErr.response.status).toBe(400)
+    expect(requestErr.response.data).toBeDefined()
+    expect(requestErr.response.data).toBe(UserNotFoundByEmailError.message)
   })
 
   // 25
   test("Scenario 5 - password is not a match", async () => {
-    // Dependencies
-    const userDataAccess = new UserDataAccess(conn)
-    const findUserByEmailService = new FindUserByEmailService(userDataAccess)
-    const generatePasswordHashService = new GeneratePasswordHashService()
-    const createUserService = new CreateUserService(generatePasswordHashService, userDataAccess)
     // Setup
     const email = "john_doeBDD025@mail.com"
     const password = "passwordBDD025"
@@ -145,15 +150,19 @@ describe("[BDD] Sign In", () => {
     expect(emailValidationMessage).toBeNull()
     expect(differentPasswordValidationMessage).toBeNull()
     expect(registeredUser).not.toBeNull()
+    // Then
+    let requestErr: AxiosError = undefined
     try {
-      // Then
       await axios.post(URL, { email, password: differentPassword })
     } catch (err) {
-      // When
-      expect(err).toBeDefined()
-      expect(err.response).toBeDefined()
-      expect(err.response.status).toBe(400)
-      expect(err.response.boyd).not.toBeNull()
+      requestErr = err
     }
+    // When
+    expect(requestErr).toBeDefined()
+    expect(requestErr.response).toBeDefined()
+    expect(requestErr.response.status).toBeDefined()
+    expect(requestErr.response.status).toBe(400)
+    expect(requestErr.response.data).toBeDefined()
+    expect(requestErr.response.data).toBe(PasswordIsNotAMatchError.message)
   })
 })

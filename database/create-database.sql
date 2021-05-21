@@ -21,7 +21,7 @@ CREATE TABLE app.tasks (
   created_at TIMESTAMP DEFAULT NOW(),
   user_id UUID NOT NULL,
   PRIMARY KEY (id),
-  CONSTRAINT fk_tasks_user FOREIGN KEY (user_id) REFERENCES app.users(id)
+  CONSTRAINT fk_tasks_user FOREIGN KEY (user_id) REFERENCES app.users(id) ON DELETE CASCADE
 );
 
 CREATE TABLE app.todos ( 
@@ -33,7 +33,7 @@ CREATE TABLE app.todos (
   task_id UUID NOT NULL,
   user_id UUID NOT NULL,
   PRIMARY KEY (id),
-  CONSTRAINT fk_todos_task FOREIGN KEY (task_id) REFERENCES app.tasks(id),
-  CONSTRAINT fk_todos_user FOREIGN KEY (user_id) REFERENCES app.users(id)
+  CONSTRAINT fk_todos_task FOREIGN KEY (task_id) REFERENCES app.tasks(id) ON DELETE CASCADE,
+  CONSTRAINT fk_todos_user FOREIGN KEY (user_id) REFERENCES app.users(id) ON DELETE CASCADE
 );
 

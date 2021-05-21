@@ -108,17 +108,20 @@ describe("[BDD] Get Signed User", () => {
     expect(headers.authentication_token).toBe(token)
     expect(decoded.userId).toBeDefined()
     expect(foundUserById).toBeNull()
+    // When
+    let requestErr: AxiosError = undefined
     try {
-      // When
       await axios.get(URL, { headers })
     } catch (err) {
-      // Then
-      expect(err).toBeDefined()
-      expect(err.response).toBeDefined()
-      expect(err.response.status).toBe(400)
-      expect(err.response.data).toBeDefined()
-      expect(err.response.data).toBe(UserNotFoundByIdError.message)
+      requestErr = err
     }
+    // Then
+    expect(requestErr).toBeDefined()
+    expect(requestErr.response).toBeDefined()
+    expect(requestErr.response.status).toBeDefined()
+    expect(requestErr.response.status).toBe(400)
+    expect(requestErr.response.data).toBeDefined()
+    expect(requestErr.response.data).toBe(UserNotFoundByIdError.message)
   })
 
   // 33
@@ -135,16 +138,20 @@ describe("[BDD] Get Signed User", () => {
     expect(decodeTokenErr).toBeDefined()
     expect(headers.authentication_token).toBeDefined()
     expect(headers.authentication_token).toBe(invalidToken)
+    // When
+    let requestErr: AxiosError = undefined
     try {
       await axios.get(URL, { headers })
     } catch (err) {
-      // Then
-      expect(err).toBeDefined()
-      expect(err.response).toBeDefined()
-      expect(err.response.status).toBe(400)
-      expect(err.response.data).toBeDefined()
-      expect(err.response.data).toBe(InvalidTokenError.message)
+      requestErr = err
     }
+    // Then
+    expect(requestErr).toBeDefined()
+    expect(requestErr.response).toBeDefined()
+    expect(requestErr.response.status).toBeDefined()
+    expect(requestErr.response.status).toBe(400)
+    expect(requestErr.response.data).toBeDefined()
+    expect(requestErr.response.data).toBe(InvalidTokenError.message)
   })
 
   // 34
@@ -164,17 +171,20 @@ describe("[BDD] Get Signed User", () => {
     expect(headers.authentication_token).toBeDefined()
     expect(headers.authentication_token).toBe(token)
     expect(decoded.userId).not.toBeDefined()
+    // When
+    let requestErr: AxiosError = undefined
     try {
-      // When
       await axios.get(URL, { headers })
     } catch (err) {
-      // Then
-      expect(err).toBeDefined()
-      expect(err.response).toBeDefined()
-      expect(err.response.status).toBe(400)
-      expect(err.response.data).toBeDefined()
-      expect(err.response.data).toBe(TokenWithoutUserIdError.message)
+      requestErr = err
     }
+    // Then
+    expect(requestErr).toBeDefined()
+    expect(requestErr.response).toBeDefined()
+    expect(requestErr.response.status).toBeDefined()
+    expect(requestErr.response.status).toBe(400)
+    expect(requestErr.response.data).toBeDefined()
+    expect(requestErr.response.data).toBe(TokenWithoutUserIdError.message)
   })
 
   // 35
@@ -228,9 +238,9 @@ describe("[BDD] Get Signed User", () => {
     expect(headers.authentication_token).toBe(token)
     expect(decoded.userId).toBeDefined()
     expect(userIdValidationMessage).not.toBeNull()
+    // When
     let invalidUserIdErr: AxiosError = undefined
     try {
-      // When
       await axios.get(URL, { headers })
     } catch (err) {
       invalidUserIdErr = err
@@ -239,6 +249,7 @@ describe("[BDD] Get Signed User", () => {
     expect(invalidUserIdErr).toBeDefined()
     expect(invalidUserIdErr.response).toBeDefined()
     expect(invalidUserIdErr.response.status).toBeDefined()
+    expect(invalidUserIdErr.response.status).toBe(400)
     expect(invalidUserIdErr.response.data).toBeDefined()
     expect(invalidUserIdErr.response.data).toBe(TokenWithInvalidUserIdError.message)
   })
@@ -259,6 +270,7 @@ describe("[BDD] Get Signed User", () => {
     // Then
     expect(noHeadersErr).toBeDefined()
     expect(noHeadersErr.response).toBeDefined()
+    expect(noHeadersErr.response.status).toBeDefined()
     expect(noHeadersErr.response.status).toBe(401)
     expect(noHeadersErr.response.data).toBeDefined()
     expect(noHeadersErr.response.data).toBe(UnauthenticatedRequestError.message)

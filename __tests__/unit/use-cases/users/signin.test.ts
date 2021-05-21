@@ -2,15 +2,19 @@ import UserDataAccess from "../../../../server/data-access/implementations/users
 import PasswordIsNotAMatchError from "../../../../server/errors/users/password-is-not-a-match.error"
 import UserNotFoundByEmailError from "../../../../server/errors/users/user-not-found-by-email.error"
 import CheckPasswordService from "../../../../server/services/users/implementations/check-password.service"
-import CreateUserService from "../../../../server/services/users/implementations/create.service"
-import DeleteUserByEmailService from "../../../../server/services/users/implementations/delete-by-email.service"
 import FindUserByEmailService from "../../../../server/services/users/implementations/find-by-email.service"
 import GenerateAuthenticationTokenService from "../../../../server/services/users/implementations/generate-authentication-token.service"
 import GeneratePasswordHashService from "../../../../server/services/users/implementations/generate-password-hash.service"
+import {SignInDataType} from "../../../../server/types/users.types"
 import SignInUseCase from "../../../../server/use-cases/users/implementations/signin.use-case"
 import ConnectionFactory from "../../../../server/utils/connection-factory.util"
+import {getValidationMessageForEmail, getValidationMessageForPassword} from "../../../../server/validators/users.validator"
+import FakeUserService from "../../../fakes/services/user.fake"
 
 // Case 18
+// 1 - Sign with a e-mail that is not registered return 400 and a message
+// 2 - Sign with a password that does not match the hash from db returns 400 and a message
+// 3 - Sign with registered user and valid credentials returns 200 and SignInData
 describe("[Use Case] Sign in Use Case", () => {
   // Dependencies
   const conn = ConnectionFactory.getConnection()
@@ -23,9 +27,7 @@ describe("[Use Case] Sign in Use Case", () => {
     checkPasswordService,
     generateAuthenticationTokenService
   )
-  const deleteUserByEmailService = new DeleteUserByEmailService(userDataAccess)
   const generatePasswordHashService = new GeneratePasswordHashService()
-  const createUserService = new CreateUserService(generatePasswordHashService, userDataAccess)
 
   beforeAll(async () => {
     await ConnectionFactory.connect(conn)
@@ -36,54 +38,88 @@ describe("[Use Case] Sign in Use Case", () => {
   })
 
   // 1
-  test("Sign in with a e-mail not registered to throw error", async () => {
+  test("E-mail not registered", async () => {
     // Setup
-    const password = "password181"
-    const email = "john_doe181@mail.com"
-    await deleteUserByEmailService.execute(email)
+    const { email, password } = FakeUserService.getNew("181")
+    const foundUser = await userDataAccess.findByEmail(email)
+    // Given
+    expect(foundUser).toBeNull()
+    // When
+    let useCaseErr: Error = undefined
     try {
-      // Test
       await signInUseCase.execute({ email, password })
     } catch (err) {
-      // Evaluation
-      expect(err).toBeDefined()
-      expect(err instanceof UserNotFoundByEmailError).toBe(true)
+      useCaseErr = err
     }
+    // Evaluation
+    expect(useCaseErr).toBeDefined()
+    expect(useCaseErr instanceof UserNotFoundByEmailError).toBe(true)
+    expect(useCaseErr.message).toBe(UserNotFoundByEmailError.message)
   })
 
   // 2
-  test("Sign in with a valid password that doesnt match throw error", async () => {
+  test("Password is not match", async () => {
     // Setup
-    const email = "john_doe182@mail.com"
-    const password = "password182"
-    const differentPassword = "different_password182"
-    await createUserService.execute({ name: "John Doe 182", email, password })
+    const { name, email, password } = FakeUserService.getNew("182A")
+    const { password: otherPassword } = FakeUserService.getNew("182B")
+    const passwordHash = await generatePasswordHashService.execute(password)
+    const createdUser = await userDataAccess.createAndReturn({ name, email, passwordHash })
+    const emailValidationMessage = getValidationMessageForEmail(email)
+    const passwordValidationMessage = getValidationMessageForPassword(otherPassword)
+    const isMatch = await checkPasswordService.execute(otherPassword, passwordHash)
+    // Given
+    expect(emailValidationMessage).toBeNull()
+    expect(passwordValidationMessage).toBeNull()
+    expect(createdUser).not.toBeNull()
+    expect(createdUser.passwordHash).toBeDefined()
+    expect(isMatch).not.toBe(true)
+    // When
+    let useCaseErr: Error = undefined
     try {
-      // Test
-      await signInUseCase.execute({ email, password: differentPassword })
+      await signInUseCase.execute({ email, password: otherPassword })
     } catch (err) {
-      // Evaluation
-      expect(err).toBeDefined()
-      expect(err instanceof PasswordIsNotAMatchError).toBe(true)
+      useCaseErr = err
     }
+    // Then
+    expect(useCaseErr).toBeDefined()
+    expect(useCaseErr instanceof PasswordIsNotAMatchError).toBeDefined()
+    expect(useCaseErr.message).toBe(PasswordIsNotAMatchError.message)
     // Clean Up
-    await deleteUserByEmailService.execute(email)
+    await userDataAccess.deleteByEmail(email)
   })
 
   // 3
-  test("Sign in with valid credentials to return user data and authentication token", async () => {
+  test("Valid credentials", async () => {
     // Setup
-    const name = "John Doe 183"
-    const email = "john_doe183@mail.com"
-    const password = "password183"
-    await createUserService.execute({ name, email, password })
-    // Test
-    const signInData = await signInUseCase.execute({ email, password })
+    const { name, email, password } = FakeUserService.getNew("183")
+    const passwordHash = await generatePasswordHashService.execute(password)
+    const createdUser = await userDataAccess.createAndReturn({ name, email, passwordHash })
+    const emailValidationMessage = getValidationMessageForEmail(email)
+    const passwordValidationMessage = getValidationMessageForPassword(password)
+    // Given
+    expect(createdUser).not.toBeNull()
+    expect(emailValidationMessage).toBeNull()
+    expect(passwordValidationMessage).toBeNull()
+    // When
+    let useCaseErr : Error = undefined
+    let signInData: SignInDataType = undefined
+    try {
+      signInData = await signInUseCase.execute({ email, password })
+    } catch (err) {
+      useCaseErr = err
+    }
     // Evaluation
+    expect(useCaseErr).not.toBeDefined()
     expect(signInData).toBeDefined()
     expect(signInData.user).toBeDefined()
-    expect(signInData.token).toBeDefined()
+    expect(signInData.user.id).toBeDefined()
+    expect(signInData.user.id).toBe(createdUser.id)
+    expect(signInData.user.name).toBeDefined()
     expect(signInData.user.name).toBe(name)
+    expect(signInData.user.email).toBeDefined()
     expect(signInData.user.email).toBe(email)
+    expect(signInData.token).toBeDefined()
+    // Clean Up 
+    await userDataAccess.deleteByEmail(email)
   })
 })

@@ -18,9 +18,23 @@ export type SignedUserType = {
   email: string
 }
 
+export type SignInCredentialsType = {
+  email: string
+  password: string
+}
+
+export type SignInDataType = {
+  user: SignedUserType
+  token: AuthenticationToken
+}
+
 export type AuthenticationToken = {
-  userId: string,
+  userId: string
   exp: number
+}
+
+export type AuthenticationHeaders = {
+  authentication_token?: string
 }
 
 export type UserDatabaseType = {

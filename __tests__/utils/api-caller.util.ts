@@ -1,10 +1,16 @@
 import axios, { AxiosResponse } from "axios"
-import { SignedUserType } from "../../server/types/users.types"
+import {
+  AuthenticationHeaders,
+  CreateUserType,
+  SignedUserType,
+  SignInCredentialsType,
+  SignInDataType
+} from "../../server/types/users.types"
 import { SERVER_URL } from "../constants"
 
 export type ApiCallerResponse<T> = {
   status: number
-  body: T
+  body?: T
 }
 
 export type ApiCallerError = {
@@ -12,13 +18,9 @@ export type ApiCallerError = {
   body: string
 }
 
-export type AuthHeaders = {
-  authentication_token?: string
-}
-
 export default class ApiCaller {
   public static async getSignedUser(
-    authHeaders: AuthHeaders
+    authHeaders: AuthenticationHeaders
   ): Promise<ApiCallerResponse<SignedUserType>> {
     let response: AxiosResponse
     try {
@@ -42,6 +44,42 @@ export default class ApiCaller {
     return {
       status: response.status,
       body: response.data
+    }
+  }
+
+  public static async createUser({
+    name,
+    email,
+    password
+  }: CreateUserType): Promise<ApiCallerResponse<void>> {
+    try {
+      const response = await axios.post(SERVER_URL + "/api/users", { name, email, password })
+      return {
+        status: response.status
+      }
+    } catch (err) {
+      throw {
+        status: err.response.status,
+        body: err.response.data
+      }
+    }
+  }
+
+  public static async signinUser({
+    email,
+    password
+  }: SignInCredentialsType): Promise<ApiCallerResponse<SignInDataType>> {
+    try {
+      const response = await axios.post(SERVER_URL + "/api/users/signin", { email, password })
+      return {
+        status: response.status,
+        body: response.data
+      }
+    } catch (err) {
+      throw {
+        status: err.response.status,
+        body: err.response.data
+      }
     }
   }
 }

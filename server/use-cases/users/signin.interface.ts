@@ -1,17 +1,5 @@
-export type CredentialsType = {
-  email: string
-  password: string
-}
-
-export type SignInDataType = {
-  user: {
-    id: string
-    name: string
-    email: string
-  }
-  token: string
-}
+import { SignInCredentialsType, SignInDataType } from "../../types/users.types"
 
 export default interface ISignInUseCase {
-  execute: (credentials: CredentialsType) => Promise<SignInDataType>
+  execute: (credentials: SignInCredentialsType) => Promise<SignInDataType>
 }
