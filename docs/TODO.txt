@@ -34,9 +34,9 @@ X - Create Functionality for get signed user by authToken
 
 X - Unit and Bdd for Signed user by Token
 
-0 - Review UserDataAccess tests and add the missing ones
+X - Review UserDataAccess tests and add the missing ones
 
-0 - Review all the custom Errors
+X - Review all the custom Errors
 
 0 - Review all tests to see if there are no expects inside conditionals or catch blocks
 
