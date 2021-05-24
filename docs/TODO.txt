@@ -41,10 +41,9 @@ X - Review all the custom Errors
 0 - Review all tests: to see if there are 
     X - No expects inside conditionals or catch blocks
     X - use try/catch form success tests too
-    0 - Use ApiCaller for api requests
+    X - Use ApiCaller for api requests
+    X - Wipe the external dependencies in the tests (use adapters when needed)
     0 - Change to Given/When/Then
-
-0 - Wipe the external dependencies in the tests (use adapters when needed)
 
 0 - All types moved to type files and no lost in classes
 

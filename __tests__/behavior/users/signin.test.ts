@@ -1,5 +1,3 @@
-import axios, { AxiosError } from "axios"
-
 import { SERVER_URL } from "../../constants"
 import ConnectionFactory from "../../../server/utils/connection-factory.util"
 import UserDataAccess from "../../../server/data-access/implementations/users.data-access"
@@ -76,56 +74,53 @@ describe("[BDD] Sign In", () => {
   // 22
   test("Scenario 2 - invalid e-mail (value validation)", async () => {
     // Setup
+    const { password } = FakeUserService.getNew("BDD022")
     const email = ""
-    const password = "passwordBDD022"
     const emailValidationMessage = getValidationMessageForEmail(email)
     // Given
     expect(emailValidationMessage).not.toBeNull()
     // When
-    let requestErr: AxiosError = undefined
+    let requestErr: ApiCallerError = undefined
     try {
-      await axios.post(URL, { email, password })
+      await ApiCaller.signinUser({ email, password })
     } catch (err) {
       requestErr = err
     }
     // Then
     expect(requestErr).toBeDefined()
-    expect(requestErr.response).toBeDefined()
-    expect(requestErr.response.status).toBeDefined()
-    expect(requestErr.response.status).toBe(400)
-    expect(requestErr.response.data).not.toBeNull()
-    expect(requestErr.response.data).toBe(emailValidationMessage)
+    expect(requestErr.status).toBeDefined()
+    expect(requestErr.status).toBe(400)
+    expect(requestErr.body).not.toBeNull()
+    expect(requestErr.body).toBe(emailValidationMessage)
   })
 
   // 23
   test("Scenario 3 - invalid password (value validation)", async () => {
     // Setup
-    const email = "john_doeBDD023@mail.com"
+    const { email }  = FakeUserService.getNew("BDD023")
     const password = ""
     const passwordValidationMessage = getValidationMessageForPassword(password)
     // Given
     expect(passwordValidationMessage).not.toBeNull()
     // When
-    let requestErr: AxiosError = undefined
+    let requestErr: ApiCallerError = undefined
     try {
-      await axios.post(URL, { email, password })
+      await ApiCaller.signinUser({ email, password })
     } catch (err) {
       requestErr = err
     }
     // Then
     expect(requestErr).toBeDefined()
-    expect(requestErr.response).toBeDefined()
-    expect(requestErr.response.status).toBeDefined()
-    expect(requestErr.response.status).toBe(400)
-    expect(requestErr.response.data).toBeDefined()
-    expect(requestErr.response.data).toBe(passwordValidationMessage)
+    expect(requestErr.status).toBeDefined()
+    expect(requestErr.status).toBe(400)
+    expect(requestErr.body).toBeDefined()
+    expect(requestErr.body).toBe(passwordValidationMessage)
   })
 
   // 24
   test("Scenario 4 - e-mail is not registered", async () => {
     // Setup
-    const email = "john_doeBDD024@mail.com"
-    const password = "passwordBDD024"
+    const { email, password } = FakeUserService.getNew("BDD024")
     const registeredUser = await findUserByEmailService.execute(email)
     const emailValidationMessage = getValidationMessageForEmail(email)
     const passwordValidationMessage = getValidationMessageForPassword(password)
@@ -134,48 +129,45 @@ describe("[BDD] Sign In", () => {
     expect(passwordValidationMessage).toBeNull()
     expect(registeredUser).toBeNull()
     // When
-    let requestErr: AxiosError = undefined
+    let requestErr: ApiCallerError = undefined
     try {
-      await axios.post(URL, { email, password })
+      await ApiCaller.signinUser({ email, password })
     } catch (err) {
       requestErr = err
     }
     // Then
     expect(requestErr).toBeDefined()
-    expect(requestErr.response).toBeDefined()
-    expect(requestErr.response.status).toBeDefined()
-    expect(requestErr.response.status).toBe(400)
-    expect(requestErr.response.data).toBeDefined()
-    expect(requestErr.response.data).toBe(UserNotFoundByEmailError.message)
+    expect(requestErr.status).toBeDefined()
+    expect(requestErr.status).toBe(400)
+    expect(requestErr.body).toBeDefined()
+    expect(requestErr.body).toBe(UserNotFoundByEmailError.message)
   })
 
   // 25
   test("Scenario 5 - password is not a match", async () => {
     // Setup
-    const email = "john_doeBDD025@mail.com"
-    const password = "passwordBDD025"
-    const differentPassword = password + "__IM_DIFFERENT__"
-    await createUserService.execute({ name: "John Doe BDD025", email, password })
+    const { name, email, password } = FakeUserService.getNew("BDD025A")
+    const { password: otherPassword } = FakeUserService.getNew("BDD025B")
+    await createUserService.execute({ name, email, password })
     const emailValidationMessage = getValidationMessageForEmail(email)
-    const differentPasswordValidationMessage = getValidationMessageForPassword(differentPassword)
-    const registeredUser = await findUserByEmailService.execute(email)
+    const passwordValidationMessage = getValidationMessageForPassword(otherPassword)
+    const foundUser = await findUserByEmailService.execute(email)
     // Given
     expect(emailValidationMessage).toBeNull()
-    expect(differentPasswordValidationMessage).toBeNull()
-    expect(registeredUser).not.toBeNull()
+    expect(passwordValidationMessage).toBeNull()
+    expect(foundUser).not.toBeNull()
     // Then
-    let requestErr: AxiosError = undefined
+    let requestErr: ApiCallerError = undefined
     try {
-      await axios.post(URL, { email, password: differentPassword })
+      await ApiCaller.signinUser({ email, password: otherPassword })
     } catch (err) {
       requestErr = err
     }
     // When
     expect(requestErr).toBeDefined()
-    expect(requestErr.response).toBeDefined()
-    expect(requestErr.response.status).toBeDefined()
-    expect(requestErr.response.status).toBe(400)
-    expect(requestErr.response.data).toBeDefined()
-    expect(requestErr.response.data).toBe(PasswordIsNotAMatchError.message)
+    expect(requestErr.status).toBeDefined()
+    expect(requestErr.status).toBe(400)
+    expect(requestErr.body).toBeDefined()
+    expect(requestErr.body).toBe(PasswordIsNotAMatchError.message)
   })
 })

@@ -1,5 +1,3 @@
-import { compare } from "bcryptjs"
-
 import GeneratePasswordHashService from "../../../../server/services/users/implementations/generate-password-hash.service"
 import FakeUserService from "../../../fakes/services/user.fake"
 
@@ -20,10 +18,10 @@ describe("[Service] Generate password hash", () => {
       hashErr = err
     }
     // Setup 2
-    const isMatch = await compare(password, passwordHash)
+    const isPasswordMatch = await FakeUserService.comparePasswordAndHash(password, passwordHash)
     // Evaluation
     expect(hashErr).not.toBeDefined()
-    expect(isMatch).toBe(true)
+    expect(isPasswordMatch).toBe(true)
   })
 
   // 152
@@ -39,9 +37,9 @@ describe("[Service] Generate password hash", () => {
     } catch (err) {
       hashErr = err
     }
-    const isMatch = await compare(otherPassword, passwordHash)
+    const isPasswordMatch = await FakeUserService.comparePasswordAndHash(otherPassword, passwordHash)
     // Evaluation
     expect(hashErr).not.toBeDefined()
-    expect(isMatch).toBe(false)
+    expect(isPasswordMatch).toBe(false)
   })
 })

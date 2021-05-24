@@ -1,6 +1,3 @@
-import axios, { AxiosError } from "axios"
-import { sign, verify, TokenExpiredError } from "jsonwebtoken"
-
 import UserDataAccess from "../../../server/data-access/implementations/users.data-access"
 import AuthenticationTokenDecoderService from "../../../server/services/users/implementations/authentication-token-decoder.service"
 import CreateUserService from "../../../server/services/users/implementations/create.service"
@@ -8,7 +5,7 @@ import FindUserByEmailService from "../../../server/services/users/implementatio
 import GenerateAuthenticationTokenService from "../../../server/services/users/implementations/generate-authentication-token.service"
 import GeneratePasswordHashService from "../../../server/services/users/implementations/generate-password-hash.service"
 import FindUserByIdService from "../../../server/services/users/implementations/find-by-id.service"
-import { AuthenticationToken, SignedUserType, UserDatabaseType } from "../../../server/types/users.types"
+import { AuthenticationToken, SignedUserType } from "../../../server/types/users.types"
 import ConnectionFactory from "../../../server/utils/connection-factory.util"
 import { SERVER_URL } from "../../constants"
 import DeleteUserByEmailService from "../../../server/services/users/implementations/delete-by-email.service"
@@ -119,19 +116,18 @@ describe("[BDD] Get Signed User", () => {
     expect(decoded.userId).toBeDefined()
     expect(foundUserById).toBeNull()
     // When
-    let requestErr: AxiosError = undefined
+    let requestErr: ApiCallerError = undefined
     try {
-      await axios.get(URL, { headers })
+      await ApiCaller.getSignedUser(headers)
     } catch (err) {
       requestErr = err
     }
     // Then
     expect(requestErr).toBeDefined()
-    expect(requestErr.response).toBeDefined()
-    expect(requestErr.response.status).toBeDefined()
-    expect(requestErr.response.status).toBe(400)
-    expect(requestErr.response.data).toBeDefined()
-    expect(requestErr.response.data).toBe(UserNotFoundByIdError.message)
+    expect(requestErr.status).toBeDefined()
+    expect(requestErr.status).toBe(400)
+    expect(requestErr.body).toBeDefined()
+    expect(requestErr.body).toBe(UserNotFoundByIdError.message)
   })
 
   // 33
@@ -149,25 +145,24 @@ describe("[BDD] Get Signed User", () => {
     expect(headers.authentication_token).toBeDefined()
     expect(headers.authentication_token).toBe(invalidToken)
     // When
-    let requestErr: AxiosError = undefined
+    let requestErr: ApiCallerError = undefined
     try {
-      await axios.get(URL, { headers })
+      await ApiCaller.getSignedUser(headers)
     } catch (err) {
       requestErr = err
     }
     // Then
     expect(requestErr).toBeDefined()
-    expect(requestErr.response).toBeDefined()
-    expect(requestErr.response.status).toBeDefined()
-    expect(requestErr.response.status).toBe(400)
-    expect(requestErr.response.data).toBeDefined()
-    expect(requestErr.response.data).toBe(InvalidTokenError.message)
+    expect(requestErr.status).toBeDefined()
+    expect(requestErr.status).toBe(400)
+    expect(requestErr.body).toBeDefined()
+    expect(requestErr.body).toBe(InvalidTokenError.message)
   })
 
   // 34
   test("Scenario 4: authToken without userId", async () => {
     // Setup
-    const token = sign({}, process.env.JWT_SECRET)
+    const token = FakeTokenService.getWithoutUserId()
     let decoded: AuthenticationToken = undefined
     let decodeTokenErr: Error = undefined
     try {
@@ -182,50 +177,49 @@ describe("[BDD] Get Signed User", () => {
     expect(headers.authentication_token).toBe(token)
     expect(decoded.userId).not.toBeDefined()
     // When
-    let requestErr: AxiosError = undefined
+    let requestErr: ApiCallerError = undefined
     try {
-      await axios.get(URL, { headers })
+      await ApiCaller.getSignedUser(headers)
     } catch (err) {
       requestErr = err
     }
     // Then
     expect(requestErr).toBeDefined()
-    expect(requestErr.response).toBeDefined()
-    expect(requestErr.response.status).toBeDefined()
-    expect(requestErr.response.status).toBe(400)
-    expect(requestErr.response.data).toBeDefined()
-    expect(requestErr.response.data).toBe(TokenWithoutUserIdError.message)
+    expect(requestErr.status).toBeDefined()
+    expect(requestErr.status).toBe(400)
+    expect(requestErr.body).toBeDefined()
+    expect(requestErr.body).toBe(TokenWithoutUserIdError.message)
   })
 
   // 35
   test("Scenario 5: authToken experied", async () => {
     // Setup
-    const expiredToken = sign({ userId: "userId" }, process.env.JWT_SECRET, { expiresIn: 0 })
+    const token = FakeTokenService.getExpired()
     let decodeTokenErr: Error = undefined
     try {
-      authenticationTokenDecoderService.execute(expiredToken)
+      authenticationTokenDecoderService.execute(token)
     } catch (err) {
       decodeTokenErr = err
     }
-    const headers = { authentication_token: expiredToken }
+    const headers = { authentication_token: token }
     // Given
     expect(decodeTokenErr instanceof InvalidTokenError).not.toBe(true)
     expect(headers.authentication_token).toBeDefined()
-    expect(headers.authentication_token).toBe(expiredToken)
+    expect(headers.authentication_token).toBe(token)
     expect(decodeTokenErr instanceof ExpiredTokenError).toBe(true)
     // When
-    let expiredTokenErr: AxiosError = undefined
+    let requestErr: ApiCallerError = undefined
     try {
-      await axios.get(URL, { headers })
+      await ApiCaller.getSignedUser(headers)
     } catch (err) {
-      expiredTokenErr = err
+      requestErr = err
     }
     // Then
-    expect(expiredTokenErr).toBeDefined()
-    expect(expiredTokenErr.response).toBeDefined()
-    expect(expiredTokenErr.response.status).toBe(400)
-    expect(expiredTokenErr.response.data).toBeDefined()
-    expect(expiredTokenErr.response.data).toBe(ExpiredTokenError.message)
+    expect(requestErr).toBeDefined()
+    expect(requestErr.status).toBeDefined()
+    expect(requestErr.status).toBe(400)
+    expect(requestErr.body).toBeDefined()
+    expect(requestErr.body).toBe(ExpiredTokenError.message)
   })
 
   // 36
@@ -249,19 +243,18 @@ describe("[BDD] Get Signed User", () => {
     expect(decoded.userId).toBeDefined()
     expect(userIdValidationMessage).not.toBeNull()
     // When
-    let invalidUserIdErr: AxiosError = undefined
+    let requestErr: ApiCallerError = undefined
     try {
-      await axios.get(URL, { headers })
+      await ApiCaller.getSignedUser(headers)
     } catch (err) {
-      invalidUserIdErr = err
+      requestErr = err
     }
     // Then
-    expect(invalidUserIdErr).toBeDefined()
-    expect(invalidUserIdErr.response).toBeDefined()
-    expect(invalidUserIdErr.response.status).toBeDefined()
-    expect(invalidUserIdErr.response.status).toBe(400)
-    expect(invalidUserIdErr.response.data).toBeDefined()
-    expect(invalidUserIdErr.response.data).toBe(TokenWithInvalidUserIdError.message)
+    expect(requestErr).toBeDefined()
+    expect(requestErr.status).toBeDefined()
+    expect(requestErr.status).toBe(400)
+    expect(requestErr.body).toBeDefined()
+    expect(requestErr.body).toBe(TokenWithInvalidUserIdError.message)
   })
 
   test("Scenario 7: authToken request header not defined", async () => {
@@ -271,18 +264,17 @@ describe("[BDD] Get Signed User", () => {
     // @ts-ignore
     expect(headers.authentication_token).not.toBeDefined()
     // When
-    let noHeadersErr: AxiosError = undefined
+    let requestErr: ApiCallerError = undefined
     try {
-      await axios.get(URL, { headers })
+      await ApiCaller.getSignedUser(headers)
     } catch (err) {
-      noHeadersErr = err
+      requestErr = err
     }
     // Then
-    expect(noHeadersErr).toBeDefined()
-    expect(noHeadersErr.response).toBeDefined()
-    expect(noHeadersErr.response.status).toBeDefined()
-    expect(noHeadersErr.response.status).toBe(401)
-    expect(noHeadersErr.response.data).toBeDefined()
-    expect(noHeadersErr.response.data).toBe(UnauthenticatedRequestError.message)
+    expect(requestErr).toBeDefined()
+    expect(requestErr.status).toBeDefined()
+    expect(requestErr.status).toBe(401)
+    expect(requestErr.body).toBeDefined()
+    expect(requestErr.body).toBe(UnauthenticatedRequestError.message)
   })
 })

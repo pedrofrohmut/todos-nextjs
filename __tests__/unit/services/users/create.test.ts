@@ -1,5 +1,3 @@
-import { compare } from "bcryptjs"
-
 import ConnectionFactory from "../../../../server/utils/connection-factory.util"
 import UserDataAccess from "../../../../server/data-access/implementations/users.data-access"
 import CreateUserService from "../../../../server/services/users/implementations/create.service"
@@ -34,12 +32,16 @@ describe("[Service] Create User Service", () => {
     }
     // Setup 2
     const foundUser2 = await userDataAccess.findByEmail(email)
+    const isPasswordMatch = await FakeUserService.comparePasswordAndHash(
+      password,
+      foundUser2.passwordHash
+    )
     // Evaluation
     expect(createErr).not.toBeDefined()
     expect(foundUser1).toBeNull()
     expect(foundUser2.name).toBe(name)
     expect(foundUser2.email).toBe(email)
-    expect(await compare(password, foundUser2.passwordHash)).toBe(true)
+    expect(isPasswordMatch).toBe(true)
     // Clean Up
     await userDataAccess.deleteByEmail(email)
   })

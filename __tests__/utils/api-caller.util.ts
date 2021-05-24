@@ -19,12 +19,13 @@ export type ApiCallerError = {
 }
 
 export default class ApiCaller {
-  public static async getSignedUser(
-    authHeaders: AuthenticationHeaders
-  ): Promise<ApiCallerResponse<SignedUserType>> {
-    let response: AxiosResponse
+  public static async getSignedUser(headers: AuthenticationHeaders): Promise<ApiCallerResponse<SignedUserType>> {
     try {
-      response = await axios.get(SERVER_URL + "/api/users/signed", { headers: authHeaders })
+      const response = await axios.get(SERVER_URL + "/api/users/signed", { headers })
+      return {
+        status: response.status,
+        body: response.data
+      }
     } catch (err) {
       if (
         err.response &&
@@ -37,10 +38,6 @@ export default class ApiCaller {
         } as ApiCallerError
       }
       throw err
-    }
-    return {
-      status: response.status,
-      body: response.data
     }
   }
 

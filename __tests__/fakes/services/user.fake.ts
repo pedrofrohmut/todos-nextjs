@@ -1,3 +1,4 @@
+import { compare } from "bcryptjs"
 import { v4 as uuid } from "uuid"
 
 import { UserType } from "../../../server/types/users.types"
@@ -15,5 +16,10 @@ export default class FakeUserService {
 
   public static getInvalidUserId(): string {
     return "___INVALID_USER_ID__"
+  }
+
+  public static async comparePasswordAndHash(password: string, hash: string): Promise<boolean> {
+    const isMatch = await compare(password, hash)
+    return isMatch
   }
 }

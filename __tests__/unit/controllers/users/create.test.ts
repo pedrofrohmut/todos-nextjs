@@ -1,5 +1,3 @@
-import axios, {AxiosError, AxiosResponse} from "axios"
-
 import { SERVER_URL } from "../../../constants"
 import ConnectionFactory from "../../../../server/utils/connection-factory.util"
 import UserDataAccess from "../../../../server/data-access/implementations/users.data-access"
