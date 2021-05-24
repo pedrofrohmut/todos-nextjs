@@ -1,4 +1,3 @@
-import { SERVER_URL } from "../../constants"
 import ConnectionFactory from "../../../server/utils/connection-factory.util"
 import UserDataAccess from "../../../server/data-access/implementations/users.data-access"
 import FindUserByEmailService from "../../../server/services/users/implementations/find-by-email.service"
@@ -10,12 +9,13 @@ import {
 import CreateUserService from "../../../server/services/users/implementations/create.service"
 import GeneratePasswordHashService from "../../../server/services/users/implementations/generate-password-hash.service"
 import EmailAlreadyInUseError from "../../../server/errors/users/email-already-in-use.error"
-import ApiCaller, { ApiCallerError, ApiCallerResponse } from "../../utils/api-caller.util"
+
+import UsersApiCaller from "../../utils/users/api-caller.util"
+import { ApiCallerError, ApiCallerResponse } from "../../utils/types/api-caller.types"
 import FakeUserService from "../../fakes/services/user.fake"
 
 // BDD01
 describe("[BDD] Create users", () => {
-  const URL = SERVER_URL + "/api/users"
   const conn = ConnectionFactory.getConnection()
   const userDataAccess = new UserDataAccess(conn)
   const generatePasswordHashService = new GeneratePasswordHashService()
@@ -47,7 +47,7 @@ describe("[BDD] Create users", () => {
     let response: ApiCallerResponse<void> = undefined
     let requestErr: ApiCallerError = undefined
     try {
-      response = await ApiCaller.createUser({ name, email, password })
+      response = await UsersApiCaller.createUser({ name, email, password })
     } catch (err) {
       requestErr = err
     }
@@ -73,7 +73,7 @@ describe("[BDD] Create users", () => {
     // When
     let requestErr: ApiCallerError = undefined
     try {
-      await ApiCaller.createUser({ name, email, password })
+      await UsersApiCaller.createUser({ name, email, password })
     } catch (err) {
       requestErr = err
     }
@@ -96,7 +96,7 @@ describe("[BDD] Create users", () => {
     // When
     let requestErr: ApiCallerError = undefined
     try {
-      await ApiCaller.createUser({ name, email, password })
+      await UsersApiCaller.createUser({ name, email, password })
     } catch (err) {
       requestErr = err
     }
@@ -119,7 +119,7 @@ describe("[BDD] Create users", () => {
     // When
     let requestErr: ApiCallerError = undefined
     try {
-      await ApiCaller.createUser({ name, email, password })
+      await UsersApiCaller.createUser({ name, email, password })
     } catch (err) {
       requestErr = err
     }
@@ -149,7 +149,7 @@ describe("[BDD] Create users", () => {
     // When
     let requestErr: ApiCallerError = undefined
     try {
-      await ApiCaller.createUser({ name: otherName, email, password: otherPassword })
+      await UsersApiCaller.createUser({ name: otherName, email, password: otherPassword })
     } catch (err) {
       requestErr = err
     }

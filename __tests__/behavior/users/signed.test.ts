@@ -7,7 +7,6 @@ import GeneratePasswordHashService from "../../../server/services/users/implemen
 import FindUserByIdService from "../../../server/services/users/implementations/find-by-id.service"
 import { AuthenticationToken, SignedUserType } from "../../../server/types/users.types"
 import ConnectionFactory from "../../../server/utils/connection-factory.util"
-import { SERVER_URL } from "../../constants"
 import DeleteUserByEmailService from "../../../server/services/users/implementations/delete-by-email.service"
 import InvalidTokenError from "../../../server/errors/users/invalid-token.error"
 import UserNotFoundByIdError from "../../../server/errors/users/user-not-found-by-id.error"
@@ -16,13 +15,14 @@ import ExpiredTokenError from "../../../server/errors/users/expired-token.error"
 import TokenWithInvalidUserIdError from "../../../server/errors/users/token-with-invalid-user-id.error"
 import { getValidationMessageForUserId } from "../../../server/validators/users.validator"
 import UnauthenticatedRequestError from "../../../server/errors/request/unauthenticated-request.error"
-import ApiCaller, {ApiCallerError, ApiCallerResponse} from "../../utils/api-caller.util"
+
+import UsersApiCaller from "../../utils/users/api-caller.util"
+import { ApiCallerError, ApiCallerResponse } from "../../utils/types/api-caller.types"
 import FakeUserService from "../../fakes/services/user.fake"
 import FakeTokenService from "../../fakes/services/token.fake"
 
 // BDD03
 describe("[BDD] Get Signed User", () => {
-  const URL = SERVER_URL + "/api/users/signed"
   const conn = ConnectionFactory.getConnection()
   const userDataAccess = new UserDataAccess(conn)
   const findUserByEmailService = new FindUserByEmailService(userDataAccess)
@@ -40,7 +40,6 @@ describe("[BDD] Get Signed User", () => {
   afterAll(async () => {
     await ConnectionFactory.closeConnection(conn)
   })
-
 
   // 31
   test("Scenario 1: valid authToken", async () => {
@@ -70,7 +69,7 @@ describe("[BDD] Get Signed User", () => {
     let response: ApiCallerResponse<SignedUserType> = undefined
     let requestErr: ApiCallerError = undefined
     try {
-      response = await ApiCaller.getSignedUser(headers)
+      response = await UsersApiCaller.getSignedUser(headers)
     } catch (err) {
       requestErr = err
     }
@@ -118,7 +117,7 @@ describe("[BDD] Get Signed User", () => {
     // When
     let requestErr: ApiCallerError = undefined
     try {
-      await ApiCaller.getSignedUser(headers)
+      await UsersApiCaller.getSignedUser(headers)
     } catch (err) {
       requestErr = err
     }
@@ -147,7 +146,7 @@ describe("[BDD] Get Signed User", () => {
     // When
     let requestErr: ApiCallerError = undefined
     try {
-      await ApiCaller.getSignedUser(headers)
+      await UsersApiCaller.getSignedUser(headers)
     } catch (err) {
       requestErr = err
     }
@@ -179,7 +178,7 @@ describe("[BDD] Get Signed User", () => {
     // When
     let requestErr: ApiCallerError = undefined
     try {
-      await ApiCaller.getSignedUser(headers)
+      await UsersApiCaller.getSignedUser(headers)
     } catch (err) {
       requestErr = err
     }
@@ -210,7 +209,7 @@ describe("[BDD] Get Signed User", () => {
     // When
     let requestErr: ApiCallerError = undefined
     try {
-      await ApiCaller.getSignedUser(headers)
+      await UsersApiCaller.getSignedUser(headers)
     } catch (err) {
       requestErr = err
     }
@@ -245,7 +244,7 @@ describe("[BDD] Get Signed User", () => {
     // When
     let requestErr: ApiCallerError = undefined
     try {
-      await ApiCaller.getSignedUser(headers)
+      await UsersApiCaller.getSignedUser(headers)
     } catch (err) {
       requestErr = err
     }
@@ -266,7 +265,7 @@ describe("[BDD] Get Signed User", () => {
     // When
     let requestErr: ApiCallerError = undefined
     try {
-      await ApiCaller.getSignedUser(headers)
+      await UsersApiCaller.getSignedUser(headers)
     } catch (err) {
       requestErr = err
     }

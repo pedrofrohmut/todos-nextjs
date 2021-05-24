@@ -1,25 +1,20 @@
-import axios, { AxiosResponse } from "axios"
+import axios from "axios"
+
+import { SERVER_URL } from "../../constants"
+
 import {
   AuthenticationHeaders,
   CreateUserType,
   SignedUserType,
   SignInCredentialsType,
   SignInDataType
-} from "../../server/types/users.types"
-import { SERVER_URL } from "../constants"
+} from "../../../server/types/users.types"
+import { ApiCallerError, ApiCallerResponse } from "../types/api-caller.types"
 
-export type ApiCallerResponse<T> = {
-  status: number
-  body?: T
-}
-
-export type ApiCallerError = {
-  status: number
-  body: string
-}
-
-export default class ApiCaller {
-  public static async getSignedUser(headers: AuthenticationHeaders): Promise<ApiCallerResponse<SignedUserType>> {
+export default class UsersApiCaller {
+  public static async getSignedUser(
+    headers: AuthenticationHeaders
+  ): Promise<ApiCallerResponse<SignedUserType>> {
     try {
       const response = await axios.get(SERVER_URL + "/api/users/signed", { headers })
       return {

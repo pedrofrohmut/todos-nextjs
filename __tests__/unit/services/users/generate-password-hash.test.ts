@@ -37,7 +37,10 @@ describe("[Service] Generate password hash", () => {
     } catch (err) {
       hashErr = err
     }
-    const isPasswordMatch = await FakeUserService.comparePasswordAndHash(otherPassword, passwordHash)
+    const isPasswordMatch = await FakeUserService.comparePasswordAndHash(
+      otherPassword,
+      passwordHash
+    )
     // Evaluation
     expect(hashErr).not.toBeDefined()
     expect(isPasswordMatch).toBe(false)

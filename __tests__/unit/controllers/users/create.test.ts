@@ -1,12 +1,10 @@
-import { SERVER_URL } from "../../../constants"
 import ConnectionFactory from "../../../../server/utils/connection-factory.util"
 import UserDataAccess from "../../../../server/data-access/implementations/users.data-access"
-import DeleteUserByEmailService from "../../../../server/services/users/implementations/delete-by-email.service"
-import FakeUserService from "../../../fakes/services/user.fake"
-import ApiCaller, {ApiCallerError, ApiCallerResponse} from "../../../utils/api-caller.util"
 import EmailAlreadyInUseError from "../../../../server/errors/users/email-already-in-use.error"
 
-const URL = SERVER_URL + "/api/users"
+import FakeUserService from "../../../fakes/services/user.fake"
+import UsersApiCaller from "../../../utils/users/api-caller.util"
+import { ApiCallerError, ApiCallerResponse } from "../../../utils/types/api-caller.types"
 
 // Case 11
 // E-mail already in use returns 400 and message
@@ -14,7 +12,6 @@ const URL = SERVER_URL + "/api/users"
 describe("[Controller] Create User", () => {
   const conn = ConnectionFactory.getConnection()
   const userDataAccess = new UserDataAccess(conn)
-  const deleteUserByEmailService = new DeleteUserByEmailService(userDataAccess)
 
   beforeAll(async () => {
     await ConnectionFactory.connect(conn)
@@ -35,7 +32,7 @@ describe("[Controller] Create User", () => {
     // When
     let requestErr: ApiCallerError = undefined
     try {
-      await ApiCaller.createUser({ name, email, password })
+      await UsersApiCaller.createUser({ name, email, password })
     } catch (err) {
       requestErr = err
     }
@@ -59,7 +56,7 @@ describe("[Controller] Create User", () => {
     let response: ApiCallerResponse<void> = undefined
     let requestErr: ApiCallerError = undefined
     try {
-      response = await ApiCaller.createUser({ name, email, password })
+      response = await UsersApiCaller.createUser({ name, email, password })
     } catch (err) {
       requestErr = err
     }

@@ -7,7 +7,7 @@ import UserNotFoundByIdError from "../../../../server/errors/users/user-not-foun
 import AuthenticationTokenDecoderService from "../../../../server/services/users/implementations/authentication-token-decoder.service"
 import FindUserByIdService from "../../../../server/services/users/implementations/find-by-id.service"
 import GenerateAuthenticationTokenService from "../../../../server/services/users/implementations/generate-authentication-token.service"
-import {SignedUserType} from "../../../../server/types/users.types"
+import { SignedUserType } from "../../../../server/types/users.types"
 import SignedUseCase from "../../../../server/use-cases/users/implementations/signed.use-case"
 import ConnectionFactory from "../../../../server/utils/connection-factory.util"
 import FakeTokenService from "../../../fakes/services/token.fake"

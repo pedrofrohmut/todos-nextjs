@@ -1,4 +1,3 @@
-import { SERVER_URL } from "../../constants"
 import ConnectionFactory from "../../../server/utils/connection-factory.util"
 import UserDataAccess from "../../../server/data-access/implementations/users.data-access"
 import GeneratePasswordHashService from "../../../server/services/users/implementations/generate-password-hash.service"
@@ -11,13 +10,14 @@ import {
 import DeleteUserByEmailService from "../../../server/services/users/implementations/delete-by-email.service"
 import UserNotFoundByEmailError from "../../../server/errors/users/user-not-found-by-email.error"
 import PasswordIsNotAMatchError from "../../../server/errors/users/password-is-not-a-match.error"
-import ApiCaller, {ApiCallerError, ApiCallerResponse} from "../../utils/api-caller.util"
-import {SignInDataType} from "../../../server/types/users.types"
+import { SignInDataType } from "../../../server/types/users.types"
+
 import FakeUserService from "../../fakes/services/user.fake"
+import UsersApiCaller from "../../utils/users/api-caller.util"
+import { ApiCallerError, ApiCallerResponse } from "../../utils/types/api-caller.types"
 
 // BDD02
 describe("[BDD] Sign In", () => {
-  const URL = SERVER_URL + "/api/users/signin"
   const conn = ConnectionFactory.getConnection()
   const userDataAccess = new UserDataAccess(conn)
   const generatePasswordHashService = new GeneratePasswordHashService()
@@ -49,7 +49,7 @@ describe("[BDD] Sign In", () => {
     let response: ApiCallerResponse<SignInDataType> = undefined
     let requestErr: ApiCallerError = undefined
     try {
-      response = await ApiCaller.signinUser({ email, password })
+      response = await UsersApiCaller.signinUser({ email, password })
     } catch (err) {
       requestErr = err
     }
@@ -82,7 +82,7 @@ describe("[BDD] Sign In", () => {
     // When
     let requestErr: ApiCallerError = undefined
     try {
-      await ApiCaller.signinUser({ email, password })
+      await UsersApiCaller.signinUser({ email, password })
     } catch (err) {
       requestErr = err
     }
@@ -97,7 +97,7 @@ describe("[BDD] Sign In", () => {
   // 23
   test("Scenario 3 - invalid password (value validation)", async () => {
     // Setup
-    const { email }  = FakeUserService.getNew("BDD023")
+    const { email } = FakeUserService.getNew("BDD023")
     const password = ""
     const passwordValidationMessage = getValidationMessageForPassword(password)
     // Given
@@ -105,7 +105,7 @@ describe("[BDD] Sign In", () => {
     // When
     let requestErr: ApiCallerError = undefined
     try {
-      await ApiCaller.signinUser({ email, password })
+      await UsersApiCaller.signinUser({ email, password })
     } catch (err) {
       requestErr = err
     }
@@ -131,7 +131,7 @@ describe("[BDD] Sign In", () => {
     // When
     let requestErr: ApiCallerError = undefined
     try {
-      await ApiCaller.signinUser({ email, password })
+      await UsersApiCaller.signinUser({ email, password })
     } catch (err) {
       requestErr = err
     }
@@ -159,7 +159,7 @@ describe("[BDD] Sign In", () => {
     // Then
     let requestErr: ApiCallerError = undefined
     try {
-      await ApiCaller.signinUser({ email, password: otherPassword })
+      await UsersApiCaller.signinUser({ email, password: otherPassword })
     } catch (err) {
       requestErr = err
     }

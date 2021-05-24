@@ -3,7 +3,7 @@ export default class TokenWithoutUserIdError extends Error {
 
   constructor(msg?: string) {
     if (msg) {
-      super (TokenWithoutUserIdError.message + ". " + msg)
+      super(TokenWithoutUserIdError.message + ". " + msg)
     } else {
       super(TokenWithoutUserIdError.message)
     }

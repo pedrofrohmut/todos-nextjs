@@ -5,10 +5,13 @@ import CheckPasswordService from "../../../../server/services/users/implementati
 import FindUserByEmailService from "../../../../server/services/users/implementations/find-by-email.service"
 import GenerateAuthenticationTokenService from "../../../../server/services/users/implementations/generate-authentication-token.service"
 import GeneratePasswordHashService from "../../../../server/services/users/implementations/generate-password-hash.service"
-import {SignInDataType} from "../../../../server/types/users.types"
+import { SignInDataType } from "../../../../server/types/users.types"
 import SignInUseCase from "../../../../server/use-cases/users/implementations/signin.use-case"
 import ConnectionFactory from "../../../../server/utils/connection-factory.util"
-import {getValidationMessageForEmail, getValidationMessageForPassword} from "../../../../server/validators/users.validator"
+import {
+  getValidationMessageForEmail,
+  getValidationMessageForPassword
+} from "../../../../server/validators/users.validator"
 import FakeUserService from "../../../fakes/services/user.fake"
 
 // Case 18
@@ -101,7 +104,7 @@ describe("[Use Case] Sign in Use Case", () => {
     expect(emailValidationMessage).toBeNull()
     expect(passwordValidationMessage).toBeNull()
     // When
-    let useCaseErr : Error = undefined
+    let useCaseErr: Error = undefined
     let signInData: SignInDataType = undefined
     try {
       signInData = await signInUseCase.execute({ email, password })
@@ -119,7 +122,7 @@ describe("[Use Case] Sign in Use Case", () => {
     expect(signInData.user.email).toBeDefined()
     expect(signInData.user.email).toBe(email)
     expect(signInData.token).toBeDefined()
-    // Clean Up 
+    // Clean Up
     await userDataAccess.deleteByEmail(email)
   })
 })

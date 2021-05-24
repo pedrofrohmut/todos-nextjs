@@ -2,7 +2,7 @@ import { sign, verify, TokenExpiredError, JsonWebTokenError, NotBeforeError } fr
 import { v4 as uuid } from "uuid"
 import ExpiredTokenError from "../../../server/errors/users/expired-token.error"
 import InvalidTokenError from "../../../server/errors/users/invalid-token.error"
-import {AuthenticationToken} from "../../../server/types/users.types"
+import { AuthenticationToken } from "../../../server/types/users.types"
 
 const oneDay = 24 * 60 * 60
 
@@ -23,7 +23,9 @@ export default class FakeTokenService {
 
   public static getWithIvalidUserId(): string {
     const invalidUserId = "___INVALID_USER_ID__"
-    const tokenWithInvalidUserId = sign({ userId: invalidUserId }, process.env.JWT_SECRET, { expiresIn: oneDay })
+    const tokenWithInvalidUserId = sign({ userId: invalidUserId }, process.env.JWT_SECRET, {
+      expiresIn: oneDay
+    })
     return tokenWithInvalidUserId
   }
 

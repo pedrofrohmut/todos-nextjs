@@ -3,7 +3,7 @@ export default class InvalidTokenError extends Error {
 
   constructor(message?: string) {
     if (message) {
-      super(InvalidTokenError.message + ". " +  message)
+      super(InvalidTokenError.message + ". " + message)
     } else {
       super(InvalidTokenError.message)
     }

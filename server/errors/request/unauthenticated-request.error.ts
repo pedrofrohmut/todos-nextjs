@@ -1,5 +1,6 @@
 export default class UnauthenticatedRequestError extends Error {
-  public static message = "The request has no authentication headers (authentication_token) set. And it is required"
+  public static message =
+    "The request has no authentication headers (authentication_token) set. And it is required"
 
   constructor(msg?: string) {
     if (msg) {

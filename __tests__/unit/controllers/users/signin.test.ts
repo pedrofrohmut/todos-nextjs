@@ -2,9 +2,7 @@ import ConnectionFactory from "../../../../server/utils/connection-factory.util"
 import UserDataAccess from "../../../../server/data-access/implementations/users.data-access"
 import CreateUserService from "../../../../server/services/users/implementations/create.service"
 import GeneratePasswordHashService from "../../../../server/services/users/implementations/generate-password-hash.service"
-import ApiCaller, { ApiCallerError, ApiCallerResponse } from "../../../utils/api-caller.util"
 import UserNotFoundByEmailError from "../../../../server/errors/users/user-not-found-by-email.error"
-import FakeUserService from "../../../fakes/services/user.fake"
 import {
   getValidationMessageForEmail,
   getValidationMessageForPassword
@@ -12,6 +10,10 @@ import {
 import PasswordIsNotAMatchError from "../../../../server/errors/users/password-is-not-a-match.error"
 import CheckPasswordService from "../../../../server/services/users/implementations/check-password.service"
 import { SignInDataType } from "../../../../server/types/users.types"
+
+import FakeUserService from "../../../fakes/services/user.fake"
+import UsersApiCaller from "../../../utils/users/api-caller.util"
+import { ApiCallerError, ApiCallerResponse } from "../../../utils/types/api-caller.types"
 
 // Case 17
 // 1 - User not registered return 400 and message
@@ -46,7 +48,7 @@ describe("[Controller] SignIn User", () => {
     // When
     let requestErr: ApiCallerError = undefined
     try {
-      await ApiCaller.signinUser({ email, password })
+      await UsersApiCaller.signinUser({ email, password })
     } catch (err) {
       requestErr = err
     }
@@ -77,7 +79,7 @@ describe("[Controller] SignIn User", () => {
     // When
     let requestErr: ApiCallerError = undefined
     try {
-      await ApiCaller.signinUser({ email, password: otherPassword })
+      await UsersApiCaller.signinUser({ email, password: otherPassword })
     } catch (err) {
       requestErr = err
     }
@@ -107,7 +109,7 @@ describe("[Controller] SignIn User", () => {
     let requestErr: ApiCallerError = undefined
     let response: ApiCallerResponse<SignInDataType> = undefined
     try {
-      response = await ApiCaller.signinUser({ email, password })
+      response = await UsersApiCaller.signinUser({ email, password })
     } catch (err) {
       requestErr = err
     }

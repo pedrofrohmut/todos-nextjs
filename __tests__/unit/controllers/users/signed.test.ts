@@ -6,12 +6,13 @@ import TokenWithInvalidUserIdError from "../../../../server/errors/users/token-w
 import TokenWithoutUserIdError from "../../../../server/errors/users/token-without-user-id.error"
 import UserNotFoundByIdError from "../../../../server/errors/users/user-not-found-by-id.error"
 import GenerateAuthenticationTokenService from "../../../../server/services/users/implementations/generate-authentication-token.service"
-import {SignedUserType} from "../../../../server/types/users.types"
+import { SignedUserType } from "../../../../server/types/users.types"
 import ConnectionFactory from "../../../../server/utils/connection-factory.util"
+
 import FakeTokenService from "../../../fakes/services/token.fake"
 import FakeUserService from "../../../fakes/services/user.fake"
-import ApiCaller, {ApiCallerResponse} from "../../../utils/api-caller.util"
-import ApiCallerError from "../../../utils/errors/api-caller.error"
+import UsersApiCaller from "../../../utils/users/api-caller.util"
+import { ApiCallerError, ApiCallerResponse } from "../../../utils/types/api-caller.types"
 
 // Case 24
 // 1 - No AuthToken in req headers returns 401 and message
@@ -42,7 +43,7 @@ describe("[Controller] Get Signed User", () => {
     let requestErr: ApiCallerError = undefined
     try {
       // @ts-ignore
-      await ApiCaller.getSignedUser(emptyHeaders)
+      await UsersApiCaller.getSignedUser(emptyHeaders)
     } catch (err) {
       requestErr = err
     }
@@ -62,7 +63,7 @@ describe("[Controller] Get Signed User", () => {
     // Test
     let requestErr: ApiCallerError = undefined
     try {
-      await ApiCaller.getSignedUser(headers)
+      await UsersApiCaller.getSignedUser(headers)
     } catch (err) {
       requestErr = err
     }
@@ -82,7 +83,7 @@ describe("[Controller] Get Signed User", () => {
     // Test
     let requestErr: ApiCallerError = undefined
     try {
-      await ApiCaller.getSignedUser(headers)
+      await UsersApiCaller.getSignedUser(headers)
     } catch (err) {
       requestErr = err
     }
@@ -102,7 +103,7 @@ describe("[Controller] Get Signed User", () => {
     // Test
     let requestErr: ApiCallerError = undefined
     try {
-      await ApiCaller.getSignedUser(headers)
+      await UsersApiCaller.getSignedUser(headers)
     } catch (err) {
       requestErr = err
     }
@@ -122,7 +123,7 @@ describe("[Controller] Get Signed User", () => {
     // Test
     let requestErr: ApiCallerError = undefined
     try {
-      await ApiCaller.getSignedUser(headers)
+      await UsersApiCaller.getSignedUser(headers)
     } catch (err) {
       requestErr = err
     }
@@ -145,7 +146,7 @@ describe("[Controller] Get Signed User", () => {
     // Test
     let requestErr: ApiCallerError = undefined
     try {
-      await ApiCaller.getSignedUser(headers)
+      await UsersApiCaller.getSignedUser(headers)
     } catch (err) {
       requestErr = err
     }
@@ -168,7 +169,7 @@ describe("[Controller] Get Signed User", () => {
     let requestErr: ApiCallerError = undefined
     let response: ApiCallerResponse<SignedUserType> = undefined
     try {
-      response = await ApiCaller.getSignedUser(headers)
+      response = await UsersApiCaller.getSignedUser(headers)
     } catch (err) {
       requestErr = err
     }

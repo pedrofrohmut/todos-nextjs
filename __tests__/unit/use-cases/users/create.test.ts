@@ -53,7 +53,7 @@ describe("[Use Case] Create User", () => {
     // Test
     let useCaseErr: Error = undefined
     try {
-    await createUserService.execute({ name, email, password })
+      await createUserService.execute({ name, email, password })
     } catch (err) {
       useCaseErr = err
     }
