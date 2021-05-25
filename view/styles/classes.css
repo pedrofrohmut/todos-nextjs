@@ -23,6 +23,29 @@
   color: var(--mainOrange-400);
 }
 
+.formGroup .error {
+  margin-top: 1rem;
+}
+
+.error {
+  padding: 1rem;
+  color: var(--redError, red);
+  font-size: 1.1rem;
+  letter-spacing: 1.0px;
+  opacity: 0.97;
+  background-color: var(--redErrorBackground, transparent);
+  border-radius: 0.4rem;
+}
+
+.success {
+  padding: 1rem;
+  color: var(--greenSuccess, green);
+  font-size: 1.1rem;
+  letter-spacing: 1px;
+  background-color: var(--greenSuccessBackground, transparent);
+  border-radius: 0.4rem;
+}
+
 .questionAndLink {
   text-align: center;
   font-size: 1.2rem;

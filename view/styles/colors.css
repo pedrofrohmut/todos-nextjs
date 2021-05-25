@@ -18,4 +18,23 @@
   --mainOrange-700: #86592d;
   --mainOrange-800: #604020;
   --mainOrange-900: #392613;
+
+  --fullWhite: #fff;
+  --fullBalck: #000;
+
+  --grey-100: #e3e3e3;
+  --grey-200: #d5d5d5;
+  --grey-300: #c7c7c7;
+  --grey-400: #aaa;
+  --grey-500: #888;
+  --grey-600: #666;
+  --grey-700: #444;
+  --grey-800: #343434;
+  --grey-900: #121212;
+
+  --redError: #ff3333;
+  --redErrorBackground: #ff333333;
+
+  --greenSuccess: #33cc33;
+  --greenSuccessBackground: #33cc3333;
 }

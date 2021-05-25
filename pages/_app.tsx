@@ -2,9 +2,9 @@ import { ReactElement } from "react"
 import { AppProps } from "next/app"
 import Head from "next/head"
 
-import "../shared/styles/globals.css"
-import "../shared/styles/classes.css"
-import "../shared/styles/colors.css"
+import "../view/styles/globals.css"
+import "../view/styles/classes.css"
+import "../view/styles/colors.css"
 
 const App = ({ Component, pageProps }: AppProps): ReactElement => (
   <>

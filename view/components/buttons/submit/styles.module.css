@@ -10,6 +10,18 @@
   width: 100%;
 }
 
+.disabled {
+  composes: container;
+  background-color: var(--redError);
+  color: var(--grey-200);
+}
+
+.submitting {
+  composes: container;
+  background-color: var(--grey-400, lightgrey);
+  color: var(--grey-100);
+}
+
 .text {
   margin-left: 0.5em;
 }

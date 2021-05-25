@@ -45,7 +45,7 @@ X - Review all the custom Errors
     X - Wipe the external dependencies in the tests (use adapters when needed)
     0 - Change to Given/When/Then
 
-0 - All types moved to type files and no lost in classes
+0 - All types moved to type files and not lost in classes
 
 0 - Filters to request for global use (filter bodyIsDefined, AuthTokenIsValid)
 
