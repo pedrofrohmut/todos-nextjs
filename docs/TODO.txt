@@ -59,6 +59,7 @@ X - Review all the custom Errors
 
 0 - Form validation in general
   0 - Send submitButton props every page
+  0 - Redirect to server error page when the error is unexpected
 
 0 - HATEOAS to api routes
 

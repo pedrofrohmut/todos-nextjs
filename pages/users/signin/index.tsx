@@ -13,10 +13,11 @@ import signInAction from "../../../view/context/actions/users/signin.action"
 import AppContext from "../../../view/context"
 import isUserLoggedIn from "../../../view/utils/is-user-logged-in.util"
 import HREFS from "../../../view/constants/hrefs.enum"
+import RequestErrorAlert from "../../../view/components/alerts/request-error"
 
 const SignInPage = (): ReactElement => {
   const router = useRouter()
-  const { dispatch } = useContext(AppContext)
+  const { state, dispatch } = useContext(AppContext)
 
   const [email, setEmail] = useState<string>("")
   const [password, setPassword] = useState<string>("")
@@ -28,15 +29,19 @@ const SignInPage = (): ReactElement => {
   const [isSubmitting, setIsSubmitting] = useState<boolean>(false)
 
   const [requestErr, setRequestErr] = useState<string>("")
-  const [requestSuccess, setRequestSuccess] = useState<string>("")
 
   useEffect(() => {
-    isUserLoggedIn(dispatch).then(isLoggedIn => {
-      if (isLoggedIn) {
-        router.push(HREFS.TASKS_LIST)
-      }
-    })
-  })
+    if (state.user !== undefined) {
+      // Avoid request when context is good
+      router.push(HREFS.TASKS_LIST)
+    } else {
+      isUserLoggedIn(dispatch).then(isLoggedIn => {
+        if (isLoggedIn) {
+          router.push(HREFS.TASKS_LIST)
+        }
+      })
+    }
+  }, [state.user])
 
   const handleChange = (
     value: string,
@@ -70,35 +75,30 @@ const SignInPage = (): ReactElement => {
     setPasswordError(passwordValidationMessage || "")
     if (emailValidationMessage !== null || passwordValidationMessage !== null) {
       setIsDisabled(true)
-    } else {
-      try {
-        const response = await UsersApi.signinUser({ email, password })
-        setRequestErr("")
-        setEmail("")
-        setPassword("")
-        setRequestSuccess(`Hello ${email}. You signed in with success.`)
-        const payload = {
-          user: {
-            id: response.body.user.id,
-            name: response.body.user.name,
-            email: response.body.user.email,
-            token: response.body.token
-          }
-        }
-        signInAction(dispatch, payload)
-        setTimeout(() => {
-          router.push("/tasks/list")
-        }, 2000)
-      } catch (err) {
-        if (err.body) {
-          setRequestErr(err.body)
-          setRequestSuccess("")
-        } else {
-          console.log(err)
+      setIsSubmitting(false)
+    }
+    try {
+      const response = await UsersApi.signinUser({ email, password })
+      const payload = {
+        user: {
+          id: response.body.user.id,
+          name: response.body.user.name,
+          email: response.body.user.email,
+          token: response.body.token
         }
       }
+      setRequestErr("")
+      signInAction(dispatch, payload)
+      router.push("/tasks/list")
+    } catch (err) {
+      setIsSubmitting(false)
+      if (err.body) {
+        setRequestErr(err.body)
+      } else {
+        router.push(HREFS.ERRORS_SERVER)
+        console.log(err)
+      }
     }
-    setIsSubmitting(false)
   }
 
   return (
@@ -106,13 +106,8 @@ const SignInPage = (): ReactElement => {
       <h1 className="pageTitle">Sign in</h1>
       <form onSubmit={handleSubmit}>
         {requestErr !== "" && (
-          <div className="formGroup">
-            <div className="error">{requestErr}</div>
-          </div>
-        )}
-        {requestSuccess !== "" && (
-          <div className="formGroup">
-            <div className="success">{requestSuccess}</div>
+          <div className="formAlertContainer">
+            <RequestErrorAlert requestErr={requestErr} />
           </div>
         )}
         <div className="formGroup">

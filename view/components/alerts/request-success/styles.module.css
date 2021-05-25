@@ -1,0 +1,8 @@
+.container {
+  padding: 1rem;
+  color: var(--greenSuccess, green);
+  font-size: 1.1rem;
+  letter-spacing: 1px;
+  background-color: var(--greenSuccessBackground, transparent);
+  border-radius: 0.4rem;
+}

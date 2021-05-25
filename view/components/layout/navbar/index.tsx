@@ -48,6 +48,7 @@ const Navbar = (): ReactElement => {
 
   return (
     <>        
+      <pre>{JSON.stringify(state, null, 4)}</pre>
       <div className={styles.container}>
         <div className={styles.innerContainer}>
           <span className={styles.userName}>Welcome {state.user.name}</span>

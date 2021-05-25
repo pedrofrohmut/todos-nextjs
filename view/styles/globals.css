@@ -72,6 +72,10 @@ input[type="submit"] {
   width: 100%;
 }
 
+button[type="submit"] {
+  margin-top: 1rem;
+}
+
 textarea {
   resize: none;
 }

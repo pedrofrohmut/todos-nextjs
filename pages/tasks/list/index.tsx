@@ -19,14 +19,16 @@ const PLACAHOLDER_TASKS: TaskType[] = [
 
 const TaskListPage = (): ReactElement => {
   const router = useRouter()
-  const { dispatch } = useContext(AppContext)
+  const { state, dispatch } = useContext(AppContext)
 
   useEffect(() => {
-    isUserLoggedIn(dispatch).then(isLoggedIn => {
-      if (!isLoggedIn) {
-        router.push(HREFS.USERS_SIGNIN)
-      }
-    })
+    if (state.user === undefined) {
+      isUserLoggedIn(dispatch).then(isLoggedIn => {
+        if (!isLoggedIn) {
+          router.push(HREFS.USERS_SIGNIN)
+        }
+      })
+    }
   })
 
   return (
