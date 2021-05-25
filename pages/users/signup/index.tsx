@@ -1,8 +1,23 @@
-import { ReactElement } from "react"
+import { ReactElement, useContext, useEffect } from "react"
 import Link from "next/link"
-import SubmitButton from "../../../shared/components/buttons/submit"
+import SubmitButton from "../../../view/components/buttons/submit"
+import isUserLoggedIn from "../../../view/utils/is-user-logged-in.util"
+import { useRouter } from "next/router"
+import AppContext from "../../../view/context"
+import HREFS from "../../../view/constants/hrefs.enum"
 
 const SignUpPage = (): ReactElement => {
+  const router = useRouter()
+  const { dispatch } = useContext(AppContext)
+
+  useEffect(() => {
+    isUserLoggedIn(dispatch).then(isLoggedIn => {
+      if (isLoggedIn) {
+        router.push(HREFS.TASKS_LIST)
+      }
+    })
+  })
+
   return (
     <div className="pageContainer">
       <h1 className="pageTitle">Sign Up</h1>
@@ -38,3 +53,7 @@ const SignUpPage = (): ReactElement => {
 }
 
 export default SignUpPage
+
+function dispatch(dispatch: any) {
+  throw new Error("Function not implemented.")
+}

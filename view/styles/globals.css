@@ -31,7 +31,7 @@ a {
   cursor: pointer;
 }
 
-a.nav-link::after {
+a.navLink::after {
   content: "";
   position: absolute;
   left: 1px;
@@ -42,8 +42,8 @@ a.nav-link::after {
   display: none;
 }
 
-a.nav-link:hover::after,
-a.nav-link:focus::after {
+a.navLink:hover::after,
+a.navLink:focus::after {
   display: block;
 }
 
@@ -78,4 +78,8 @@ textarea {
 
 input[type="checkbox"] {
   margin-right: 1.2rem;
+}
+
+#__next {
+  height: 100vh;
 }

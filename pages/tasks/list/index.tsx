@@ -1,9 +1,12 @@
-import { ReactElement } from "react"
+import { ReactElement, useContext, useEffect } from "react"
 import Link from "next/link"
+import { useRouter } from "next/router"
 
-import TaskListItem, { TaskType } from "../../../shared/components/tasks/task-list-item"
-
-import AddButton from "../../../shared/components/buttons/add"
+import AddButton from "../../../view/components/buttons/add"
+import AppContext from "../../../view/context"
+import HREFS from "../../../view/constants/hrefs.enum"
+import TaskListItem, { TaskType } from "../../../view/components/tasks/task-list-item"
+import isUserLoggedIn from "../../../view/utils/is-user-logged-in.util"
 
 const PLACAHOLDER_TASKS: TaskType[] = [
   { id: "1", name: "Routine", description: "", userId: "1" },
@@ -15,6 +18,17 @@ const PLACAHOLDER_TASKS: TaskType[] = [
 ]
 
 const TaskListPage = (): ReactElement => {
+  const router = useRouter()
+  const { dispatch } = useContext(AppContext)
+
+  useEffect(() => {
+    isUserLoggedIn(dispatch).then(isLoggedIn => {
+      if (!isLoggedIn) {
+        router.push(HREFS.USERS_SIGNIN)
+      }
+    })
+  })
+
   return (
     <div className="pageContainer">
       <div className="pageTitle">Tasks</div>

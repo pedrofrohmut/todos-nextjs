@@ -1,16 +1,22 @@
-import { Dispatch, ReactElement, SetStateAction, useState } from "react"
+import { Dispatch, ReactElement, SetStateAction, useContext, useEffect, useState } from "react"
 import Link from "next/link"
 import { useRouter } from "next/router"
 
-import SubmitButton from "../../../view/components/buttons/submit"
 import {
   getValidationMessageForEmail,
   getValidationMessageForPassword
 } from "../../../server/validators/users.validator"
+import SubmitButton from "../../../view/components/buttons/submit"
 import UsersApi from "../../../view/api/users.api"
+
+import signInAction from "../../../view/context/actions/users/signin.action"
+import AppContext from "../../../view/context"
+import isUserLoggedIn from "../../../view/utils/is-user-logged-in.util"
+import HREFS from "../../../view/constants/hrefs.enum"
 
 const SignInPage = (): ReactElement => {
   const router = useRouter()
+  const { dispatch } = useContext(AppContext)
 
   const [email, setEmail] = useState<string>("")
   const [password, setPassword] = useState<string>("")
@@ -23,6 +29,14 @@ const SignInPage = (): ReactElement => {
 
   const [requestErr, setRequestErr] = useState<string>("")
   const [requestSuccess, setRequestSuccess] = useState<string>("")
+
+  useEffect(() => {
+    isUserLoggedIn(dispatch).then(isLoggedIn => {
+      if (isLoggedIn) {
+        router.push(HREFS.TASKS_LIST)
+      }
+    })
+  })
 
   const handleChange = (
     value: string,
@@ -59,11 +73,19 @@ const SignInPage = (): ReactElement => {
     } else {
       try {
         const response = await UsersApi.signinUser({ email, password })
-        console.log(response)
         setRequestErr("")
         setEmail("")
         setPassword("")
         setRequestSuccess(`Hello ${email}. You signed in with success.`)
+        const payload = {
+          user: {
+            id: response.body.user.id,
+            name: response.body.user.name,
+            email: response.body.user.email,
+            token: response.body.token
+          }
+        }
+        signInAction(dispatch, payload)
         setTimeout(() => {
           router.push("/tasks/list")
         }, 2000)

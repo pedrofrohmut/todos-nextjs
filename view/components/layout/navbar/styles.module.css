@@ -1,0 +1,32 @@
+.container {
+  padding: 0.5rem 0;
+}
+
+.innerContainer {
+  max-width: 720px;
+  margin: 0 auto;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.userName {
+  font-size: 3.2rem;
+  color: var(--fullWhite, white);
+  opacity: 0.4;
+}
+
+.signOutButton {
+  color: var(--fullWhite);
+  opacity: 0.4;
+  margin-left: 1rem;
+}
+
+.nav li {
+  display: inline-block;
+  margin-right: 1rem;
+}
+
+.nav li:last-child {
+  margin-right: 0;
+}

@@ -1,8 +1,23 @@
-import { ReactElement } from "react"
+import { useRouter } from "next/router"
+import { ReactElement, useContext, useEffect } from "react"
 
-import SubmitButton from "../../../shared/components/buttons/submit"
+import SubmitButton from "../../../view/components/buttons/submit"
+import HREFS from "../../../view/constants/hrefs.enum"
+import AppContext from "../../../view/context"
+import isUserLoggedIn from "../../../view/utils/is-user-logged-in.util"
 
 const AddTaskPage = (): ReactElement => {
+  const router = useRouter()
+  const { dispatch } = useContext(AppContext)
+
+  useEffect(() => {
+    isUserLoggedIn(dispatch).then((isLoggedIn: boolean) => {
+      if (!isLoggedIn) {
+        router.push(HREFS.USERS_SIGNIN)
+      }
+    })
+  })
+
   return (
     <div className="pageContainer">
       <h1 className="pageTitle">Add Task</h1>

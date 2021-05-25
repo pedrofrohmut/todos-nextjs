@@ -58,6 +58,7 @@ X - Review all the custom Errors
 0 - Connect cruds to views
 
 0 - Form validation in general
+  0 - Send submitButton props every page
 
 0 - HATEOAS to api routes
 
