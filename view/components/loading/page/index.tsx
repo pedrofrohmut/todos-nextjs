@@ -1,12 +1,10 @@
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
-import { ReactNode } from "react"
+import { ReactElement } from "react"
 import { faSpinner } from "@fortawesome/free-solid-svg-icons"
 
-import WithHomeRoute from "../view/components/routes/with-home-route"
+import styles from "./styles.module.css"
 
-import styles from "./home/styles.module.css"
-
-const IndexPage = (): ReactNode => {
+const LoadingPage = (): ReactElement => {
   return (
     <div className={styles.container}>
       <FontAwesomeIcon icon={faSpinner} spin size="4x" />
@@ -14,4 +12,4 @@ const IndexPage = (): ReactNode => {
   )
 }
 
-export default WithHomeRoute(IndexPage)
+export default LoadingPage

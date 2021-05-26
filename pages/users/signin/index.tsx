@@ -1,4 +1,4 @@
-import { Dispatch, ReactElement, SetStateAction, useContext, useEffect, useState } from "react"
+import { Dispatch, ReactElement, SetStateAction, useContext, useState } from "react"
 import Link from "next/link"
 import { useRouter } from "next/router"
 
@@ -8,12 +8,12 @@ import {
 } from "../../../server/validators/users.validator"
 import SubmitButton from "../../../view/components/buttons/submit"
 import UsersApi from "../../../view/api/users.api"
+import HREFS from "../../../view/constants/hrefs.enum"
+import RequestErrorAlert from "../../../view/components/alerts/request-error"
+import WithGuestRoute from "../../../view/components/routes/with-guest-route"
 
 import signInAction from "../../../view/context/actions/users/signin.action"
 import AppContext from "../../../view/context"
-import isUserLoggedIn from "../../../view/utils/is-user-logged-in.util"
-import HREFS from "../../../view/constants/hrefs.enum"
-import RequestErrorAlert from "../../../view/components/alerts/request-error"
 
 type Fields = {
   email: string
@@ -22,7 +22,7 @@ type Fields = {
 
 const SignInPage = (): ReactElement => {
   const router = useRouter()
-  const { state, dispatch } = useContext(AppContext)
+  const { dispatch } = useContext(AppContext)
 
   const [email, setEmail] = useState<string>("")
   const [password, setPassword] = useState<string>("")
@@ -34,18 +34,6 @@ const SignInPage = (): ReactElement => {
   const [isSubmitting, setIsSubmitting] = useState<boolean>(false)
 
   const [requestErr, setRequestErr] = useState<string>("")
-
-  useEffect(() => {
-    if (state.user !== undefined) {
-      router.push(HREFS.TASKS_LIST)
-    } else {
-      isUserLoggedIn(dispatch).then(isLoggedIn => {
-        if (isLoggedIn) {
-          router.push(HREFS.TASKS_LIST)
-        }
-      })
-    }
-  }, [state.user])
 
   const validate = ({ email, password }: Fields): boolean => {
     const emailValidationMessage = getValidationMessageForEmail(email)
@@ -142,4 +130,4 @@ const SignInPage = (): ReactElement => {
   )
 }
 
-export default SignInPage
+export default WithGuestRoute(SignInPage)

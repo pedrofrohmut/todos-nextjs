@@ -1,25 +1,9 @@
-import { useRouter } from "next/router"
-import { ReactElement, useContext, useEffect } from "react"
+import { ReactElement } from "react"
 
-import AppContext from "../../../view/context"
-import HREFS from "../../../view/constants/hrefs.enum"
 import SubmitButton from "../../../view/components/buttons/submit"
-import isUserLoggedIn from "../../../view/utils/is-user-logged-in.util"
+import WithUserRoute from "../../../view/components/routes/with-user-route"
 
 const EditTaskPage = (): ReactElement => {
-  const router = useRouter()
-  const { state, dispatch } = useContext(AppContext)
-
-  useEffect(() => {
-    if (state.user === undefined) {
-      isUserLoggedIn(dispatch).then(isLoggedIn => {
-        if (!isLoggedIn) {
-          router.push(HREFS.USERS_SIGNIN)
-        }
-      })
-    }
-  }, [state.user])
-
   return (
     <div className="pageContainer">
       <h1 className="pageTitle">Edit Task</h1>
@@ -40,4 +24,4 @@ const EditTaskPage = (): ReactElement => {
   )
 }
 
-export default EditTaskPage
+export default WithUserRoute(EditTaskPage)

@@ -1,5 +1,5 @@
-import {ReactElement, useContext, useState} from "react"
-import {useRouter} from "next/router"
+import { ReactElement, useContext, useState } from "react"
+import { useRouter } from "next/router"
 import Link from "next/link"
 
 import AppContext from "../../../context"
@@ -11,7 +11,7 @@ import RequestSuccessAlert from "../../alerts/request-success"
 
 const Navbar = (): ReactElement => {
   const router = useRouter()
-  const {state, dispatch} = useContext(AppContext)
+  const { state, dispatch } = useContext(AppContext)
 
   const [signOutMessage, setSignOutMessage] = useState("")
 
@@ -25,11 +25,16 @@ const Navbar = (): ReactElement => {
   }
 
   if (!state || !state.user || !state.user.name) {
-    return ( 
+    return (
       <div className={styles.container}>
         <div className={styles.innerContainer}>
           <nav className={styles.nav}>
             <ul>
+              <li>
+                <Link href={HREFS.HOME}>
+                  <a className="navLink">Home</a>
+                </Link>
+              </li>
               <li>
                 <Link href={HREFS.USERS_SIGNIN}>
                   <a className="navLink">Sign In</a>
@@ -60,13 +65,25 @@ const Navbar = (): ReactElement => {
               </Link>
             </li>
             <li>
-              <a onClick={handleSignOut} className={styles.signOutButton}>Sign Out</a>
+              <Link href={HREFS.USERS_SIGNIN}>
+                <a className="navLink">Sign In</a>
+              </Link>
+            </li>
+            <li>
+              <Link href={HREFS.USERS_SIGNUP}>
+                <a className="navLink">Sign Up</a>
+              </Link>
+            </li>
+            <li>
+              <a onClick={handleSignOut} className={styles.signOutButton}>
+                Sign Out
+              </a>
             </li>
           </nav>
         </div>
       </div>
       {signOutMessage !== "" && (
-      <div className={styles.signOutMessage}>
+        <div className={styles.signOutMessage}>
           <RequestSuccessAlert message={signOutMessage} />
         </div>
       )}

@@ -5,8 +5,8 @@ import { AppContextType, DispatchType } from "./types.context"
 
 const initialDispatch: DispatchType = () => undefined
 
-const AppContext = createContext<AppContextType>({ 
-  state: initialState, 
+const AppContext = createContext<AppContextType>({
+  state: initialState,
   dispatch: initialDispatch
 })
 

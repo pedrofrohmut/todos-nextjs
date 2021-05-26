@@ -2,12 +2,10 @@
 /*
 
 # Except web-app:
-!/pages
-!/shared
-
-!/server
-
 !/__tests__
+!/pages
+!/server
+!/view
 
 !jest.config;ts
 !babel.config.js

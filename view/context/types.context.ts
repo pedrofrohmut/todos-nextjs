@@ -16,7 +16,7 @@ export type SignInPayloadType = {
   }
 }
 
-export type ActionType = { type: "SIGNIN", payload: SignInPayloadType } | { type: "SIGNOUT" }
+export type ActionType = { type: "SIGNIN"; payload: SignInPayloadType } | { type: "SIGNOUT" }
 
 export type DispatchType = (action: ActionType) => void
 

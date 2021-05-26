@@ -1,15 +1,11 @@
-import { ReactElement, useContext, useEffect, useState } from "react"
+import { ReactElement, useState } from "react"
 import Link from "next/link"
 
-import TodoListItem, { TodoType } from "../../../view/components/todos/todo-list-item"
-
 import AddButton from "../../../view/components/buttons/add"
+import TodoListItem, { TodoType } from "../../../view/components/todos/todo-list-item"
+import WithUserRoute from "../../../view/components/routes/with-user-route"
 
 import styles from "./styles.module.css"
-import AppContext from "../../../view/context"
-import { useRouter } from "next/router"
-import isUserLoggedIn from "../../../view/utils/is-user-logged-in.util"
-import HREFS from "../../../view/constants/hrefs.enum"
 
 // PLACAHOLDER  VALUES
 const id = "1"
@@ -50,21 +46,8 @@ const countIncomplete = (todos: TodoType[]): number =>
   todos.reduce((acc: number, curr: TodoType) => acc + (curr.isComplete ? 0 : 1), 0)
 
 const TaskDetailsPage = (): ReactElement => {
-  const router = useRouter()
-  const { state, dispatch } = useContext(AppContext)
-
   const [openTodoId, setOpenTodoId] = useState("")
   const incompleteTodosCount = countIncomplete(todos)
-
-  useEffect(() => {
-    if (state.user === undefined) {
-      isUserLoggedIn(dispatch).then(isLoggedIn => {
-        if (!isLoggedIn) {
-          router.push(HREFS.USERS_SIGNIN)
-        }
-      })
-    }
-  }, [state.user])
 
   const setIsOpen = (id: string): void => {
     if (id === openTodoId) {
@@ -109,4 +92,4 @@ const TaskDetailsPage = (): ReactElement => {
   )
 }
 
-export default TaskDetailsPage
+export default WithUserRoute(TaskDetailsPage)

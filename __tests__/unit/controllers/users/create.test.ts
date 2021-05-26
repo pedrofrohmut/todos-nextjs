@@ -6,7 +6,6 @@ import FakeUserService from "../../../fakes/services/user.fake"
 import UsersApi from "../../../../view/api/users.api"
 import { ApiError, ApiResponse } from "../../../../view/api/api.types"
 
-
 // Case 11
 // E-mail already in use returns 400 and message
 // Valid creadentials create user and returns 201
