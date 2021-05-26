@@ -162,12 +162,12 @@ const SignUpPage = (): ReactElement => {
       <form onSubmit={handleSubmit}>
         {requestErr !== "" && (
           <div className="formAlertContainer">
-            <RequestErrorAlert requestErr={requestErr} />
+            <RequestErrorAlert message={requestErr} />
           </div>
         )}
         {requestSuccess !== "" && (
           <div className="formAlertContainer">
-            <RequestSuccessAlert requestSuccess={requestSuccess} />
+            <RequestSuccessAlert message={requestSuccess} />
           </div>
         )}
         <div className="formGroup">

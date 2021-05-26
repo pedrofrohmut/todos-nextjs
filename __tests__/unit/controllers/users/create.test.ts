@@ -3,8 +3,9 @@ import UserDataAccess from "../../../../server/data-access/implementations/users
 import EmailAlreadyInUseError from "../../../../server/errors/users/email-already-in-use.error"
 
 import FakeUserService from "../../../fakes/services/user.fake"
-import UsersApiCaller from "../../../utils/users/api-caller.util"
-import { ApiCallerError, ApiCallerResponse } from "../../../utils/types/api-caller.types"
+import UsersApi from "../../../../view/api/users.api"
+import { ApiError, ApiResponse } from "../../../../view/api/api.types"
+
 
 // Case 11
 // E-mail already in use returns 400 and message
@@ -30,9 +31,9 @@ describe("[Controller] Create User", () => {
     expect(createdUser).not.toBeNull()
     expect(createdUser.email).toBe(email)
     // When
-    let requestErr: ApiCallerError = undefined
+    let requestErr: ApiError = undefined
     try {
-      await UsersApiCaller.createUser({ name, email, password })
+      await UsersApi.createUser({ name, email, password })
     } catch (err) {
       requestErr = err
     }
@@ -53,10 +54,10 @@ describe("[Controller] Create User", () => {
     // Given
     expect(foundUser).toBeNull()
     // When
-    let response: ApiCallerResponse<void> = undefined
-    let requestErr: ApiCallerError = undefined
+    let response: ApiResponse<void> = undefined
+    let requestErr: ApiError = undefined
     try {
-      response = await UsersApiCaller.createUser({ name, email, password })
+      response = await UsersApi.createUser({ name, email, password })
     } catch (err) {
       requestErr = err
     }

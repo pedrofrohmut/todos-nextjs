@@ -2,7 +2,7 @@ X - Style: use css modules for local styling
 
 X - Change buttons from css classes to complete shared components (edit/submit/add)
 
-X - Change id to uuidv4
+X - DATABASE: Change id to uuidv4
 
 X - api calls
 
@@ -38,18 +38,17 @@ X - Review UserDataAccess tests and add the missing ones
 
 X - Review all the custom Errors
 
+X - Authentication Context for logged in users (useReducer, and logout button in layout)
+
 0 - Review all tests: to see if there are 
     X - No expects inside conditionals or catch blocks
     X - use try/catch form success tests too
     X - Use ApiCaller for api requests
     X - Wipe the external dependencies in the tests (use adapters when needed)
     0 - Change to Given/When/Then
+    0 - No more bahavior tests (controller test will substitute)
 
-0 - All types moved to type files and not lost in classes
-
-0 - Filters to request for global use (filter bodyIsDefined, AuthTokenIsValid)
-
-0 - Authentication Context for logged in users (useReducer, and logout button in layout)
+0 - SERVER: All types moved to type files and not lost in classes
 
 0 - CRUD for Tasks
 
@@ -71,8 +70,8 @@ X - Review all the custom Errors
 
 -----------------
 
- 0 for done
+ X for done
 
- X for NOT done
+ 0 for NOT done
 
 -----------------

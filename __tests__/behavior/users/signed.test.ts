@@ -16,8 +16,8 @@ import TokenWithInvalidUserIdError from "../../../server/errors/users/token-with
 import { getValidationMessageForUserId } from "../../../server/validators/users.validator"
 import UnauthenticatedRequestError from "../../../server/errors/request/unauthenticated-request.error"
 
-import UsersApiCaller from "../../utils/users/api-caller.util"
-import { ApiCallerError, ApiCallerResponse } from "../../utils/types/api-caller.types"
+import UsersApiCaller from "../../../view/api/users.api"
+import { ApiError, ApiResponse } from "../../../view/api/api.types"
 import FakeUserService from "../../fakes/services/user.fake"
 import FakeTokenService from "../../fakes/services/token.fake"
 
@@ -66,8 +66,8 @@ describe("[BDD] Get Signed User", () => {
     expect(headers.authentication_token).toBeDefined()
     expect(headers.authentication_token).toBe(token)
     // When
-    let response: ApiCallerResponse<SignedUserType> = undefined
-    let requestErr: ApiCallerError = undefined
+    let response: ApiResponse<SignedUserType> = undefined
+    let requestErr: ApiError = undefined
     try {
       response = await UsersApiCaller.getSignedUser(headers)
     } catch (err) {
@@ -115,7 +115,7 @@ describe("[BDD] Get Signed User", () => {
     expect(decoded.userId).toBeDefined()
     expect(foundUserById).toBeNull()
     // When
-    let requestErr: ApiCallerError = undefined
+    let requestErr: ApiError = undefined
     try {
       await UsersApiCaller.getSignedUser(headers)
     } catch (err) {
@@ -144,7 +144,7 @@ describe("[BDD] Get Signed User", () => {
     expect(headers.authentication_token).toBeDefined()
     expect(headers.authentication_token).toBe(invalidToken)
     // When
-    let requestErr: ApiCallerError = undefined
+    let requestErr: ApiError = undefined
     try {
       await UsersApiCaller.getSignedUser(headers)
     } catch (err) {
@@ -176,7 +176,7 @@ describe("[BDD] Get Signed User", () => {
     expect(headers.authentication_token).toBe(token)
     expect(decoded.userId).not.toBeDefined()
     // When
-    let requestErr: ApiCallerError = undefined
+    let requestErr: ApiError = undefined
     try {
       await UsersApiCaller.getSignedUser(headers)
     } catch (err) {
@@ -207,7 +207,7 @@ describe("[BDD] Get Signed User", () => {
     expect(headers.authentication_token).toBe(token)
     expect(decodeTokenErr instanceof ExpiredTokenError).toBe(true)
     // When
-    let requestErr: ApiCallerError = undefined
+    let requestErr: ApiError = undefined
     try {
       await UsersApiCaller.getSignedUser(headers)
     } catch (err) {
@@ -242,7 +242,7 @@ describe("[BDD] Get Signed User", () => {
     expect(decoded.userId).toBeDefined()
     expect(userIdValidationMessage).not.toBeNull()
     // When
-    let requestErr: ApiCallerError = undefined
+    let requestErr: ApiError = undefined
     try {
       await UsersApiCaller.getSignedUser(headers)
     } catch (err) {
@@ -263,7 +263,7 @@ describe("[BDD] Get Signed User", () => {
     // @ts-ignore
     expect(headers.authentication_token).not.toBeDefined()
     // When
-    let requestErr: ApiCallerError = undefined
+    let requestErr: ApiError = undefined
     try {
       await UsersApiCaller.getSignedUser(headers)
     } catch (err) {

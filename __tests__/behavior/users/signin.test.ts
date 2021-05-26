@@ -13,8 +13,8 @@ import PasswordIsNotAMatchError from "../../../server/errors/users/password-is-n
 import { SignInDataType } from "../../../server/types/users.types"
 
 import FakeUserService from "../../fakes/services/user.fake"
-import UsersApiCaller from "../../utils/users/api-caller.util"
-import { ApiCallerError, ApiCallerResponse } from "../../utils/types/api-caller.types"
+import UsersApiCaller from "../../../view/api/users.api"
+import { ApiError, ApiResponse } from "../../../view/api/api.types"
 
 // BDD02
 describe("[BDD] Sign In", () => {
@@ -46,8 +46,8 @@ describe("[BDD] Sign In", () => {
     expect(passwordValidationMessage).toBeNull()
     expect(createdUser).not.toBeNull()
     // When
-    let response: ApiCallerResponse<SignInDataType> = undefined
-    let requestErr: ApiCallerError = undefined
+    let response: ApiResponse<SignInDataType> = undefined
+    let requestErr: ApiError = undefined
     try {
       response = await UsersApiCaller.signinUser({ email, password })
     } catch (err) {
@@ -80,7 +80,7 @@ describe("[BDD] Sign In", () => {
     // Given
     expect(emailValidationMessage).not.toBeNull()
     // When
-    let requestErr: ApiCallerError = undefined
+    let requestErr: ApiError = undefined
     try {
       await UsersApiCaller.signinUser({ email, password })
     } catch (err) {
@@ -103,7 +103,7 @@ describe("[BDD] Sign In", () => {
     // Given
     expect(passwordValidationMessage).not.toBeNull()
     // When
-    let requestErr: ApiCallerError = undefined
+    let requestErr: ApiError = undefined
     try {
       await UsersApiCaller.signinUser({ email, password })
     } catch (err) {
@@ -129,7 +129,7 @@ describe("[BDD] Sign In", () => {
     expect(passwordValidationMessage).toBeNull()
     expect(registeredUser).toBeNull()
     // When
-    let requestErr: ApiCallerError = undefined
+    let requestErr: ApiError = undefined
     try {
       await UsersApiCaller.signinUser({ email, password })
     } catch (err) {
@@ -157,7 +157,7 @@ describe("[BDD] Sign In", () => {
     expect(passwordValidationMessage).toBeNull()
     expect(foundUser).not.toBeNull()
     // Then
-    let requestErr: ApiCallerError = undefined
+    let requestErr: ApiError = undefined
     try {
       await UsersApiCaller.signinUser({ email, password: otherPassword })
     } catch (err) {

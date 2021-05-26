@@ -115,7 +115,7 @@ const SignInPage = (): ReactElement => {
       <form onSubmit={handleSubmit}>
         {requestErr !== "" && (
           <div className="formAlertContainer">
-            <RequestErrorAlert requestErr={requestErr} />
+            <RequestErrorAlert message={requestErr} />
           </div>
         )}
         <div className="formGroup">

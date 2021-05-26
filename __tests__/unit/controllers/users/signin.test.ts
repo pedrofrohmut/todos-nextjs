@@ -12,8 +12,8 @@ import CheckPasswordService from "../../../../server/services/users/implementati
 import { SignInDataType } from "../../../../server/types/users.types"
 
 import FakeUserService from "../../../fakes/services/user.fake"
-import UsersApiCaller from "../../../utils/users/api-caller.util"
-import { ApiCallerError, ApiCallerResponse } from "../../../utils/types/api-caller.types"
+import UsersApi from "../../../../view/api/users.api"
+import { ApiError, ApiResponse } from "../../../../view/api/api.types"
 
 // Case 17
 // 1 - User not registered return 400 and message
@@ -46,9 +46,9 @@ describe("[Controller] SignIn User", () => {
     expect(passwordValidationMessage).toBeNull()
     expect(foundUser).toBeNull()
     // When
-    let requestErr: ApiCallerError = undefined
+    let requestErr: ApiError = undefined
     try {
-      await UsersApiCaller.signinUser({ email, password })
+      await UsersApi.signinUser({ email, password })
     } catch (err) {
       requestErr = err
     }
@@ -77,9 +77,9 @@ describe("[Controller] SignIn User", () => {
     expect(createdUser.passwordHash).toBeDefined()
     expect(isMatch).not.toBe(true)
     // When
-    let requestErr: ApiCallerError = undefined
+    let requestErr: ApiError = undefined
     try {
-      await UsersApiCaller.signinUser({ email, password: otherPassword })
+      await UsersApi.signinUser({ email, password: otherPassword })
     } catch (err) {
       requestErr = err
     }
@@ -106,10 +106,10 @@ describe("[Controller] SignIn User", () => {
     expect(emailValidationMessage).toBeNull()
     expect(passwordValidationMessage).toBeNull()
     // When
-    let requestErr: ApiCallerError = undefined
-    let response: ApiCallerResponse<SignInDataType> = undefined
+    let requestErr: ApiError = undefined
+    let response: ApiResponse<SignInDataType> = undefined
     try {
-      response = await UsersApiCaller.signinUser({ email, password })
+      response = await UsersApi.signinUser({ email, password })
     } catch (err) {
       requestErr = err
     }

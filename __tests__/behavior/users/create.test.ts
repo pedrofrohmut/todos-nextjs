@@ -10,8 +10,8 @@ import CreateUserService from "../../../server/services/users/implementations/cr
 import GeneratePasswordHashService from "../../../server/services/users/implementations/generate-password-hash.service"
 import EmailAlreadyInUseError from "../../../server/errors/users/email-already-in-use.error"
 
-import UsersApiCaller from "../../utils/users/api-caller.util"
-import { ApiCallerError, ApiCallerResponse } from "../../utils/types/api-caller.types"
+import UsersApiCaller from "../../../view/api/users.api"
+import { ApiError, ApiResponse } from "../../../view/api/api.types"
 import FakeUserService from "../../fakes/services/user.fake"
 
 // BDD01
@@ -44,8 +44,8 @@ describe("[BDD] Create users", () => {
     expect(passwordValidationMessage).toBeNull()
     expect(foundUserByEmail).toBeNull()
     // When
-    let response: ApiCallerResponse<void> = undefined
-    let requestErr: ApiCallerError = undefined
+    let response: ApiResponse<void> = undefined
+    let requestErr: ApiError = undefined
     try {
       response = await UsersApiCaller.createUser({ name, email, password })
     } catch (err) {
@@ -71,7 +71,7 @@ describe("[BDD] Create users", () => {
     // Given
     expect(nameValidationMessage).not.toBeNull()
     // When
-    let requestErr: ApiCallerError = undefined
+    let requestErr: ApiError = undefined
     try {
       await UsersApiCaller.createUser({ name, email, password })
     } catch (err) {
@@ -94,7 +94,7 @@ describe("[BDD] Create users", () => {
     // Given
     expect(emailValidationMessage).not.toBeNull()
     // When
-    let requestErr: ApiCallerError = undefined
+    let requestErr: ApiError = undefined
     try {
       await UsersApiCaller.createUser({ name, email, password })
     } catch (err) {
@@ -117,7 +117,7 @@ describe("[BDD] Create users", () => {
     // Given
     expect(passwordValidationMessage).not.toBeNull()
     // When
-    let requestErr: ApiCallerError = undefined
+    let requestErr: ApiError = undefined
     try {
       await UsersApiCaller.createUser({ name, email, password })
     } catch (err) {
@@ -147,7 +147,7 @@ describe("[BDD] Create users", () => {
     expect(passwordValidationMessage).toBeNull()
     expect(registeredUser).not.toBeNull()
     // When
-    let requestErr: ApiCallerError = undefined
+    let requestErr: ApiError = undefined
     try {
       await UsersApiCaller.createUser({ name: otherName, email, password: otherPassword })
     } catch (err) {
