@@ -48,15 +48,15 @@ const Navbar = (): ReactElement => {
   }
 
   return (
-    <>        
+    <div>
       <pre>{JSON.stringify(state, null, 4)}</pre>
       <div className={styles.container}>
         <div className={styles.innerContainer}>
           <span className={styles.userName}>Welcome {state.user.name}</span>
           <nav className={styles.nav}>
             <li>
-              <Link href={HREFS.TASKS_LIST}>
-                <a className="navLink">Tasks List</a>
+              <Link href={HREFS.HOME}>
+                <a className="navLink">Home</a>
               </Link>
             </li>
             <li>
@@ -70,7 +70,7 @@ const Navbar = (): ReactElement => {
           <RequestSuccessAlert message={signOutMessage} />
         </div>
       )}
-    </>
+    </div>
   )
 }
 

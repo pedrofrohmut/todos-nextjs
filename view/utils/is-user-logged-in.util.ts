@@ -1,7 +1,7 @@
 import UsersApi from "../api/users.api"
 import LocalStorageNames from "../constants/local-stora-name.enum"
 import signInAction from "../context/actions/users/signin.action"
-import {DispatchType} from "../context/types.context"
+import { DispatchType } from "../context/types.context"
 
 const isUserLoggedIn = async (dispatch: DispatchType): Promise<boolean> => {
   const token = localStorage.getItem(LocalStorageNames.TOKEN)

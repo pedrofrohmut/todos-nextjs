@@ -29,7 +29,7 @@ const TaskListPage = (): ReactElement => {
         }
       })
     }
-  })
+  }, [state.user])
 
   return (
     <div className="pageContainer">

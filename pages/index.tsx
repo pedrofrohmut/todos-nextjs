@@ -11,16 +11,20 @@ import AppContext from "../view/context"
 
 const IndexPage = (): ReactElement => {
   const router = useRouter()
-  const { dispatch } = useContext(AppContext)
+  const { state, dispatch } = useContext(AppContext)
 
   useEffect(() => {
-    isUserLoggedIn(dispatch).then(isLoggedIn => {
-      if (!isLoggedIn) {
-        router.push(HREFS.USERS_SIGNIN)
-      }
+    if (state.user !== undefined) {
       router.push(HREFS.TASKS_LIST)
-    })
-  })
+    } else {
+      isUserLoggedIn(dispatch).then(isLoggedIn => {
+        if (!isLoggedIn) {
+          router.push(HREFS.USERS_SIGNIN)
+        }
+        router.push(HREFS.TASKS_LIST)
+      })
+    }
+  }, [state.user])
 
   return (
     <div className={styles.container}>

@@ -37,7 +37,6 @@ const SignInPage = (): ReactElement => {
 
   useEffect(() => {
     if (state.user !== undefined) {
-      // Avoid request when context is good
       router.push(HREFS.TASKS_LIST)
     } else {
       isUserLoggedIn(dispatch).then(isLoggedIn => {

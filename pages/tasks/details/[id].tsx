@@ -51,18 +51,20 @@ const countIncomplete = (todos: TodoType[]): number =>
 
 const TaskDetailsPage = (): ReactElement => {
   const router = useRouter()
-  const { dispatch } = useContext(AppContext)
+  const { state, dispatch } = useContext(AppContext)
 
   const [openTodoId, setOpenTodoId] = useState("")
   const incompleteTodosCount = countIncomplete(todos)
 
   useEffect(() => {
-    isUserLoggedIn(dispatch).then(isLoggedIn => {
-      if (!isLoggedIn) {
-        router.push(HREFS.USERS_SIGNIN)
-      }
-    })
-  })
+    if (state.user === undefined) {
+      isUserLoggedIn(dispatch).then(isLoggedIn => {
+        if (!isLoggedIn) {
+          router.push(HREFS.USERS_SIGNIN)
+        }
+      })
+    }
+  }, [state.user])
 
   const setIsOpen = (id: string): void => {
     if (id === openTodoId) {

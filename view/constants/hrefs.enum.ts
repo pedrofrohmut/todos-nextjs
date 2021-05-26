@@ -1,5 +1,6 @@
 enum HREFS {
   ERRORS_SERVER = "/errors/server",
+  HOME = "/",
   TASKS_ADD = "/tasks/add",
   TASKS_DETAILS = "/tasks/details",
   TASKS_EDIT = "/tasks/edit",
