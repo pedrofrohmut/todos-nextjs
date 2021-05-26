@@ -1,5 +1,4 @@
 import { ReactElement } from "react"
-import Link from "next/link"
 
 import AddButton from "../../../view/components/buttons/add"
 import TaskListItem, { TaskType } from "../../../view/components/tasks/task-list-item"
@@ -24,9 +23,7 @@ const TaskListPage = (): ReactElement => {
           <TaskListItem className="listItem" key={task.id} task={task} />
         ))}
       </div>
-      <Link href={HREFS.TASKS_ADD}>
-        <AddButton />
-      </Link>
+      <AddButton href={HREFS.TASKS_ADD} />
     </div>
   )
 }

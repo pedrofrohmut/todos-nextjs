@@ -6,6 +6,7 @@ import TodoListItem, { TodoType } from "../../../view/components/todos/todo-list
 import WithUserRoute from "../../../view/components/routes/with-user-route"
 
 import styles from "./styles.module.css"
+import HREFS from "../../../view/constants/hrefs.enum"
 
 // PLACAHOLDER  VALUES
 const id = "1"
@@ -81,9 +82,7 @@ const TaskDetailsPage = (): ReactElement => {
           />
         ))}
       </div>
-      <Link href="/todos/add">
-        <AddButton />
-      </Link>
+      <AddButton href={HREFS.TODOS_ADD} />
       <div className={styles.links}>
         <a className="nav-link">Clean completed todos</a>
         <a className="nav-link">Delete current task</a>

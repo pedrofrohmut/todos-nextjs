@@ -1,7 +1,7 @@
 import { ReactElement } from "react"
-import Link from "next/link"
 
 import EditButton from "../../buttons/edit"
+import HREFS from "../../../constants/hrefs.enum"
 
 import styles from "./styles.module.css"
 
@@ -33,11 +33,7 @@ const TodoListItem = ({
         <a className={styles.name} onClick={(): void => setIsOpen(id)}>
           {name}
         </a>
-        {isOpen && (
-          <Link href={`/todos/edit/${id}`}>
-            <EditButton />
-          </Link>
-        )}
+        {isOpen && <EditButton href={HREFS.TODOS_EDIT + "/" + id} />}
       </div>
       {isOpen && (
         <div>
