@@ -17,11 +17,11 @@ const Navbar = (): ReactElement => {
 
   const handleSignOut = (): void => {
     setSignOutMessage(`Bye ${state.user.name}. You signed out with success.`)
-    setTimeout(() => {
-      signOutAction(dispatch)
-      router.push(HREFS.USERS_SIGNIN)
-      setSignOutMessage("")
-    }, 2100)
+    // setTimeout(() => {
+    //   signOutAction(dispatch)
+    //   router.push(HREFS.USERS_SIGNIN)
+    //   setSignOutMessage("")
+    // }, 2100)
   }
 
   if (!state || !state.user || !state.user.name) {
@@ -66,7 +66,7 @@ const Navbar = (): ReactElement => {
         </div>
       </div>
       {signOutMessage !== "" && (
-        <div className={`pageContainer ${styles.signOutMessage}`}>
+      <div className={styles.signOutMessage}>
           <RequestSuccessAlert message={signOutMessage} />
         </div>
       )}
