@@ -7,6 +7,7 @@ import signOutAction from "../../../context/actions/users/signout.action"
 import HREFS from "../../../constants/hrefs.enum"
 
 import styles from "./styles.module.css"
+import RequestSuccessAlert from "../../alerts/request-success"
 
 const Navbar = (): ReactElement => {
   const router = useRouter()
@@ -15,12 +16,12 @@ const Navbar = (): ReactElement => {
   const [signOutMessage, setSignOutMessage] = useState("")
 
   const handleSignOut = (): void => {
-    signOutAction(dispatch)
     setSignOutMessage(`Bye ${state.user.name}. You signed out with success.`)
-    router.push(HREFS.USERS_SIGNIN)
     setTimeout(() => {
+      signOutAction(dispatch)
+      router.push(HREFS.USERS_SIGNIN)
       setSignOutMessage("")
-    }, 1800)
+    }, 2100)
   }
 
   if (!state || !state.user || !state.user.name) {
@@ -65,8 +66,8 @@ const Navbar = (): ReactElement => {
         </div>
       </div>
       {signOutMessage !== "" && (
-        <div className="pageContainer" style={{padding: "2rem"}}>
-          <div className="success">{signOutMessage}</div>
+        <div className={`pageContainer ${styles.signOutMessage}`}>
+          <RequestSuccessAlert message={signOutMessage} />
         </div>
       )}
     </>

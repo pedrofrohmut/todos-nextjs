@@ -2,8 +2,8 @@ import { ReactElement } from "react"
 
 import styles from "./styles.module.css"
 
-const RequestErrorAlert = ({ requestErr }: { requestErr: string }): ReactElement => (
-  <div className={styles.container}>{requestErr}</div>
+const RequestErrorAlert = ({ message }: { message: string }): ReactElement => (
+  <div className={styles.container}>{message}</div>
 )
 
 export default RequestErrorAlert

@@ -15,6 +15,11 @@ import isUserLoggedIn from "../../../view/utils/is-user-logged-in.util"
 import HREFS from "../../../view/constants/hrefs.enum"
 import RequestErrorAlert from "../../../view/components/alerts/request-error"
 
+type Fields = {
+  email: string
+  password: string
+}
+
 const SignInPage = (): ReactElement => {
   const router = useRouter()
   const { state, dispatch } = useContext(AppContext)
@@ -43,17 +48,23 @@ const SignInPage = (): ReactElement => {
     }
   }, [state.user])
 
+  const validate = ({ email, password }: Fields): boolean => {
+    const emailValidationMessage = getValidationMessageForEmail(email)
+    const passwordValidationMessage = getValidationMessageForPassword(password)
+    setEmailError(emailValidationMessage || "")
+    setPasswordError(passwordValidationMessage || "")
+    const hasErrorMessages = emailValidationMessage !== null || passwordValidationMessage !== null
+    setIsDisabled(hasErrorMessages)
+    return hasErrorMessages
+  }
+
   const handleChange = (
     value: string,
-    state: { email: string; password: string },
+    { email, password }: Fields,
     setter: Dispatch<SetStateAction<string>>
   ): void => {
     setter(value)
-    const emailValidationMessage = getValidationMessageForEmail(state.email)
-    const passwordValidationMessage = getValidationMessageForPassword(state.password)
-    setEmailError(emailValidationMessage || "")
-    setPasswordError(passwordValidationMessage || "")
-    setIsDisabled(emailValidationMessage !== null || passwordValidationMessage !== null)
+    validate({ email, password })
   }
 
   const handleChangeEmail = (e: React.FormEvent<HTMLInputElement>): void => {
@@ -69,13 +80,11 @@ const SignInPage = (): ReactElement => {
   const handleSubmit = async (e: React.SyntheticEvent): Promise<void> => {
     e.preventDefault()
     setIsSubmitting(true)
-    const emailValidationMessage = getValidationMessageForEmail(email)
-    const passwordValidationMessage = getValidationMessageForPassword(password)
-    setEmailError(emailValidationMessage || "")
-    setPasswordError(passwordValidationMessage || "")
-    if (emailValidationMessage !== null || passwordValidationMessage !== null) {
+    const hasErrors = validate({ email, password })
+    if (hasErrors) {
       setIsDisabled(true)
       setIsSubmitting(false)
+      return
     }
     try {
       const response = await UsersApi.signinUser({ email, password })
