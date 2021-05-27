@@ -17,6 +17,7 @@ const AddTaskPage = (): ReactElement => {
           <textarea id="description" rows={6}></textarea>
         </div>
         <div className="formGroup">
+          {/* @ts-ignore */}
           <SubmitButton />
         </div>
       </form>

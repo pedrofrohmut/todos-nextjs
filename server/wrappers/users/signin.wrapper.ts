@@ -1,33 +1,32 @@
-import IControllerWrapper from "../controller-wrapper.interface"
-import SignInController from "../../controllers/users/implementations/signin.controller"
-import ISignInController, {
-  Request,
-  RequestBody,
-  Response
-} from "../../controllers/users/signin.interface"
-import UserDataAccess from "../../data-access/implementations/users.data-access"
+import IControllerWrapper, {
+  WrapperRequest,
+  WrapperResponse
+} from "../controller-wrapper.interface"
+import ISignInController from "../../controllers/users/signin.interface"
+
 import CheckPasswordService from "../../services/users/implementations/check-password.service"
+import ConnectionFactory, { Connection } from "../../utils/connection-factory.util"
 import FindUserByEmailService from "../../services/users/implementations/find-by-email.service"
 import GenerateAuthenticationTokenService from "../../services/users/implementations/generate-authentication-token.service"
+import SignInController from "../../controllers/users/implementations/signin.controller"
 import SignInUseCase from "../../use-cases/users/implementations/signin.use-case"
-import ConnectionFactory, { Connection } from "../../utils/connection-factory.util"
-import {
-  getValidationMessageForEmail,
-  getValidationMessageForPassword
-} from "../../validators/users.validator"
+import UserDataAccess from "../../data-access/implementations/users.data-access"
+import UserValidator from "../../validators/users.validator"
+import { SignInCredentialsType, SignInDataType } from "../../types/users.types"
 
-export default class SignInWrapper implements IControllerWrapper {
+export default class SignInWrapper
+  implements IControllerWrapper<SignInCredentialsType, SignInDataType> {
   private connection: Connection
   private signinController: ISignInController
 
   constructor() {}
 
-  private validateBody({ email, password }: RequestBody): string {
-    const emailValidationMessage = getValidationMessageForEmail(email)
+  private validateBody({ email, password }: Partial<SignInCredentialsType>): string {
+    const emailValidationMessage = UserValidator.getMessageForEmail(email)
     if (emailValidationMessage) {
       return emailValidationMessage
     }
-    const passwordValidationMessage = getValidationMessageForPassword(password)
+    const passwordValidationMessage = UserValidator.getMessageForPassword(password)
     if (passwordValidationMessage) {
       return passwordValidationMessage
     }
@@ -53,18 +52,20 @@ export default class SignInWrapper implements IControllerWrapper {
     await ConnectionFactory.closeConnection(this.connection)
   }
 
-  public async execute(request: Request): Promise<Response> {
-    // TODO: use a filter for BodyIsDefined
-    if (!request.body) {
+  public async execute(
+    request: WrapperRequest<SignInCredentialsType>
+  ): Promise<WrapperResponse<SignInDataType>> {
+    const { body } = request
+    if (body === undefined) {
       return { status: 400, body: "Missing the request body" }
     }
     const validationMessage = this.validateBody(request.body)
-    if (validationMessage) {
+    if (validationMessage !== null) {
       return { status: 400, body: validationMessage }
     }
     try {
       await this.init()
-      const response = await this.signinController.execute(request)
+      const response = await this.signinController.execute({ body })
       return response
     } catch (err) {
       return { status: 500, body: "Error to sign in an user: " + err.message }

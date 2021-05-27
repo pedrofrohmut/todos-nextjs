@@ -7,36 +7,14 @@ import HREFS from "../../../view/constants/hrefs.enum"
 import SubmitButton from "../../../view/components/buttons/submit"
 import RequestSuccessAlert from "../../../view/components/alerts/request-success"
 import RequestErrorAlert from "../../../view/components/alerts/request-error"
-import {
-  getValidationMessageForEmail,
-  getValidationMessageForName,
-  getValidationMessageForPassword
-} from "../../../server/validators/users.validator"
 import UsersApi from "../../../view/api/users.api"
+import UserValidator from "../../../server/validators/users.validator"
 
 type Fields = {
   name: string
   email: string
   password: string
   confirmPassword: string
-}
-
-const getValidationMessageForConfirmPassword = (
-  password?: string,
-  confirmPassword?: string
-): string => {
-  if (
-    password === undefined ||
-    password === "" ||
-    confirmPassword === undefined ||
-    confirmPassword === ""
-  ) {
-    return "Password and/or confirm password are blank or not defined"
-  }
-  if (password !== confirmPassword) {
-    return "Password and confirm password do not match"
-  }
-  return null
 }
 
 const SignUpPage = (): ReactElement => {
@@ -59,10 +37,10 @@ const SignUpPage = (): ReactElement => {
   const [requestSuccess, setRequestSuccess] = useState<string>("")
 
   const validate = ({ name, email, password, confirmPassword }: Fields): boolean => {
-    const nameValidationMessage = getValidationMessageForName(name)
-    const emailValidationMessage = getValidationMessageForEmail(email)
-    const passwordValidationMessage = getValidationMessageForPassword(password)
-    const confirmPasswordValidationMessage = getValidationMessageForConfirmPassword(
+    const nameValidationMessage = UserValidator.getMessageForName(name)
+    const emailValidationMessage = UserValidator.getMessageForEmail(email)
+    const passwordValidationMessage = UserValidator.getMessageForPassword(password)
+    const confirmPasswordValidationMessage = UserValidator.getMessageForConfirmPassword(
       password,
       confirmPassword
     )

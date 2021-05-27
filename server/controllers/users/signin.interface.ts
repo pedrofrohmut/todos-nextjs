@@ -1,28 +1,14 @@
-export type RequestBody = {
-  email: string
-  password: string
+import { SignInCredentialsType, SignInDataType } from "../../types/users.types"
+
+export type SignInRequestType = {
+  body: SignInCredentialsType
 }
 
-export type Request = {
-  body: RequestBody
-}
-
-export type ResponseBody =
-  | {
-      user: {
-        id: string
-        name: string
-        email: string
-      }
-      token: string
-    }
-  | string
-
-export type Response = {
-  status: number
-  body: ResponseBody
+export type SignInResponseType = {
+  status: 200 | 400
+  body: SignInDataType | string
 }
 
 export default interface ISignInController {
-  execute: (request: Request) => Promise<Response>
+  execute: (request: SignInRequestType) => Promise<SignInResponseType>
 }

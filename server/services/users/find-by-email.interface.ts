@@ -1,5 +1,5 @@
-import { UserType } from "../../types/users.types"
+import { UserDatabaseType } from "../../types/users.types"
 
 export default interface IFindUserByEmailService {
-  execute: (email: string) => Promise<UserType>
+  execute: (email: string) => Promise<UserDatabaseType>
 }

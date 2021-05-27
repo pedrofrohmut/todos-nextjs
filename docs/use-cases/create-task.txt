@@ -1,0 +1,18 @@
+USE CASE = create task
+
+  Request:
+    params = userId
+    headers = { athentication_token: token }
+    body = {
+      name: taskName,
+      description: taskDescription
+    }
+
+  Validation:
+    params = notUndefined && notBlank && validUserId
+    headers = notUndefined && validUserId &&  matchParamsUserId
+    body = {
+      name: notUndefined && notBlank && minLength3 && maxLength120
+      description: notUndefined && notBlank && minLenth3 && maxLength512
+    }
+

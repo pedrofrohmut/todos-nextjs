@@ -5,13 +5,13 @@ import { CreateUserDatabaseType, UserDatabaseType } from "../../types/users.type
 export default class UserDataAccess implements IUserDataAccess {
   private readonly connection: Connection
 
-  public constructor(connection: Connection) {
+  constructor(connection: Connection) {
     this.connection = connection
   }
 
   public async create({ name, email, passwordHash }: CreateUserDatabaseType): Promise<void> {
     await this.connection.query(
-      `INSERT INTO app.users (name, email, password_hash) VALUES ($1, $2, $3)`,
+      "INSERT INTO app.users (name, email, password_hash) VALUES ($1, $2, $3)",
       [name, email, passwordHash]
     )
   }
@@ -22,8 +22,8 @@ export default class UserDataAccess implements IUserDataAccess {
     passwordHash
   }: CreateUserDatabaseType): Promise<UserDatabaseType> {
     const result = await this.connection.query(
-      `INSERT INTO app.users (name, email, password_hash) 
-         VALUES ($1, $2, $3) 
+      `INSERT INTO app.users (name, email, password_hash)
+         VALUES ($1, $2, $3)
          RETURNING id, name, email, password_hash`,
       [name, email, passwordHash]
     )

@@ -1,9 +1,9 @@
-import IControllerWrapper from "../controller-wrapper.interface"
-import ICreateUserController, {
-  Request,
-  RequestBody,
-  Response
-} from "../../controllers/users/create.interface"
+import IControllerWrapper, {
+  WrapperRequest,
+  WrapperResponse
+} from "../controller-wrapper.interface"
+import ICreateUserController from "../../controllers/users/create.interface"
+
 import CreateUserController from "../../controllers/users/implementations/create.controller"
 import UserDataAccess from "../../data-access/implementations/users.data-access"
 import CreateUserService from "../../services/users/implementations/create.service"
@@ -11,13 +11,10 @@ import FindUserByEmailService from "../../services/users/implementations/find-by
 import GeneratePasswordHashService from "../../services/users/implementations/generate-password-hash.service"
 import CreateUserUseCase from "../../use-cases/users/implementations/create.use-case"
 import ConnectionFactory, { Connection } from "../../utils/connection-factory.util"
-import {
-  getValidationMessageForEmail,
-  getValidationMessageForName,
-  getValidationMessageForPassword
-} from "../../validators/users.validator"
+import UserValidator from "../../validators/users.validator"
+import { CreateUserType } from "../../types/users.types"
 
-export default class CreateUserWrapper implements IControllerWrapper {
+export default class CreateUserWrapper implements IControllerWrapper<CreateUserType, void> {
   private connection: Connection
   private createUserController: ICreateUserController
 
@@ -38,33 +35,34 @@ export default class CreateUserWrapper implements IControllerWrapper {
     await ConnectionFactory.closeConnection(this.connection)
   }
 
-  private validateBody({ name, email, password }: RequestBody): string {
-    const nameValidationMessage = getValidationMessageForName(name)
+  private validateBody({ name, email, password }: Partial<CreateUserType>): string {
+    const nameValidationMessage = UserValidator.getMessageForName(name)
     if (nameValidationMessage) {
       return nameValidationMessage
     }
-    const emailValidationMessage = getValidationMessageForEmail(email)
+    const emailValidationMessage = UserValidator.getMessageForEmail(email)
     if (emailValidationMessage) {
       return emailValidationMessage
     }
-    const passwordValidationMessage = getValidationMessageForPassword(password)
+    const passwordValidationMessage = UserValidator.getMessageForPassword(password)
     if (passwordValidationMessage) {
       return passwordValidationMessage
     }
     return null
   }
 
-  public async execute(request: Request): Promise<Response> {
-    if (!request.body) {
+  public async execute(request: WrapperRequest<CreateUserType>): Promise<WrapperResponse<void>> {
+    const { body } = request
+    if (body === undefined) {
       return { status: 400, body: "Missing the request body" }
     }
     const validationMessage = this.validateBody(request.body)
-    if (validationMessage) {
+    if (validationMessage !== null) {
       return { status: 400, body: validationMessage }
     }
     try {
       await this.init()
-      const response = await this.createUserController.execute(request)
+      const response = await this.createUserController.execute({ body })
       return response
     } catch (err) {
       return { status: 500, body: "Error to create an user: " + err.message }

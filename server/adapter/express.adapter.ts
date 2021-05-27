@@ -1,5 +1,5 @@
 import { NextApiRequest, NextApiResponse } from "next"
-import IControllerWrapper from "../wrappers/controller-wrapper.interface"
+import IControllerWrapper, { Params } from "../wrappers/controller-wrapper.interface"
 
 export default class ExpressAdapter {
   private readonly request: NextApiRequest
@@ -10,9 +10,17 @@ export default class ExpressAdapter {
     this.response = response
   }
 
-  // eslint-disable-next-line
-  public async callControllerWrapper(controllerWrapper: IControllerWrapper): Promise<void> {
-    const { status, body } = await controllerWrapper.execute(this.request)
+  public async callControllerWrapper(
+    // eslint-disable-next-line
+    controllerWrapper: IControllerWrapper<any, any>
+  ): Promise<void> {
+    const params = this.request.query as Params
+    const headers = { authentication_token: this.request.headers.authentication_token as string }
+    const { status, body } = await controllerWrapper.execute({
+      params,
+      body: this.request.body,
+      headers
+    })
     if (body) {
       this.response.status(status).send(body)
     } else {

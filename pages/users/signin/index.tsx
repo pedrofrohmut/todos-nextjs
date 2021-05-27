@@ -2,10 +2,7 @@ import { Dispatch, ReactElement, SetStateAction, useContext, useState } from "re
 import Link from "next/link"
 import { useRouter } from "next/router"
 
-import {
-  getValidationMessageForEmail,
-  getValidationMessageForPassword
-} from "../../../server/validators/users.validator"
+import UserValidator from "../../../server/validators/users.validator"
 import SubmitButton from "../../../view/components/buttons/submit"
 import UsersApi from "../../../view/api/users.api"
 import HREFS from "../../../view/constants/hrefs.enum"
@@ -36,8 +33,8 @@ const SignInPage = (): ReactElement => {
   const [requestErr, setRequestErr] = useState<string>("")
 
   const validate = ({ email, password }: Fields): boolean => {
-    const emailValidationMessage = getValidationMessageForEmail(email)
-    const passwordValidationMessage = getValidationMessageForPassword(password)
+    const emailValidationMessage = UserValidator.getMessageForEmail(email)
+    const passwordValidationMessage = UserValidator.getMessageForPassword(password)
     setEmailError(emailValidationMessage || "")
     setPasswordError(passwordValidationMessage || "")
     const hasErrorMessages = emailValidationMessage !== null || passwordValidationMessage !== null

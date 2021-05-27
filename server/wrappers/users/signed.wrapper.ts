@@ -1,14 +1,20 @@
-import IControllerWrapper from "../controller-wrapper.interface"
-import ISignedController, { Request, Response } from "../../controllers/users/signed.interface"
+import IControllerWrapper, {
+  WrapperRequest,
+  WrapperResponse
+} from "../controller-wrapper.interface"
+import ISignedController from "../../controllers/users/signed.interface"
+
+import AuthenticationTokenDecoderService from "../../services/users/implementations/authentication-token-decoder.service"
+import ConnectionFactory, { Connection } from "../../utils/connection-factory.util"
+import FindUserByIdService from "../../services/users/implementations/find-by-id.service"
 import SignedController from "../../controllers/users/implementations/signed.controller"
 import SignedUseCase from "../../use-cases/users/implementations/signed.use-case"
-import FindUserByIdService from "../../services/users/implementations/find-by-id.service"
 import UserDataAccess from "../../data-access/implementations/users.data-access"
-import ConnectionFactory, { Connection } from "../../utils/connection-factory.util"
-import AuthenticationTokenDecoderService from "../../services/users/implementations/authentication-token-decoder.service"
+import { SignedUserType } from "../../types/users.types"
+
 import UnauthenticatedRequestError from "../../errors/request/unauthenticated-request.error"
 
-export default class SignedWrapper implements IControllerWrapper {
+export default class SignedWrapper implements IControllerWrapper<void, SignedUserType> {
   private connection: Connection
   private signedController: ISignedController
 
@@ -28,13 +34,14 @@ export default class SignedWrapper implements IControllerWrapper {
     await ConnectionFactory.closeConnection(this.connection)
   }
 
-  public async execute(request: Request): Promise<Response> {
-    if (request.headers === undefined || request.headers.authentication_token === undefined) {
+  public async execute(request: WrapperRequest<void>): Promise<WrapperResponse<SignedUserType>> {
+    const { headers } = request
+    if (headers === undefined || headers.authentication_token === undefined) {
       return { status: 401, body: UnauthenticatedRequestError.message }
     }
     try {
       await this.init()
-      const response = await this.signedController.execute(request)
+      const response = await this.signedController.execute({ headers })
       return response
     } catch (err) {
       return { status: 500, body: "Error to get signed user: " + err.message }

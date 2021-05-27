@@ -1,7 +1,8 @@
-import ISignInController, { Request, Response } from "../signin.interface"
+import ISignInController, { SignInRequestType, SignInResponseType } from "../signin.interface"
 import ISignInUseCase from "../../../use-cases/users/signin.interface"
-import UserNotFoundByEmailError from "../../../errors/users/user-not-found-by-email.error"
+
 import PasswordIsNotAMatchError from "../../../errors/users/password-is-not-a-match.error"
+import UserNotFoundByEmailError from "../../../errors/users/user-not-found-by-email.error"
 
 export default class SignInController implements ISignInController {
   private readonly signInUseCase: ISignInUseCase
@@ -10,7 +11,7 @@ export default class SignInController implements ISignInController {
     this.signInUseCase = signInUseCase
   }
 
-  public async execute(request: Request): Promise<Response> {
+  public async execute(request: SignInRequestType): Promise<SignInResponseType> {
     const { email, password } = request.body
     try {
       const signInData = await this.signInUseCase.execute({ email, password })

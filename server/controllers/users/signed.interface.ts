@@ -1,16 +1,14 @@
-import { SignedUserType } from "../../types/users.types"
+import { AuthenticationHeaders, SignedUserType } from "../../types/users.types"
 
-export type Request = {
-  headers: {
-    authentication_token: string
-  }
+export type SignedRequestType = {
+  headers: AuthenticationHeaders
 }
 
-export type Response = {
-  status: number
+export type SignedResponseType = {
+  status: 200 | 400
   body: SignedUserType | string
 }
 
 export default interface ISignedController {
-  execute: (request: Request) => Promise<Response>
+  execute: (request: SignedRequestType) => Promise<SignedResponseType>
 }

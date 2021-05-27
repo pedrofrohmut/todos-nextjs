@@ -1,5 +1,9 @@
-import ICreateUserController, { Request, Response } from "../create.interface"
+import ICreateUserController, {
+  CreateUserRequestType,
+  CreateUserResponseType
+} from "../create.interface"
 import ICreateUserUseCase from "../../../use-cases/users/create.interface"
+
 import EmailAlreadyInUseError from "../../../errors/users/email-already-in-use.error"
 
 export default class CreateUserController implements ICreateUserController {
@@ -9,7 +13,7 @@ export default class CreateUserController implements ICreateUserController {
     this.createUserUseCase = createUserUseCase
   }
 
-  public async execute(request: Request): Promise<Response> {
+  public async execute(request: CreateUserRequestType): Promise<CreateUserResponseType> {
     const { name, email, password } = request.body
     try {
       await this.createUserUseCase.execute({ name, email, password })
