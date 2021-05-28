@@ -4,6 +4,8 @@ import IControllerWrapper, {
 } from "../controller-wrapper.interface"
 import ISignInController from "../../controllers/users/signin.interface"
 
+import { SignInCredentialsType, SignInDataType } from "../../types/users.types"
+
 import CheckPasswordService from "../../services/users/implementations/check-password.service"
 import ConnectionFactory, { Connection } from "../../utils/connection-factory.util"
 import FindUserByEmailService from "../../services/users/implementations/find-by-email.service"
@@ -12,7 +14,7 @@ import SignInController from "../../controllers/users/implementations/signin.con
 import SignInUseCase from "../../use-cases/users/implementations/signin.use-case"
 import UserDataAccess from "../../data-access/implementations/users.data-access"
 import UserValidator from "../../validators/users.validator"
-import { SignInCredentialsType, SignInDataType } from "../../types/users.types"
+import RequestValidator from "../../validators/request.validator"
 
 export default class SignInWrapper
   implements IControllerWrapper<SignInCredentialsType, SignInDataType> {
@@ -56,12 +58,12 @@ export default class SignInWrapper
     request: WrapperRequest<SignInCredentialsType>
   ): Promise<WrapperResponse<SignInDataType>> {
     const { body } = request
-    if (body === undefined) {
-      return { status: 400, body: "Missing the request body" }
-    }
-    const validationMessage = this.validateBody(request.body)
-    if (validationMessage !== null) {
-      return { status: 400, body: validationMessage }
+    const bodyValidationResponse = RequestValidator.getResponseForExistingBody(
+      body,
+      this.validateBody
+    )
+    if (bodyValidationResponse !== null) {
+      return bodyValidationResponse
     }
     try {
       await this.init()

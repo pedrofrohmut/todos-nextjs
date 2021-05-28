@@ -1,15 +1,15 @@
-import {AuthenticationHeaders} from "../types/users.types"
+import { AuthenticationHeaders } from "../types/users.types"
 
 export type WrapperResponse<T> = {
   status: number
   body?: T | string
 }
 
-export type Params = { userId: string } & { taskId: string } & { todoId: string }
+export type RequestParamsType = { userId: string } & { taskId: string } & { todoId: string }
 
 export type WrapperRequest<T> = {
   headers?: AuthenticationHeaders
-  params?: Params
+  params?: RequestParamsType
   body?: T
 }
 

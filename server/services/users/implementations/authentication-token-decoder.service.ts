@@ -12,6 +12,7 @@ export default class AuthenticationTokenDecoderService
       const decodedToken = verify(token, process.env.JWT_SECRET) as AuthenticationToken
       return decodedToken
     } catch (err) {
+      // TokenExpiredError must precede other errors. Lib inheritance issues
       if (err instanceof TokenExpiredError) {
         throw new ExpiredTokenError()
       }

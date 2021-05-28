@@ -3,6 +3,25 @@
   margin: auto;
 }
 
+/**
+ * NAV LINK
+ * */
+.navLink::after {
+  content: "";
+  position: absolute;
+  left: 1px;
+  top: calc(100% + 3px);
+  height: 3px;
+  width: 100%;
+  background-color: var(--mainOrange-400);
+  display: none;
+}
+
+.navLink:hover::after,
+.navLink:focus::after {
+  display: block;
+}
+
 .pageTitle {
   margin: 1rem 0 0 0;
   padding: 0;

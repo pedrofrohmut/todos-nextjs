@@ -32,22 +32,6 @@ a {
   cursor: pointer;
 }
 
-a.navLink::after {
-  content: "";
-  position: absolute;
-  left: 1px;
-  top: calc(100% + 3px);
-  height: 3px;
-  width: 100%;
-  background-color: var(--mainOrange-400);
-  display: none;
-}
-
-a.navLink:hover::after,
-a.navLink:focus::after {
-  display: block;
-}
-
 /* INPUT */
 input[type="email"],
 input[type="text"],
@@ -60,8 +44,7 @@ textarea {
   border: 0;
 }
 
-input[type="button"],
-input[type="submit"] {
+input[type="button"] {
   background-color: var(--mainOrange-400);
   color: var(--mainBlue-900);
   border: 0;
@@ -73,6 +56,10 @@ input[type="submit"] {
   width: 100%;
 }
 
+input[type="checkbox"] {
+  margin-right: 1.2rem;
+}
+
 button[type="submit"] {
   margin-top: 1rem;
 }
@@ -81,8 +68,9 @@ textarea {
   resize: none;
 }
 
-input[type="checkbox"] {
-  margin-right: 1.2rem;
+table {
+  text-indent: 0;
+  border-color: inherit;
 }
 
 #__next {

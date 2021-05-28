@@ -13,6 +13,7 @@ import CreateUserUseCase from "../../use-cases/users/implementations/create.use-
 import ConnectionFactory, { Connection } from "../../utils/connection-factory.util"
 import UserValidator from "../../validators/users.validator"
 import { CreateUserType } from "../../types/users.types"
+import RequestValidator from "../../validators/request.validator"
 
 export default class CreateUserWrapper implements IControllerWrapper<CreateUserType, void> {
   private connection: Connection
@@ -53,12 +54,12 @@ export default class CreateUserWrapper implements IControllerWrapper<CreateUserT
 
   public async execute(request: WrapperRequest<CreateUserType>): Promise<WrapperResponse<void>> {
     const { body } = request
-    if (body === undefined) {
-      return { status: 400, body: "Missing the request body" }
-    }
-    const validationMessage = this.validateBody(request.body)
-    if (validationMessage !== null) {
-      return { status: 400, body: validationMessage }
+    const bodyValidationResponse = RequestValidator.getResponseForExistingBody(
+      body,
+      this.validateBody
+    )
+    if (bodyValidationResponse !== null) {
+      return bodyValidationResponse
     }
     try {
       await this.init()
