@@ -19,6 +19,7 @@ import NoDecoderTokenServiceError from "../errors/validators/request/no-token-de
 import TokenWithInvalidUserIdError from "../errors/users/token-with-invalid-user-id.error"
 import UserIdFromRequestTokenAndParamsAreNotMatchError from "../errors/request/user-id-from-request-token-and-params-are-not-match.error"
 import MissingRequestBodyError from "../errors/request/missing-request-body.error"
+import TaskValidator from "./tasks.validator"
 
 export default class RequestValidator {
   public static getResponseForAuthenticationHeaders(
@@ -76,6 +77,20 @@ export default class RequestValidator {
       return { status: 400, body: InvalidRequestParamsError.message }
     }
     const paramsValidationMessage = UserValidator.getMessageForUserId(params.userId)
+    if (paramsValidationMessage !== null) {
+      return { status: 400, body: InvalidRequestParamsError.message }
+    }
+    return null
+  }
+
+  public static getResponseForParamsWithTaskId(params: ParamsToValidateType): ValidatorResponse {
+    if (params === undefined || params.taskId === undefined) {
+      return { status: 400, body: MissingRequestParamsError.message }
+    }
+    if (typeof params.taskId !== "string") {
+      return { status: 400, body: InvalidRequestParamsError.message }
+    }
+    const paramsValidationMessage = TaskValidator.getMessageForTaskId(params.taskId)
     if (paramsValidationMessage !== null) {
       return { status: 400, body: InvalidRequestParamsError.message }
     }

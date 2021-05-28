@@ -6,9 +6,15 @@ import IControllerWrapper, {
 import IDeleteTaskController from "../../controllers/tasks/delete-task-controller.interface"
 
 import AuthenticationTokenDecoderService from "../../services/users/implementations/authentication-token-decoder.service"
-import ConnectionFactory, {Connection} from "../../utils/connection-factory.util"
+import ConnectionFactory, { Connection } from "../../utils/connection-factory.util"
+import DeleteTaskByIdService from "../../services/tasks/implementations/delete-task-by-id.service"
 import DeleteTaskController from "../../controllers/tasks/implementations/delete-task.controller"
+import DeleteTaskUseCase from "../../use-cases/tasks/implementations/delete-task.use-case"
+import FindTaskByIdService from "../../services/tasks/implementations/find-task-by-id.service"
+import FindUserByIdService from "../../services/users/implementations/find-by-id.service"
 import RequestValidator from "../../validators/request.validator"
+import TaskDataAccess from "../../data-access/implementations/tasks.data-access"
+import UserDataAccess from "../../data-access/implementations/users.data-access"
 
 export default class DeleteTaskWrapper implements IControllerWrapper<void, void> {
   private connection: Connection
@@ -21,18 +27,29 @@ export default class DeleteTaskWrapper implements IControllerWrapper<void, void>
     this.connection = ConnectionFactory.getConnection()
     await ConnectionFactory.connect(this.connection)
     this.authenticationTokenDecoderService = new AuthenticationTokenDecoderService()
-    this.deleteTaskController = new DeleteTaskController()
+    const userDataAccess = new UserDataAccess(this.connection)
+    const taskDataAccess = new TaskDataAccess(this.connection)
+    const findUserByIdService = new FindUserByIdService(userDataAccess)
+    const findTaskByIdService = new FindTaskByIdService(taskDataAccess)
+    const deleteTaskByIdService = new DeleteTaskByIdService(taskDataAccess)
+    const deleteTaskUseCase = new DeleteTaskUseCase(
+      findUserByIdService,
+      findTaskByIdService,
+      deleteTaskByIdService
+    )
+    this.deleteTaskController = new DeleteTaskController(
+      this.authenticationTokenDecoderService,
+      deleteTaskUseCase
+    )
   }
 
   private async cleanUp(): Promise<void> {
     await ConnectionFactory.closeConnection(this.connection)
   }
 
-  private validateBody(): string {}
-
   public async execute(request: WrapperRequest<void>): Promise<WrapperResponse<void>> {
     const { headers, params } = request
-    const paramsValidationResponse = RequestValidator.getResponseForParamsWithUserId(params)
+    const paramsValidationResponse = RequestValidator.getResponseForParamsWithTaskId(params)
     if (paramsValidationResponse !== null) {
       return paramsValidationResponse
     }
