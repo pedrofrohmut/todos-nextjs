@@ -20,3 +20,30 @@ TODOS
   SetNotDone: PATCH api/todos/setnotdone/[todoId]
   Update: PUT api/todos/[todosId]
 
+
+TASKS:
+
+  DeleteTask:
+    URL api/tasks/[taskId]
+    Method DELETE
+    Request:
+      Params taskId: uuid
+      Headers authentication_token: jwt
+    Response:
+      status 204
+      body no content
+
+  FindByTaskById:
+    URL api/tasks/[taskId]
+    Method GET
+    Request:
+      Params taskId: uuid
+      Headers authentication_token: jwt
+    Response:
+      status 200
+      body foundTask: {
+        id: uuid
+        name: text
+        description: text
+        userId: uuid
+      }

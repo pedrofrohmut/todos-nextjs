@@ -1,12 +1,11 @@
-import { CreateTaskType } from "../../types/task.types"
 import { AuthenticationHeaders } from "../../types/user.types"
+import { CreateTaskType } from "../../types/task.types"
+import { UserIdParamsType } from "../controller.types"
 
 export type CreateTaskRequestType = {
   headers: AuthenticationHeaders
   body: CreateTaskType
-  params: {
-    userId: string
-  }
+  params: UserIdParamsType
 }
 
 export type CreateTaskResponseType = {

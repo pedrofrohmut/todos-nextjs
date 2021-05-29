@@ -79,7 +79,7 @@ export default class CreateUserWrapper implements IControllerWrapper<CreateTaskT
       const response = await this.createTaskController.execute({ headers, body, params })
       return response
     } catch (err) {
-      return { status: 500, body: "Error to create an task: " + err.message }
+      return { status: 500, body: "[Wrapper] Error to create an task: " + err.message }
     } finally {
       await this.cleanUp()
     }

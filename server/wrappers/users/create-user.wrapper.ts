@@ -66,7 +66,7 @@ export default class CreateUserWrapper implements IControllerWrapper<CreateUserT
       const response = await this.createUserController.execute({ body })
       return response
     } catch (err) {
-      return { status: 500, body: "Error to create an user: " + err.message }
+      return { status: 500, body: "[Wrapper] Error to create an user: " + err.message }
     } finally {
       await this.cleanUp()
     }

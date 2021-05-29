@@ -49,7 +49,7 @@ export default class GetSignedUserWrapper implements IControllerWrapper<void, Si
       const response = await this.getSignedUserController.execute({ headers: request.headers })
       return response
     } catch (err) {
-      return { status: 500, body: "Error to get signed user: " + err.message }
+      return { status: 500, body: "[Wrapper] Error to get signed user: " + err.message }
     } finally {
       await this.cleanUp()
     }

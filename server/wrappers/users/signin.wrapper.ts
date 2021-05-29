@@ -70,7 +70,7 @@ export default class SignInWrapper
       const response = await this.signinController.execute({ body })
       return response
     } catch (err) {
-      return { status: 500, body: "Error to sign in an user: " + err.message }
+      return { status: 500, body: "[Wrapper] Error to sign in an user: " + err.message }
     } finally {
       await this.cleanUp()
     }
