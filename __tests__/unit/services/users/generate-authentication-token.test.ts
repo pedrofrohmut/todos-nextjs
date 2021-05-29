@@ -1,5 +1,5 @@
 import GenerateAuthenticationTokenService from "../../../../server/services/users/implementations/generate-authentication-token.service"
-import { AuthenticationToken } from "../../../../server/types/users.types"
+import { AuthenticationToken } from "../../../../server/types/user.types"
 import FakeTokenService from "../../../fakes/services/token.fake"
 import FakeUserService from "../../../fakes/services/user.fake"
 

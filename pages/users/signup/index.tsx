@@ -8,7 +8,7 @@ import SubmitButton from "../../../view/components/buttons/submit"
 import RequestSuccessAlert from "../../../view/components/alerts/request-success"
 import RequestErrorAlert from "../../../view/components/alerts/request-error"
 import UsersApi from "../../../view/api/users.api"
-import UserValidator from "../../../server/validators/users.validator"
+import UserValidator from "../../../server/validators/user.validator"
 
 type Fields = {
   name: string

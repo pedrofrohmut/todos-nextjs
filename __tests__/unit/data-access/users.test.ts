@@ -1,7 +1,7 @@
 import ConnectionFactory from "../../../server/utils/connection-factory.util"
-import UserDataAccess from "../../../server/data-access/implementations/users.data-access"
+import UserDataAccess from "../../../server/data-access/implementations/user.data-access"
 import FakeUserService from "../../fakes/services/user.fake"
-import { UserDatabaseType } from "../../../server/types/users.types"
+import { UserDatabaseType } from "../../../server/types/user.types"
 
 // Case 14
 // 1 - create

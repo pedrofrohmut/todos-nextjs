@@ -1,15 +1,12 @@
 import ConnectionFactory from "../../../../server/utils/connection-factory.util"
-import UserDataAccess from "../../../../server/data-access/implementations/users.data-access"
-import CreateUserService from "../../../../server/services/users/implementations/create.service"
+import UserDataAccess from "../../../../server/data-access/implementations/user.data-access"
+import CreateUserService from "../../../../server/services/users/implementations/create-user.service"
 import GeneratePasswordHashService from "../../../../server/services/users/implementations/generate-password-hash.service"
 import UserNotFoundByEmailError from "../../../../server/errors/users/user-not-found-by-email.error"
-import {
-  getValidationMessageForEmail,
-  getValidationMessageForPassword
-} from "../../../../server/validators/users.validator"
+import UserValidator from "../../../../server/validators/user.validator"
 import PasswordIsNotAMatchError from "../../../../server/errors/users/password-is-not-a-match.error"
 import CheckPasswordService from "../../../../server/services/users/implementations/check-password.service"
-import { SignInDataType } from "../../../../server/types/users.types"
+import { SignInDataType } from "../../../../server/types/user.types"
 
 import FakeUserService from "../../../fakes/services/user.fake"
 import UsersApi from "../../../../view/api/users.api"
@@ -39,8 +36,8 @@ describe("[Controller] SignIn User", () => {
     // Setup.
     const { email, password } = FakeUserService.getNew("171")
     const foundUser = await userDataAccess.findByEmail(email)
-    const emailValidationMessage = getValidationMessageForEmail(email)
-    const passwordValidationMessage = getValidationMessageForPassword(password)
+    const emailValidationMessage = UserValidator.getMessageForEmail(email)
+    const passwordValidationMessage = UserValidator.getMessageForPassword(password)
     // Given
     expect(emailValidationMessage).toBeNull()
     expect(passwordValidationMessage).toBeNull()
@@ -67,8 +64,8 @@ describe("[Controller] SignIn User", () => {
     const { password: otherPassword } = FakeUserService.getNew("172B")
     const passwordHash = await generatePasswordHashService.execute(password)
     const createdUser = await userDataAccess.createAndReturn({ name, email, passwordHash })
-    const emailValidationMessage = getValidationMessageForEmail(email)
-    const passwordValidationMessage = getValidationMessageForPassword(otherPassword)
+    const emailValidationMessage = UserValidator.getMessageForEmail(email)
+    const passwordValidationMessage = UserValidator.getMessageForPassword(otherPassword)
     const isMatch = await checkPasswordService.execute(otherPassword, passwordHash)
     // Given
     expect(emailValidationMessage).toBeNull()
@@ -99,8 +96,8 @@ describe("[Controller] SignIn User", () => {
     const { name, email, password } = FakeUserService.getNew("173")
     await createUserService.execute({ name, email, password })
     const createdUser = await userDataAccess.findByEmail(email)
-    const emailValidationMessage = getValidationMessageForEmail(email)
-    const passwordValidationMessage = getValidationMessageForPassword(password)
+    const emailValidationMessage = UserValidator.getMessageForEmail(email)
+    const passwordValidationMessage = UserValidator.getMessageForPassword(password)
     // Given
     expect(createdUser).not.toBeNull()
     expect(emailValidationMessage).toBeNull()

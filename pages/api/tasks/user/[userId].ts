@@ -1,7 +1,7 @@
 import { NextApiRequest, NextApiResponse } from "next"
 
 import ExpressAdapter from "../../../../server/adapter/express.adapter"
-import CreateTaskWrapper from "../../../../server/wrappers/tasks/create.wrapper"
+import CreateTaskWrapper from "../../../../server/wrappers/tasks/create-task.wrapper"
 
 const SignInRoute = async (request: NextApiRequest, response: NextApiResponse): Promise<void> => {
   switch (request.method) {

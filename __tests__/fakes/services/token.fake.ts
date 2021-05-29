@@ -2,7 +2,7 @@ import { sign, verify, TokenExpiredError, JsonWebTokenError, NotBeforeError } fr
 import { v4 as uuid } from "uuid"
 import ExpiredTokenError from "../../../server/errors/users/expired-token.error"
 import InvalidTokenError from "../../../server/errors/users/invalid-token.error"
-import { AuthenticationToken } from "../../../server/types/users.types"
+import { AuthenticationToken } from "../../../server/types/user.types"
 
 const oneDay = 24 * 60 * 60
 

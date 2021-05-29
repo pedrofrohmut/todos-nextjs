@@ -23,7 +23,7 @@ case 20 = services\users\generate-authentication-token
 
 case 21 = services\users\authentication-token-decoder
 
-case 22 = services\users\find-by-id
+case 22 = services\users\find-user-by-id
  
 case 23 = use-cases\users\signed
 

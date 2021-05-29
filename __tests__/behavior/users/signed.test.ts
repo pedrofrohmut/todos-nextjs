@@ -1,19 +1,19 @@
-import UserDataAccess from "../../../server/data-access/implementations/users.data-access"
+import UserDataAccess from "../../../server/data-access/implementations/user.data-access"
 import AuthenticationTokenDecoderService from "../../../server/services/users/implementations/authentication-token-decoder.service"
-import CreateUserService from "../../../server/services/users/implementations/create.service"
-import FindUserByEmailService from "../../../server/services/users/implementations/find-by-email.service"
+import CreateUserService from "../../../server/services/users/implementations/create-user.service"
+import FindUserByEmailService from "../../../server/services/users/implementations/find-user-by-email.service"
 import GenerateAuthenticationTokenService from "../../../server/services/users/implementations/generate-authentication-token.service"
 import GeneratePasswordHashService from "../../../server/services/users/implementations/generate-password-hash.service"
-import FindUserByIdService from "../../../server/services/users/implementations/find-by-id.service"
-import { AuthenticationToken, SignedUserType } from "../../../server/types/users.types"
+import FindUserByIdService from "../../../server/services/users/implementations/find-user-by-id.service"
+import { AuthenticationToken, SignedUserType } from "../../../server/types/user.types"
 import ConnectionFactory from "../../../server/utils/connection-factory.util"
-import DeleteUserByEmailService from "../../../server/services/users/implementations/delete-by-email.service"
+import DeleteUserByEmailService from "../../../server/services/users/implementations/delete-user-by-email.service"
 import InvalidTokenError from "../../../server/errors/users/invalid-token.error"
 import UserNotFoundByIdError from "../../../server/errors/users/user-not-found-by-id.error"
 import TokenWithoutUserIdError from "../../../server/errors/users/token-without-user-id.error"
 import ExpiredTokenError from "../../../server/errors/users/expired-token.error"
 import TokenWithInvalidUserIdError from "../../../server/errors/users/token-with-invalid-user-id.error"
-import { getValidationMessageForUserId } from "../../../server/validators/users.validator"
+import UserValidator from "../../../server/validators/user.validator"
 import UnauthenticatedRequestError from "../../../server/errors/request/unauthenticated-request.error"
 
 import UsersApiCaller from "../../../view/api/users.api"
@@ -46,7 +46,7 @@ describe("[BDD] Get Signed User", () => {
     // Setup
     const { name, email, passwordHash } = FakeUserService.getNew("BDD031")
     const createdUser = await userDataAccess.createAndReturn({ name, email, passwordHash })
-    const userIdValidationMessage = getValidationMessageForUserId(createdUser.id)
+    const userIdValidationMessage = UserValidator.getMessageForUserId(createdUser.id)
     const token = generateAuthenticationTokenService.execute(createdUser.id)
     let decoded: AuthenticationToken = undefined
     let decodeTokenErr: Error = undefined
@@ -234,7 +234,7 @@ describe("[BDD] Get Signed User", () => {
       decodeTokenErr = err
     }
     const headers = { authentication_token: token }
-    const userIdValidationMessage = getValidationMessageForUserId(userId)
+    const userIdValidationMessage = UserValidator.getMessageForUserId(userId)
     // Given
     expect(decodeTokenErr).not.toBeDefined()
     expect(headers.authentication_token).toBeDefined()

@@ -1,12 +1,8 @@
 import ConnectionFactory from "../../../server/utils/connection-factory.util"
-import UserDataAccess from "../../../server/data-access/implementations/users.data-access"
-import FindUserByEmailService from "../../../server/services/users/implementations/find-by-email.service"
-import {
-  getValidationMessageForEmail,
-  getValidationMessageForName,
-  getValidationMessageForPassword
-} from "../../../server/validators/users.validator"
-import CreateUserService from "../../../server/services/users/implementations/create.service"
+import UserDataAccess from "../../../server/data-access/implementations/user.data-access"
+import FindUserByEmailService from "../../../server/services/users/implementations/find-user-by-email.service"
+import UserValidator from "../../../server/validators/user.validator"
+import CreateUserService from "../../../server/services/users/implementations/create-user.service"
 import GeneratePasswordHashService from "../../../server/services/users/implementations/generate-password-hash.service"
 import EmailAlreadyInUseError from "../../../server/errors/users/email-already-in-use.error"
 
@@ -34,9 +30,9 @@ describe("[BDD] Create users", () => {
   test("Scenario 1 - valid credentials", async () => {
     // Setup
     const { name, email, password } = FakeUserService.getNew("BDD011")
-    const nameValidationMessage = getValidationMessageForName(name)
-    const emailValidationMessage = getValidationMessageForEmail(email)
-    const passwordValidationMessage = getValidationMessageForPassword(password)
+    const nameValidationMessage = UserValidator.getMessageForName(name)
+    const emailValidationMessage = UserValidator.getMessageForEmail(email)
+    const passwordValidationMessage = UserValidator.getMessageForPassword(password)
     const foundUserByEmail = await userDataAccess.findByEmail(email)
     // Given
     expect(nameValidationMessage).toBeNull()
@@ -67,7 +63,7 @@ describe("[BDD] Create users", () => {
     // Setup
     const { email, password } = FakeUserService.getNew("BDD012")
     const name = ""
-    const nameValidationMessage = getValidationMessageForName(name)
+    const nameValidationMessage = UserValidator.getMessageForName(name)
     // Given
     expect(nameValidationMessage).not.toBeNull()
     // When
@@ -90,7 +86,7 @@ describe("[BDD] Create users", () => {
     // Setup
     const { name, password } = FakeUserService.getNew("BDD013")
     const email = ""
-    const emailValidationMessage = getValidationMessageForEmail(email)
+    const emailValidationMessage = UserValidator.getMessageForEmail(email)
     // Given
     expect(emailValidationMessage).not.toBeNull()
     // When
@@ -113,7 +109,7 @@ describe("[BDD] Create users", () => {
     // Setup
     const { name, email } = FakeUserService.getNew("BDD014")
     const password = ""
-    const passwordValidationMessage = getValidationMessageForPassword(password)
+    const passwordValidationMessage = UserValidator.getMessageForPassword(password)
     // Given
     expect(passwordValidationMessage).not.toBeNull()
     // When
@@ -136,9 +132,9 @@ describe("[BDD] Create users", () => {
     // Setup
     const { name, email, password } = FakeUserService.getNew("BDD015A")
     const { name: otherName, password: otherPassword } = FakeUserService.getNew("BDD015B")
-    const nameValidationMessage = getValidationMessageForName(otherName)
-    const emailValidationMessage = getValidationMessageForEmail(email)
-    const passwordValidationMessage = getValidationMessageForPassword(otherPassword)
+    const nameValidationMessage = UserValidator.getMessageForName(otherName)
+    const emailValidationMessage = UserValidator.getMessageForEmail(email)
+    const passwordValidationMessage = UserValidator.getMessageForPassword(otherPassword)
     await createUserService.execute({ name, email, password })
     const registeredUser = await findUserByEmailService.execute(email)
     // Given

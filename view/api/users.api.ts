@@ -6,7 +6,7 @@ import {
   SignedUserType,
   SignInCredentialsType,
   SignInDataType
-} from "../../server/types/users.types"
+} from "../../server/types/user.types"
 import { ApiResponse } from "./api.types"
 
 import { SERVER_URL } from "./constants"

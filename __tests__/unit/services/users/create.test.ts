@@ -1,6 +1,6 @@
 import ConnectionFactory from "../../../../server/utils/connection-factory.util"
-import UserDataAccess from "../../../../server/data-access/implementations/users.data-access"
-import CreateUserService from "../../../../server/services/users/implementations/create.service"
+import UserDataAccess from "../../../../server/data-access/implementations/user.data-access"
+import CreateUserService from "../../../../server/services/users/implementations/create-user.service"
 import GeneratePasswordHashService from "../../../../server/services/users/implementations/generate-password-hash.service"
 import FakeUserService from "../../../fakes/services/user.fake"
 

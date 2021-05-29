@@ -1,8 +1,8 @@
 import ConnectionFactory from "../../../../server/utils/connection-factory.util"
-import UserDataAccess from "../../../../server/data-access/implementations/users.data-access"
-import FindUserByEmailService from "../../../../server/services/users/implementations/find-by-email.service"
-import DeleteUserByEmailService from "../../../../server/services/users/implementations/delete-by-email.service"
-import { UserDatabaseType } from "../../../../server/types/users.types"
+import UserDataAccess from "../../../../server/data-access/implementations/user.data-access"
+import FindUserByEmailService from "../../../../server/services/users/implementations/find-user-by-email.service"
+import DeleteUserByEmailService from "../../../../server/services/users/implementations/delete-user-by-email.service"
+import { UserDatabaseType } from "../../../../server/types/user.types"
 import FakeUserService from "../../../fakes/services/user.fake"
 
 // Case 13

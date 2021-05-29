@@ -1,4 +1,4 @@
-import UserDataAccess from "../../../../server/data-access/implementations/users.data-access"
+import UserDataAccess from "../../../../server/data-access/implementations/user.data-access"
 import UnauthenticatedRequestError from "../../../../server/errors/request/unauthenticated-request.error"
 import ExpiredTokenError from "../../../../server/errors/users/expired-token.error"
 import InvalidTokenError from "../../../../server/errors/users/invalid-token.error"
@@ -6,7 +6,7 @@ import TokenWithInvalidUserIdError from "../../../../server/errors/users/token-w
 import TokenWithoutUserIdError from "../../../../server/errors/users/token-without-user-id.error"
 import UserNotFoundByIdError from "../../../../server/errors/users/user-not-found-by-id.error"
 import GenerateAuthenticationTokenService from "../../../../server/services/users/implementations/generate-authentication-token.service"
-import { SignedUserType } from "../../../../server/types/users.types"
+import { SignedUserType } from "../../../../server/types/user.types"
 import ConnectionFactory from "../../../../server/utils/connection-factory.util"
 
 import FakeTokenService from "../../../fakes/services/token.fake"

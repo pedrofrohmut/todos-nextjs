@@ -2,7 +2,7 @@ import { Dispatch, ReactElement, SetStateAction, useContext, useState } from "re
 import Link from "next/link"
 import { useRouter } from "next/router"
 
-import UserValidator from "../../../server/validators/users.validator"
+import UserValidator from "../../../server/validators/user.validator"
 import SubmitButton from "../../../view/components/buttons/submit"
 import UsersApi from "../../../view/api/users.api"
 import HREFS from "../../../view/constants/hrefs.enum"

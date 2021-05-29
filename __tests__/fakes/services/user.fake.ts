@@ -1,10 +1,10 @@
 import { compare } from "bcryptjs"
 import { v4 as uuid } from "uuid"
 
-import { UserType } from "../../../server/types/users.types"
+import User from "../../../server/entities/user.entity"
 
 export default class FakeUserService {
-  public static getNew(code: string): UserType {
+  public static getNew(code: string): User {
     return {
       id: uuid(),
       name: `John Doe ${code}`,

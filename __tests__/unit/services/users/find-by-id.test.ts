@@ -1,6 +1,6 @@
-import UserDataAccess from "../../../../server/data-access/implementations/users.data-access"
-import FindUserByIdService from "../../../../server/services/users/implementations/find-by-id.service"
-import { UserDatabaseType } from "../../../../server/types/users.types"
+import UserDataAccess from "../../../../server/data-access/implementations/user.data-access"
+import FindUserByIdService from "../../../../server/services/users/implementations/find-user-by-id.service"
+import { UserDatabaseType } from "../../../../server/types/user.types"
 import ConnectionFactory from "../../../../server/utils/connection-factory.util"
 import FakeUserService from "../../../fakes/services/user.fake"
 

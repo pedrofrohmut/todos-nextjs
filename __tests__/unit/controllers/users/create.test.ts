@@ -1,5 +1,5 @@
 import ConnectionFactory from "../../../../server/utils/connection-factory.util"
-import UserDataAccess from "../../../../server/data-access/implementations/users.data-access"
+import UserDataAccess from "../../../../server/data-access/implementations/user.data-access"
 import EmailAlreadyInUseError from "../../../../server/errors/users/email-already-in-use.error"
 
 import FakeUserService from "../../../fakes/services/user.fake"

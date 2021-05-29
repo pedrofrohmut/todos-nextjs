@@ -1,7 +1,7 @@
 import { NextApiRequest, NextApiResponse } from "next"
 
 import ExpressAdapter from "../../server/adapter/express.adapter"
-import CreateUserWrapper from "../../server/wrappers/users/create.wrapper"
+import CreateUserWrapper from "../../server/wrappers/users/create-user.wrapper"
 
 const UsersRoute = async (request: NextApiRequest, response: NextApiResponse): Promise<void> => {
   switch (request.method) {

@@ -1,9 +1,4 @@
-import {
-  getValidationMessageForEmail,
-  getValidationMessageForName,
-  getValidationMessageForPassword,
-  getValidationMessageForUserId
-} from "../../../server/validators/users.validator"
+import UserValidator from "../../../server/validators/user.validator"
 import FakeUserService from "../../fakes/services/user.fake"
 
 // Case 16
@@ -18,10 +13,10 @@ describe("[Validation] User", () => {
     const invalidUserId = FakeUserService.getInvalidUserId()
     const { id: validUserId } = FakeUserService.getNew("161")
     // Test
-    const msg1 = getValidationMessageForUserId(undefined)
-    const msg2 = getValidationMessageForUserId("")
-    const msg3 = getValidationMessageForUserId(invalidUserId)
-    const msg4 = getValidationMessageForUserId(validUserId)
+    const msg1 = UserValidator.getMessageForUserId(undefined)
+    const msg2 = UserValidator.getMessageForUserId("")
+    const msg3 = UserValidator.getMessageForUserId(invalidUserId)
+    const msg4 = UserValidator.getMessageForUserId(validUserId)
     // Evaluation
     expect(msg1).not.toBeNull()
     expect(msg2).not.toBeNull()
@@ -34,13 +29,13 @@ describe("[Validation] User", () => {
     // Setup
     const { name: validName } = FakeUserService.getNew("162")
     // Test
-    const msg1 = getValidationMessageForName(undefined)
-    const msg2 = getValidationMessageForName("")
-    const msg3 = getValidationMessageForName("ab")
-    const msg4 = getValidationMessageForName(
+    const msg1 = UserValidator.getMessageForName(undefined)
+    const msg2 = UserValidator.getMessageForName("")
+    const msg3 = UserValidator.getMessageForName("ab")
+    const msg4 = UserValidator.getMessageForName(
       "Adipisicing ipsum repellat consectetur in sequi officia sapiente! Itaque quos unde nihil omnis assumenda deleniti Magni libero ipsam iure quia laborum Officia cum harum dolores alias odit molestias? Excepturi aperiam libero nisi ratione in?"
     )
-    const msg5 = getValidationMessageForName(validName)
+    const msg5 = UserValidator.getMessageForName(validName)
     // Evaluation
     expect(msg1).not.toBeNull()
     expect(msg2).not.toBeNull()
@@ -54,10 +49,10 @@ describe("[Validation] User", () => {
     // Setup
     const { email: validEmail } = FakeUserService.getNew("163")
     // Test
-    const msg1 = getValidationMessageForEmail(undefined)
-    const msg2 = getValidationMessageForEmail("")
-    const msg3 = getValidationMessageForEmail("john_doe161")
-    const msg4 = getValidationMessageForEmail(validEmail)
+    const msg1 = UserValidator.getMessageForEmail(undefined)
+    const msg2 = UserValidator.getMessageForEmail("")
+    const msg3 = UserValidator.getMessageForEmail("john_doe161")
+    const msg4 = UserValidator.getMessageForEmail(validEmail)
     // Evaluation
     expect(msg1).not.toBeNull()
     expect(msg2).not.toBeNull()
@@ -70,13 +65,13 @@ describe("[Validation] User", () => {
     // Setup
     const { password: validPassword } = FakeUserService.getNew("164")
     // Test
-    const msg1 = getValidationMessageForPassword(undefined)
-    const msg2 = getValidationMessageForPassword("")
-    const msg3 = getValidationMessageForPassword("12")
-    const msg4 = getValidationMessageForPassword(
+    const msg1 = UserValidator.getMessageForPassword(undefined)
+    const msg2 = UserValidator.getMessageForPassword("")
+    const msg3 = UserValidator.getMessageForPassword("12")
+    const msg4 = UserValidator.getMessageForPassword(
       "Lorem autem sapiente modi aliquam animi? Neque fugiat minus ea nihil pariatur repudiandae? Quod delectus saepe labore vitae pariatur. Laborum."
     )
-    const msg5 = getValidationMessageForPassword(validPassword)
+    const msg5 = UserValidator.getMessageForPassword(validPassword)
     // Evaluation
     expect(msg1).not.toBeNull()
     expect(msg2).not.toBeNull()
