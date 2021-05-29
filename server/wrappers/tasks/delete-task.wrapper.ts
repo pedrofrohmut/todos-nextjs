@@ -1,4 +1,4 @@
-import IAuthenticationTokenDecoderService from "../../services/users/authentication-token-decoder.interface"
+import IAuthenticationTokenDecoderService from "../../services/users/authentication-token-decoder-service.interface"
 import IControllerWrapper, {
   WrapperRequest,
   WrapperResponse
@@ -11,10 +11,10 @@ import DeleteTaskByIdService from "../../services/tasks/implementations/delete-t
 import DeleteTaskController from "../../controllers/tasks/implementations/delete-task.controller"
 import DeleteTaskUseCase from "../../use-cases/tasks/implementations/delete-task.use-case"
 import FindTaskByIdService from "../../services/tasks/implementations/find-task-by-id.service"
-import FindUserByIdService from "../../services/users/implementations/find-by-id.service"
+import FindUserByIdService from "../../services/users/implementations/find-user-by-id.service"
 import RequestValidator from "../../validators/request.validator"
-import TaskDataAccess from "../../data-access/implementations/tasks.data-access"
-import UserDataAccess from "../../data-access/implementations/users.data-access"
+import TaskDataAccess from "../../data-access/implementations/task.data-access"
+import UserDataAccess from "../../data-access/implementations/user.data-access"
 
 export default class DeleteTaskWrapper implements IControllerWrapper<void, void> {
   private connection: Connection

@@ -1,10 +1,12 @@
-import ISignInUseCase from "../signin.interface"
-import ICheckPasswordService from "../../../services/users/check-password.interface"
-import IFindUserByEmailService from "../../../services/users/find-by-email.interface"
-import IGenerateTokenService from "../../../services/users/generate-authentication-token.interface"
+import ISignInUseCase from "../signin-use-case.interface"
+import ICheckPasswordService from "../../../services/users/check-password-service.interface"
+import IFindUserByEmailService from "../../../services/users/find-user-by-email-service.interface"
+import IGenerateTokenService from "../../../services/users/generate-authentication-token-service.interface"
+
+import { SignInCredentialsType, SignInDataType } from "../../../types/user.types"
+
 import UserNotFoundByEmailError from "../../../errors/users/user-not-found-by-email.error"
 import PasswordIsNotAMatchError from "../../../errors/users/password-is-not-a-match.error"
-import { SignInCredentialsType, SignInDataType } from "../../../types/users.types"
 
 export default class SignInUseCase implements ISignInUseCase {
   private readonly findUserByEmailService: IFindUserByEmailService

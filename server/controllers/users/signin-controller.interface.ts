@@ -1,4 +1,4 @@
-import { SignInCredentialsType, SignInDataType } from "../../types/users.types"
+import { SignInCredentialsType, SignInDataType } from "../../types/user.types"
 
 export type SignInRequestType = {
   body: SignInCredentialsType

@@ -1,10 +1,10 @@
-import IAuthenticationTokenDecoderService from "../../../services/users/authentication-token-decoder.interface"
-import IFindUserByIdService from "../../../services/users/find-by-id.interface"
-import ISignedUseCase from "../signed.interface"
+import IAuthenticationTokenDecoderService from "../../../services/users/authentication-token-decoder-service.interface"
+import IFindUserByIdService from "../../../services/users/find-user-by-id-service.interface"
+import IGetSignedUserUseCase from "../get-signed-user-use-case.interface"
 
-import { AuthenticationToken, SignedUserType } from "../../../types/users.types"
+import { AuthenticationToken, SignedUserType } from "../../../types/user.types"
 
-import UserValidator from "../../../validators/users.validator"
+import UserValidator from "../../../validators/user.validator"
 
 import ExpiredTokenError from "../../../errors/users/expired-token.error"
 import InvalidTokenError from "../../../errors/users/invalid-token.error"
@@ -12,7 +12,7 @@ import TokenWithInvalidUserIdError from "../../../errors/users/token-with-invali
 import TokenWithoutUserIdError from "../../../errors/users/token-without-user-id.error"
 import UserNotFoundByIdError from "../../../errors/users/user-not-found-by-id.error"
 
-export default class SignedUseCase implements ISignedUseCase {
+export default class GetSignedUserUseCase implements IGetSignedUserUseCase {
   private readonly findUserByIdService: IFindUserByIdService
   private readonly authenticationTokenDecoderService: IAuthenticationTokenDecoderService
 

@@ -1,22 +1,22 @@
-import IAuthenticationTokenDecoderService from "../../services/users/authentication-token-decoder.interface"
+import IAuthenticationTokenDecoderService from "../../services/users/authentication-token-decoder-service.interface"
 import IControllerWrapper, {
   WrapperRequest,
   WrapperResponse
 } from "../controller-wrapper.interface"
-import ISignedController from "../../controllers/users/signed.interface"
+import IGetSignedUserController from "../../controllers/users/get-signed-user-controller.interface"
 
 import AuthenticationTokenDecoderService from "../../services/users/implementations/authentication-token-decoder.service"
 import ConnectionFactory, { Connection } from "../../utils/connection-factory.util"
-import FindUserByIdService from "../../services/users/implementations/find-by-id.service"
+import FindUserByIdService from "../../services/users/implementations/find-user-by-id.service"
+import GetSignedUserController from "../../controllers/users/implementations/get-signed-user.controller"
+import GetSignedUserUseCase from "../../use-cases/users/implementations/get-signed-user.use-case"
 import RequestValidator from "../../validators/request.validator"
-import SignedController from "../../controllers/users/implementations/signed.controller"
-import SignedUseCase from "../../use-cases/users/implementations/signed.use-case"
-import UserDataAccess from "../../data-access/implementations/users.data-access"
-import { SignedUserType } from "../../types/users.types"
+import UserDataAccess from "../../data-access/implementations/user.data-access"
+import { SignedUserType } from "../../types/user.types"
 
-export default class SignedWrapper implements IControllerWrapper<void, SignedUserType> {
+export default class GetSignedUserWrapper implements IControllerWrapper<void, SignedUserType> {
   private connection: Connection
-  private signedController: ISignedController
+  private getSignedUserController: IGetSignedUserController
   private authenticationTokenDecoderService: IAuthenticationTokenDecoderService
 
   constructor() {}
@@ -27,8 +27,8 @@ export default class SignedWrapper implements IControllerWrapper<void, SignedUse
     const userDataAccess = new UserDataAccess(this.connection)
     const findUserByIdService = new FindUserByIdService(userDataAccess)
     const authenticationTokenDecoderService = new AuthenticationTokenDecoderService()
-    const signedUseCase = new SignedUseCase(findUserByIdService, authenticationTokenDecoderService)
-    this.signedController = new SignedController(signedUseCase)
+    const signedUseCase = new GetSignedUserUseCase(findUserByIdService, authenticationTokenDecoderService)
+    this.getSignedUserController = new GetSignedUserController(signedUseCase)
     this.authenticationTokenDecoderService = new AuthenticationTokenDecoderService()
   }
 
@@ -46,7 +46,7 @@ export default class SignedWrapper implements IControllerWrapper<void, SignedUse
       if (headersValidationResponse !== null) {
         return headersValidationResponse
       }
-      const response = await this.signedController.execute({ headers: request.headers })
+      const response = await this.getSignedUserController.execute({ headers: request.headers })
       return response
     } catch (err) {
       return { status: 500, body: "Error to get signed user: " + err.message }

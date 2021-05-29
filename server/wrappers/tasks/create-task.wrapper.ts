@@ -1,21 +1,21 @@
-import IAuthenticationTokenDecoderService from "../../services/users/authentication-token-decoder.interface"
-import ICreateTaskController from "../../controllers/tasks/create.interface"
+import IAuthenticationTokenDecoderService from "../../services/users/authentication-token-decoder-service.interface"
+import ICreateTaskController from "../../controllers/tasks/create-task-controller.interface"
 import IControllerWrapper, {
   WrapperRequest,
   WrapperResponse
 } from "../controller-wrapper.interface"
 
-import { CreateTaskType } from "../../types/tasks.types"
+import { CreateTaskType } from "../../types/task.types"
 
 import ConnectionFactory, { Connection } from "../../utils/connection-factory.util"
-import CreateTaskController from "../../controllers/tasks/implementations/create.controller"
-import CreateTaskService from "../../services/tasks/implementations/create.service"
-import CreateTaskUseCase from "../../use-cases/tasks/implementations/create.use-case"
-import FindUserByIdService from "../../services/users/implementations/find-by-id.service"
+import CreateTaskController from "../../controllers/tasks/implementations/create-task.controller"
+import CreateTaskService from "../../services/tasks/implementations/create-task.service"
+import CreateTaskUseCase from "../../use-cases/tasks/implementations/create-task.use-case"
+import FindUserByIdService from "../../services/users/implementations/find-user-by-id.service"
 import RequestValidator from "../../validators/request.validator"
-import TaskDataAccess from "../../data-access/implementations/tasks.data-access"
-import TaskValidator from "../../validators/tasks.validator"
-import UserDataAccess from "../../data-access/implementations/users.data-access"
+import TaskDataAccess from "../../data-access/implementations/task.data-access"
+import TaskValidator from "../../validators/task.validator"
+import UserDataAccess from "../../data-access/implementations/user.data-access"
 import AuthenticationTokenDecoderService from "../../services/users/implementations/authentication-token-decoder.service"
 
 export default class CreateUserWrapper implements IControllerWrapper<CreateTaskType, void> {

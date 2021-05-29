@@ -2,8 +2,8 @@ import { JsonWebTokenError, NotBeforeError, TokenExpiredError, verify } from "js
 import ExpiredTokenError from "../../../errors/users/expired-token.error"
 import InvalidTokenError from "../../../errors/users/invalid-token.error"
 
-import { AuthenticationToken } from "../../../types/users.types"
-import IAuthenticationTokenDecoderService from "../authentication-token-decoder.interface"
+import { AuthenticationToken } from "../../../types/user.types"
+import IAuthenticationTokenDecoderService from "../authentication-token-decoder-service.interface"
 
 export default class AuthenticationTokenDecoderService
   implements IAuthenticationTokenDecoderService {

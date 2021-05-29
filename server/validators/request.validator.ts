@@ -1,3 +1,5 @@
+import IAuthenticationTokenDecoderService from "../services/users/authentication-token-decoder-service.interface"
+
 import {
   BodyToValidateType,
   BodyValidatorCallbackType,
@@ -5,21 +7,19 @@ import {
   ParamsToValidateType,
   ValidatorResponse
 } from "../types/request.types"
+import { AuthenticationToken } from "../types/user.types"
 
-import UserValidator from "./users.validator"
-
-import InvalidRequestParamsError from "../errors/request/invalid-request-params.error"
-import MissingRequestParamsError from "../errors/request/missing-request-params.error"
-import IAuthenticationTokenDecoderService from "../services/users/authentication-token-decoder.interface"
-import UnauthenticatedRequestError from "../errors/request/unauthenticated-request.error"
-import { AuthenticationToken } from "../types/users.types"
-import InvalidTokenError from "../errors/users/invalid-token.error"
 import ExpiredTokenError from "../errors/users/expired-token.error"
-import NoDecoderTokenServiceError from "../errors/validators/request/no-token-decoder-service.error"
-import TokenWithInvalidUserIdError from "../errors/users/token-with-invalid-user-id.error"
-import UserIdFromRequestTokenAndParamsAreNotMatchError from "../errors/request/user-id-from-request-token-and-params-are-not-match.error"
+import InvalidRequestParamsError from "../errors/request/invalid-request-params.error"
+import InvalidTokenError from "../errors/users/invalid-token.error"
 import MissingRequestBodyError from "../errors/request/missing-request-body.error"
-import TaskValidator from "./tasks.validator"
+import MissingRequestParamsError from "../errors/request/missing-request-params.error"
+import NoDecoderTokenServiceError from "../errors/validators/request/no-token-decoder-service.error"
+import TaskValidator from "./task.validator"
+import TokenWithInvalidUserIdError from "../errors/users/token-with-invalid-user-id.error"
+import UnauthenticatedRequestError from "../errors/request/unauthenticated-request.error"
+import UserIdFromRequestTokenAndParamsAreNotMatchError from "../errors/request/user-id-from-request-token-and-params-are-not-match.error"
+import UserValidator from "./user.validator"
 
 export default class RequestValidator {
   public static getResponseForAuthenticationHeaders(

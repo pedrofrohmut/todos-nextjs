@@ -1,4 +1,4 @@
-import { TaskDatabaseType } from "../../types/tasks.types"
+import { TaskDatabaseType } from "../../types/task.types"
 
 export default interface IFindTaskByIdService {
   execute: (taskId: string) => Promise<TaskDatabaseType>

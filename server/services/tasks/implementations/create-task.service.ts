@@ -1,7 +1,7 @@
-import ICreateTaskService from "../create.interface"
-import ITaskDataAccess from "../../../data-access/tasks.interface"
+import ICreateTaskService from "../create-task-service.interface"
+import ITaskDataAccess from "../../../data-access/task-data-access.interface"
 
-import { CreateTaskType } from "../../../types/tasks.types"
+import { CreateTaskType } from "../../../types/task.types"
 
 export default class CreateTaskService implements ICreateTaskService {
   private readonly taskDataAccess: ITaskDataAccess

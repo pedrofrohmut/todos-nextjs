@@ -1,4 +1,4 @@
-import { CreateTaskDatabaseType, TaskDatabaseType } from "../types/tasks.types"
+import { CreateTaskDatabaseType, TaskDatabaseType } from "../types/task.types"
 
 export default interface ITaskDataAccess {
   create: (newTask: CreateTaskDatabaseType) => Promise<void>

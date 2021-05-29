@@ -1,8 +1,8 @@
 import ICreateTaskController, {
   CreateTaskRequestType,
   CreateTaskResponseType
-} from "../create.interface"
-import ICreateTaskUseCase from "../../../use-cases/tasks/create.interface"
+} from "../create-task-controller.interface"
+import ICreateTaskUseCase from "../../../use-cases/tasks/create-task-use-case.interface"
 import UserNotFoundByIdError from "../../../errors/users/user-not-found-by-id.error"
 
 export default class CreateTaskController implements ICreateTaskController {

@@ -1,5 +1,5 @@
-import { CreateTaskType } from "../../types/tasks.types"
-import { AuthenticationHeaders } from "../../types/users.types"
+import { CreateTaskType } from "../../types/task.types"
+import { AuthenticationHeaders } from "../../types/user.types"
 
 export type CreateTaskRequestType = {
   headers: AuthenticationHeaders

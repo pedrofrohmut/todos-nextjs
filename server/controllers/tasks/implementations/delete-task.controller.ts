@@ -1,4 +1,4 @@
-import IAuthenticationTokenDecoderService from "../../../services/users/authentication-token-decoder.interface"
+import IAuthenticationTokenDecoderService from "../../../services/users/authentication-token-decoder-service.interface"
 import IDeleteTaskController, {
   DeleteTaskRequestType,
   DeleteTaskResponseType

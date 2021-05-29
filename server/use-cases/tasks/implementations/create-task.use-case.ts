@@ -1,8 +1,8 @@
-import ICreateTaskUseCase from "../create.interface"
-import IFindUserByIdService from "../../../services/users/find-by-id.interface"
-import ICreateTaskService from "../../../services/tasks/create.interface"
+import ICreateTaskUseCase from "../create-task-use-case.interface"
+import IFindUserByIdService from "../../../services/users/find-user-by-id-service.interface"
+import ICreateTaskService from "../../../services/tasks/create-task-service.interface"
 
-import { CreateTaskType } from "../../../types/tasks.types"
+import { CreateTaskType } from "../../../types/task.types"
 
 import UserNotFoundByIdError from "../../../errors/users/user-not-found-by-id.error"
 

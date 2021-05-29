@@ -1,6 +1,6 @@
-import { UserDatabaseType } from "../../../types/users.types"
-import IFindUserByIdService from "../find-by-id.interface"
-import IUserDataAccess from "../../../data-access/users.interface"
+import { UserDatabaseType } from "../../../types/user.types"
+import IFindUserByIdService from "../find-user-by-id-service.interface"
+import IUserDataAccess from "../../../data-access/user-data-access.interface"
 
 export default class FindUserByIdService implements IFindUserByIdService {
   private readonly userDataAccess: IUserDataAccess

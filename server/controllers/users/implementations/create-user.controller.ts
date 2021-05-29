@@ -1,8 +1,8 @@
 import ICreateUserController, {
   CreateUserRequestType,
   CreateUserResponseType
-} from "../create.interface"
-import ICreateUserUseCase from "../../../use-cases/users/create.interface"
+} from "../create-user-controller.interface"
+import ICreateUserUseCase from "../../../use-cases/users/create-user-use-case.interface"
 
 import EmailAlreadyInUseError from "../../../errors/users/email-already-in-use.error"
 

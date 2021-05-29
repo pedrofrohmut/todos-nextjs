@@ -1,7 +1,7 @@
 import IDeleteTaskByIdService from "../../../services/tasks/delete-task-by-id-service.interface"
 import IDeleteTaskUseCase from "../delete-task-use-case.interface"
 import IFindTaskByIdService from "../../../services/tasks/find-task-by-id-service.interface"
-import IFindUserByIdService from "../../../services/users/find-by-id.interface"
+import IFindUserByIdService from "../../../services/users/find-user-by-id-service.interface"
 
 import TaskNotFoundByIdError from "../../../errors/tasks/task-not-found-by-id.error"
 import UserNotFoundByIdError from "../../../errors/users/user-not-found-by-id.error"

@@ -1,4 +1,4 @@
-import { CreateUserDatabaseType, UserDatabaseType } from "../types/users.types"
+import { CreateUserDatabaseType, UserDatabaseType } from "../types/user.types"
 
 export default interface IUserDataAccess {
   create: (newUser: CreateUserDatabaseType) => Promise<void>

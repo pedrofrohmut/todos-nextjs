@@ -1,5 +1,5 @@
-import ISignInController, { SignInRequestType, SignInResponseType } from "../signin.interface"
-import ISignInUseCase from "../../../use-cases/users/signin.interface"
+import ISignInController, { SignInRequestType, SignInResponseType } from "../signin-controller.interface"
+import ISignInUseCase from "../../../use-cases/users/signin-use-case.interface"
 
 import PasswordIsNotAMatchError from "../../../errors/users/password-is-not-a-match.error"
 import UserNotFoundByEmailError from "../../../errors/users/user-not-found-by-email.error"

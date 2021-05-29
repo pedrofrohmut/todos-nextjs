@@ -1,4 +1,4 @@
-import { AuthenticationHeaders } from "../../types/users.types"
+import { AuthenticationHeaders } from "../../types/user.types"
 
 export type DeleteTaskRequestType = {
   headers: AuthenticationHeaders

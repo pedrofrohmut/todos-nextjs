@@ -1,6 +1,6 @@
-import { CreateTaskDatabaseType, TaskDatabaseType } from "../../types/tasks.types"
+import { CreateTaskDatabaseType, TaskDatabaseType } from "../../types/task.types"
 import { Connection } from "../../utils/connection-factory.util"
-import ITaskDataAccess from "../tasks.interface"
+import ITaskDataAccess from "../task-data-access.interface"
 
 export default class TaskDataAccess implements ITaskDataAccess {
   private readonly connection: Connection

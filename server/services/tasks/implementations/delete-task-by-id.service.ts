@@ -1,5 +1,5 @@
-import ITaskDataAccess from "../../../data-access/tasks.interface";
-import IDeleteTaskByIdService from "../delete-task-by-id-service.interface";
+import ITaskDataAccess from "../../../data-access/task-data-access.interface"
+import IDeleteTaskByIdService from "../delete-task-by-id-service.interface"
 
 export default class DeleteTaskByIdService implements IDeleteTaskByIdService {
   private readonly taskDataAccess: ITaskDataAccess

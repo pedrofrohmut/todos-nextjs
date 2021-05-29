@@ -1,6 +1,6 @@
-import { UserDatabaseType } from "../../../types/users.types"
-import IFindUserByEmailService from "../find-by-email.interface"
-import IUserDataAccess from "../../../data-access/users.interface"
+import { UserDatabaseType } from "../../../types/user.types"
+import IFindUserByEmailService from "../find-user-by-email-service.interface"
+import IUserDataAccess from "../../../data-access/user-data-access.interface"
 
 export default class FindUserByEmailService implements IFindUserByEmailService {
   private readonly userDataAccess: IUserDataAccess

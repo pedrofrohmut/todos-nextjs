@@ -1,5 +1,8 @@
-import ISignedController, { SignedRequestType, SignedResponseType } from "../signed.interface"
-import ISignedUseCase from "../../../use-cases/users/signed.interface"
+import IGetSignedUserController, {
+  GetSignedUserRequestType,
+  GetSignedUserResponseType
+} from "../get-signed-user-controller.interface"
+import IGetSignedUserUseCase from "../../../use-cases/users/get-signed-user-use-case.interface"
 
 import ExpiredTokenError from "../../../errors/users/expired-token.error"
 import InvalidTokenError from "../../../errors/users/invalid-token.error"
@@ -7,18 +10,18 @@ import TokenWithInvalidUserIdError from "../../../errors/users/token-with-invali
 import TokenWithoutUserIdError from "../../../errors/users/token-without-user-id.error"
 import UserNotFoundByIdError from "../../../errors/users/user-not-found-by-id.error"
 
-export default class SignedController implements ISignedController {
-  private readonly signedUseCase: ISignedUseCase
+export default class GetSignedUserController implements IGetSignedUserController {
+  private readonly getSignedUserUseCase: IGetSignedUserUseCase
 
-  constructor(signedUseCase: ISignedUseCase) {
-    this.signedUseCase = signedUseCase
+  constructor(getSignedUserUseCase: IGetSignedUserUseCase) {
+    this.getSignedUserUseCase = getSignedUserUseCase
   }
 
-  public async execute(request: SignedRequestType): Promise<SignedResponseType> {
+  public async execute(request: GetSignedUserRequestType): Promise<GetSignedUserResponseType> {
     const authenticationToken = request.headers.authentication_token
     try {
-      const signedData = await this.signedUseCase.execute(authenticationToken)
-      return { status: 200, body: signedData }
+      const signedUserData = await this.getSignedUserUseCase.execute(authenticationToken)
+      return { status: 200, body: signedUserData }
     } catch (err) {
       if (err instanceof InvalidTokenError) {
         return { status: 400, body: InvalidTokenError.message }

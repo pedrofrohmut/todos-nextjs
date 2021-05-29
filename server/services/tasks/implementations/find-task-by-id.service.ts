@@ -1,7 +1,7 @@
 import IFindTaskByIdService from "../find-task-by-id-service.interface"
-import ITaskDataAccess from "../../../data-access/tasks.interface"
+import ITaskDataAccess from "../../../data-access/task-data-access.interface"
 
-import { TaskDatabaseType } from "../../../types/tasks.types"
+import { TaskDatabaseType } from "../../../types/task.types"
 
 export default class FindTaskByIdService implements IFindTaskByIdService {
   private readonly taskDataAccess: ITaskDataAccess

@@ -1,8 +1,10 @@
-import ICreateUserUseCase from "../create.interface"
-import { CreateUserType } from "../../../types/users.types"
+import ICreateUserService from "../../../services/users/create-user-service.interface"
+import IFindUserByEmailService from "../../../services/users/find-user-by-email-service.interface"
+import ICreateUserUseCase from "../create-user-use-case.interface"
+
+import { CreateUserType } from "../../../types/user.types"
+
 import EmailAlreadyInUseError from "../../../errors/users/email-already-in-use.error"
-import IFindUserByEmailService from "../../../services/users/find-by-email.interface"
-import ICreateUserService from "../../../services/users/create.interface"
 
 export default class CreateUserUseCase implements ICreateUserUseCase {
   private readonly findUserByEmailService: IFindUserByEmailService

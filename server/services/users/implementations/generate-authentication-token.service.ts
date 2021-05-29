@@ -1,6 +1,6 @@
 import { sign } from "jsonwebtoken"
 
-import IGenerateAuthenticationTokenService from "../generate-authentication-token.interface"
+import IGenerateAuthenticationTokenService from "../generate-authentication-token-service.interface"
 
 export default class GenerateAuthenticationTokenService
   implements IGenerateAuthenticationTokenService {

@@ -1,6 +1,6 @@
 import { hash } from "bcryptjs"
 
-import IGeneratePasswordHashService from "../generate-password-hash.interface"
+import IGeneratePasswordHashService from "../generate-password-hash-service.interface"
 
 export default class GeneratePasswordHashService implements IGeneratePasswordHashService {
   public async execute(password: string): Promise<string> {

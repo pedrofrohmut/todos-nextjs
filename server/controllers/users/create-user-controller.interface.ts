@@ -1,4 +1,4 @@
-import { CreateUserType } from "../../types/users.types"
+import { CreateUserType } from "../../types/user.types"
 
 export type CreateUserRequestType = {
   body: CreateUserType

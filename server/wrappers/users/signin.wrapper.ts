@@ -2,19 +2,19 @@ import IControllerWrapper, {
   WrapperRequest,
   WrapperResponse
 } from "../controller-wrapper.interface"
-import ISignInController from "../../controllers/users/signin.interface"
+import ISignInController from "../../controllers/users/signin-controller.interface"
 
-import { SignInCredentialsType, SignInDataType } from "../../types/users.types"
+import { SignInCredentialsType, SignInDataType } from "../../types/user.types"
 
 import CheckPasswordService from "../../services/users/implementations/check-password.service"
 import ConnectionFactory, { Connection } from "../../utils/connection-factory.util"
-import FindUserByEmailService from "../../services/users/implementations/find-by-email.service"
+import FindUserByEmailService from "../../services/users/implementations/find-user-by-email.service"
 import GenerateAuthenticationTokenService from "../../services/users/implementations/generate-authentication-token.service"
+import RequestValidator from "../../validators/request.validator"
 import SignInController from "../../controllers/users/implementations/signin.controller"
 import SignInUseCase from "../../use-cases/users/implementations/signin.use-case"
-import UserDataAccess from "../../data-access/implementations/users.data-access"
-import UserValidator from "../../validators/users.validator"
-import RequestValidator from "../../validators/request.validator"
+import UserDataAccess from "../../data-access/implementations/user.data-access"
+import UserValidator from "../../validators/user.validator"
 
 export default class SignInWrapper
   implements IControllerWrapper<SignInCredentialsType, SignInDataType> {
