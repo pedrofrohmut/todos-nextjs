@@ -1,6 +1,9 @@
-import { CreateTaskDatabaseType, TaskDatabaseType } from "../../types/task.types"
-import { Connection } from "../../utils/connection-factory.util"
 import ITaskDataAccess from "../task-data-access.interface"
+
+import { CreateTaskDatabaseType, TaskDatabaseType } from "../../types/task.types"
+import { TaskSQLType } from "../sql.types"
+
+import { Connection } from "../../utils/connection-factory.util"
 
 export default class TaskDataAccess implements ITaskDataAccess {
   private readonly connection: Connection
@@ -28,12 +31,29 @@ export default class TaskDataAccess implements ITaskDataAccess {
     if (result.rows.length === 0) {
       return null
     }
-    const { id, name, description, user_id } = result.rows[0]
+    const { id, name, description, user_id } = result.rows[0] as TaskSQLType
     return {
       id,
       name,
       description,
       userId: user_id
     }
+  }
+
+  public async findByUserId(userId: string): Promise<TaskDatabaseType[]> {
+    const result = await this.connection.query(
+      "SELECT id, name, description FROM app.tasks WHERE user_id = $1",
+      [userId]
+    )
+    if (result.rows.length === 0) {
+      return []
+    }
+    const tasks = result.rows.map(({ id, name, description }: TaskSQLType) => ({
+      id,
+      name,
+      description,
+      userId
+    }))
+    return tasks
   }
 }

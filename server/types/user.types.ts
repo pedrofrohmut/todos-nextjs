@@ -1,8 +1,8 @@
-export type AuthenticationHeaders = {
+export type AuthenticationHeadersType = {
   authentication_token?: string
 }
 
-export type AuthenticationToken = {
+export type AuthenticationTokenType = {
   userId: string
   exp: number
 }

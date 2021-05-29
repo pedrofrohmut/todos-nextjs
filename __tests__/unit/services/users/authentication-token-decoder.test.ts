@@ -1,5 +1,5 @@
 import AuthenticationTokenDecoderService from "../../../../server/services/users/implementations/authentication-token-decoder.service"
-import { AuthenticationToken } from "../../../../server/types/user.types"
+import { AuthenticationTokenType } from "../../../../server/types/user.types"
 import FindUserByEmailService from "../../../../server/services/users/implementations/find-user-by-email.service"
 import ConnectionFactory from "../../../../server/utils/connection-factory.util"
 import CreateUserService from "../../../../server/services/users/implementations/create-user.service"
@@ -40,7 +40,7 @@ describe("[Service] Authentication token decoder service", () => {
     const { id: userId } = await findUserByEmailService.execute(email)
     const token = generateAuthenticationTokenService.execute(userId)
     // Test
-    let decoded: AuthenticationToken = undefined
+    let decoded: AuthenticationTokenType = undefined
     let decodeTokenErr: Error = undefined
     try {
       decoded = authenticationTokenDecoderService.execute(token)

@@ -2,14 +2,14 @@ import { JsonWebTokenError, NotBeforeError, TokenExpiredError, verify } from "js
 import ExpiredTokenError from "../../../errors/users/expired-token.error"
 import InvalidTokenError from "../../../errors/users/invalid-token.error"
 
-import { AuthenticationToken } from "../../../types/user.types"
+import { AuthenticationTokenType } from "../../../types/user.types"
 import IAuthenticationTokenDecoderService from "../authentication-token-decoder-service.interface"
 
 export default class AuthenticationTokenDecoderService
   implements IAuthenticationTokenDecoderService {
-  public execute(token: string): AuthenticationToken {
+  public execute(token: string): AuthenticationTokenType {
     try {
-      const decodedToken = verify(token, process.env.JWT_SECRET) as AuthenticationToken
+      const decodedToken = verify(token, process.env.JWT_SECRET) as AuthenticationTokenType
       return decodedToken
     } catch (err) {
       // TokenExpiredError must precede other errors. Lib inheritance issues

@@ -1,7 +1,7 @@
 import axios from "axios"
 
 import {
-  AuthenticationHeaders,
+  AuthenticationHeadersType,
   CreateUserType,
   SignedUserType,
   SignInCredentialsType,
@@ -13,7 +13,7 @@ import { SERVER_URL } from "./constants"
 
 export default class UsersApi {
   public static async getSignedUser(
-    headers: AuthenticationHeaders
+    headers: AuthenticationHeadersType
   ): Promise<ApiResponse<SignedUserType>> {
     try {
       const response = await axios.get(SERVER_URL + "/api/users/signed", { headers })

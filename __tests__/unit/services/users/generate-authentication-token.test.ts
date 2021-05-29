@@ -1,5 +1,5 @@
 import GenerateAuthenticationTokenService from "../../../../server/services/users/implementations/generate-authentication-token.service"
-import { AuthenticationToken } from "../../../../server/types/user.types"
+import { AuthenticationTokenType } from "../../../../server/types/user.types"
 import FakeTokenService from "../../../fakes/services/token.fake"
 import FakeUserService from "../../../fakes/services/user.fake"
 
@@ -31,7 +31,7 @@ describe("[Service] Generate authentication token service", () => {
     const token = generateAuthenticationTokenService.execute(userId)
     // Test
     let decodeTokenErr: Error = undefined
-    let decoded: AuthenticationToken = undefined
+    let decoded: AuthenticationTokenType = undefined
     try {
       decoded = FakeTokenService.decodeToken(token)
     } catch (err) {

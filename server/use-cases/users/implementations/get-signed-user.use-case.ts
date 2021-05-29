@@ -2,7 +2,7 @@ import IAuthenticationTokenDecoderService from "../../../services/users/authenti
 import IFindUserByIdService from "../../../services/users/find-user-by-id-service.interface"
 import IGetSignedUserUseCase from "../get-signed-user-use-case.interface"
 
-import { AuthenticationToken, SignedUserType } from "../../../types/user.types"
+import { AuthenticationTokenType, SignedUserType } from "../../../types/user.types"
 
 import UserValidator from "../../../validators/user.validator"
 
@@ -25,7 +25,7 @@ export default class GetSignedUserUseCase implements IGetSignedUserUseCase {
   }
 
   public async execute(token: string): Promise<SignedUserType> {
-    let decoded: AuthenticationToken = undefined
+    let decoded: AuthenticationTokenType = undefined
     try {
       decoded = this.authenticationTokenDecoderService.execute(token)
     } catch (err) {

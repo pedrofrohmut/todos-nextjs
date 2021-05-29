@@ -1,7 +1,7 @@
-import { AuthenticationHeaders, SignedUserType } from "../../types/user.types"
+import { AuthenticationHeadersType, SignedUserType } from "../../types/user.types"
 
 export type GetSignedUserRequestType = {
-  headers: AuthenticationHeaders
+  headers: AuthenticationHeadersType
 }
 
 export type GetSignedUserResponseType = {

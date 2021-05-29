@@ -1,6 +1,7 @@
 import IUserDataAccess from "../user-data-access.interface"
 import { Connection } from "../../utils/connection-factory.util"
 import { CreateUserDatabaseType, UserDatabaseType } from "../../types/user.types"
+import { UserSQLType } from "../sql.types"
 
 export default class UserDataAccess implements IUserDataAccess {
   private readonly connection: Connection
@@ -22,20 +23,18 @@ export default class UserDataAccess implements IUserDataAccess {
     passwordHash
   }: CreateUserDatabaseType): Promise<UserDatabaseType> {
     const result = await this.connection.query(
-      `INSERT INTO app.users (name, email, password_hash)
-         VALUES ($1, $2, $3)
-         RETURNING id, name, email, password_hash`,
+      `INSERT INTO app.users (name, email, password_hash) VALUES ($1, $2, $3) RETURNING id`,
       [name, email, passwordHash]
     )
     if (result.rows.length === 0) {
       return null
     }
-    const createdUser = result.rows[0]
+    const { id } = result.rows[0] as UserSQLType
     return {
-      id: createdUser.id,
-      name: createdUser.name,
-      email: createdUser.email,
-      passwordHash: createdUser.password_hash
+      id,
+      name,
+      email,
+      passwordHash
     }
   }
 
@@ -52,7 +51,7 @@ export default class UserDataAccess implements IUserDataAccess {
     if (result.rows.length === 0) {
       return null
     }
-    const { id, name, password_hash } = result.rows[0]
+    const { id, name, password_hash } = result.rows[0] as UserSQLType
     return {
       id,
       name,
@@ -66,7 +65,7 @@ export default class UserDataAccess implements IUserDataAccess {
     if (result.rows.length === 0) {
       return null
     }
-    const { name, email, password_hash } = result.rows[0]
+    const { name, email, password_hash } = result.rows[0] as UserSQLType
     return {
       id: userId,
       name,

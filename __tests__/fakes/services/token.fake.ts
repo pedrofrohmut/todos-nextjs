@@ -2,7 +2,7 @@ import { sign, verify, TokenExpiredError, JsonWebTokenError, NotBeforeError } fr
 import { v4 as uuid } from "uuid"
 import ExpiredTokenError from "../../../server/errors/users/expired-token.error"
 import InvalidTokenError from "../../../server/errors/users/invalid-token.error"
-import { AuthenticationToken } from "../../../server/types/user.types"
+import { AuthenticationTokenType } from "../../../server/types/user.types"
 
 const oneDay = 24 * 60 * 60
 
@@ -29,9 +29,9 @@ export default class FakeTokenService {
     return tokenWithInvalidUserId
   }
 
-  public static decodeToken(token: string): AuthenticationToken {
+  public static decodeToken(token: string): AuthenticationTokenType {
     try {
-      const decoded = verify(token, process.env.JWT_SECRET) as AuthenticationToken
+      const decoded = verify(token, process.env.JWT_SECRET) as AuthenticationTokenType
       return decoded
     } catch (err) {
       if (err instanceof TokenExpiredError) {

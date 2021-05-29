@@ -5,7 +5,7 @@ import FindUserByEmailService from "../../../server/services/users/implementatio
 import GenerateAuthenticationTokenService from "../../../server/services/users/implementations/generate-authentication-token.service"
 import GeneratePasswordHashService from "../../../server/services/users/implementations/generate-password-hash.service"
 import FindUserByIdService from "../../../server/services/users/implementations/find-user-by-id.service"
-import { AuthenticationToken, SignedUserType } from "../../../server/types/user.types"
+import { AuthenticationTokenType, SignedUserType } from "../../../server/types/user.types"
 import ConnectionFactory from "../../../server/utils/connection-factory.util"
 import DeleteUserByEmailService from "../../../server/services/users/implementations/delete-user-by-email.service"
 import InvalidTokenError from "../../../server/errors/users/invalid-token.error"
@@ -48,7 +48,7 @@ describe("[BDD] Get Signed User", () => {
     const createdUser = await userDataAccess.createAndReturn({ name, email, passwordHash })
     const userIdValidationMessage = UserValidator.getMessageForUserId(createdUser.id)
     const token = generateAuthenticationTokenService.execute(createdUser.id)
-    let decoded: AuthenticationToken = undefined
+    let decoded: AuthenticationTokenType = undefined
     let decodeTokenErr: Error = undefined
     try {
       decoded = FakeTokenService.decodeToken(token)
@@ -100,7 +100,7 @@ describe("[BDD] Get Signed User", () => {
     await deleteUserByEmailService.execute(email)
     const foundUserById = await findUserByIdService.execute(userId)
     const token = generateAuthenticationTokenService.execute(userId)
-    let decoded: AuthenticationToken = undefined
+    let decoded: AuthenticationTokenType = undefined
     let decodeTokenErr: Error
     try {
       decoded = authenticationTokenDecoderService.execute(token)
@@ -162,7 +162,7 @@ describe("[BDD] Get Signed User", () => {
   test("Scenario 4: authToken without userId", async () => {
     // Setup
     const token = FakeTokenService.getWithoutUserId()
-    let decoded: AuthenticationToken = undefined
+    let decoded: AuthenticationTokenType = undefined
     let decodeTokenErr: Error = undefined
     try {
       decoded = authenticationTokenDecoderService.execute(token)
@@ -226,7 +226,7 @@ describe("[BDD] Get Signed User", () => {
     // Setup
     const userId = ""
     const token = generateAuthenticationTokenService.execute(userId)
-    let decoded: AuthenticationToken = undefined
+    let decoded: AuthenticationTokenType = undefined
     let decodeTokenErr: Error = undefined
     try {
       decoded = authenticationTokenDecoderService.execute(token)

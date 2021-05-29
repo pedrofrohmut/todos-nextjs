@@ -1,9 +1,9 @@
-import { AuthenticationHeaders } from "../../types/user.types"
+import { AuthenticationHeadersType } from "../../types/user.types"
 import { CreateTaskType } from "../../types/task.types"
 import { UserIdParamsType } from "../controller.types"
 
 export type CreateTaskRequestType = {
-  headers: AuthenticationHeaders
+  headers: AuthenticationHeadersType
   body: CreateTaskType
   params: UserIdParamsType
 }

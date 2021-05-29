@@ -1,5 +1,5 @@
-import { AuthenticationToken } from "../../types/user.types"
+import { AuthenticationTokenType } from "../../types/user.types"
 
 export default interface IAuthenticationTokenDecoderService {
-  execute: (token: string) => AuthenticationToken
+  execute: (token: string) => AuthenticationTokenType
 }

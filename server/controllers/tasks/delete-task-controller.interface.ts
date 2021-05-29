@@ -1,8 +1,8 @@
-import { AuthenticationHeaders } from "../../types/user.types"
+import { AuthenticationHeadersType } from "../../types/user.types"
 import { TaskIdParamsType } from "../controller.types"
 
 export type DeleteTaskRequestType = {
-  headers: AuthenticationHeaders
+  headers: AuthenticationHeadersType
   params: TaskIdParamsType
 }
 

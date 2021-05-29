@@ -7,7 +7,7 @@ import {
   ParamsToValidateType,
   ValidatorResponse
 } from "../types/request.types"
-import { AuthenticationToken } from "../types/user.types"
+import { AuthenticationTokenType } from "../types/user.types"
 
 import ExpiredTokenError from "../errors/users/expired-token.error"
 import InvalidRequestParamsError from "../errors/request/invalid-request-params.error"
@@ -36,7 +36,7 @@ export default class RequestValidator {
     if (decoderService === undefined) {
       return { status: 500, body: NoDecoderTokenServiceError.message }
     }
-    let decodedToken: AuthenticationToken = undefined
+    let decodedToken: AuthenticationTokenType = undefined
     try {
       decodedToken = decoderService.execute(headers.authentication_token)
       const tokenValidationMessage = UserValidator.getMessageForUserId(decodedToken.userId)
