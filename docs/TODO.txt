@@ -82,7 +82,24 @@ X - SERVER: All types moved to type files and not lost in classes
     6 - use-cases
     7 - utils
     8 - controller-wrappers
+    ** Remove the data-acces layer and make their impl in the service directly
+    ** Put all services and useCases from entities together in a single class
+    ** Separate User Services from Auth services
+    ** Recude the types to a minimun
+    ** Move types out off domain if they are not a must inside
+    ** Try out with entities that throws errors when a value is not valid. The entity
+      attrs will be readonly and validate in the constructor
+    ** Add routes?
+    ** ConnectionFactory with only getConnection => DatabaseConnection
+    ** DatabaseConnection impl interface connect() closeConnection()
+    ** Controller with readonly attrs
+    ** Controller private constructor with getInstance()
+    ** No more controllerWrappers and single interface to all controllers
+    ** Each implementation folder can have its own types for its internal works
 
+
+0 - ControllerAdapers are called in the routes and the route checks the framework used
+and calls the right adapter
 
 0 - Review all tests: to see if there are
     X - No expects inside conditionals or catch blocks
