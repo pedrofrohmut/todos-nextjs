@@ -1,16 +1,8 @@
 import { Client } from "pg"
 
+import { Connection, ConnectionParamsType } from "../types/connection.types"
+
 import DataBaseConnectionError from "../errors/database/connection.error"
-
-export type Connection = Client
-
-export type ConnectionParamsType = {
-  user: string
-  host: string
-  database: string
-  password: string
-  port: number
-}
 
 export default class ConnectionFactory {
   public static getConnection(connectionParams?: ConnectionParamsType): Connection {

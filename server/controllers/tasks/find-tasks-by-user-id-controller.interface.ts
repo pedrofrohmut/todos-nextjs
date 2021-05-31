@@ -1,6 +1,6 @@
 import { AuthenticationHeadersType } from "../../types/user.types"
 import { TaskType } from "../../types/task.types"
-import { UserIdParamsType } from "../controller.types"
+import { UserIdParamsType } from "../../types/request.types"
 
 export type FindTasksByUserIdRequestType = {
   headers: AuthenticationHeadersType

@@ -4,10 +4,11 @@ import IControllerWrapper, {
 } from "../controller-wrapper.interface"
 import ISignInController from "../../controllers/users/signin-controller.interface"
 
+import { Connection } from "../../types/connection.types"
 import { SignInCredentialsType, SignInDataType } from "../../types/user.types"
 
 import CheckPasswordService from "../../services/users/implementations/check-password.service"
-import ConnectionFactory, { Connection } from "../../utils/connection-factory.util"
+import ConnectionFactory from "../../utils/connection-factory.util"
 import FindUserByEmailService from "../../services/users/implementations/find-user-by-email.service"
 import GenerateAuthenticationTokenService from "../../services/users/implementations/generate-authentication-token.service"
 import RequestValidator from "../../validators/request.validator"

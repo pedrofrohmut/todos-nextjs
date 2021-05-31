@@ -5,14 +5,16 @@ import IControllerWrapper, {
 } from "../controller-wrapper.interface"
 import IGetSignedUserController from "../../controllers/users/get-signed-user-controller.interface"
 
+import { Connection } from "../../types/connection.types"
+import { SignedUserType } from "../../types/user.types"
+
 import AuthenticationTokenDecoderService from "../../services/users/implementations/authentication-token-decoder.service"
-import ConnectionFactory, { Connection } from "../../utils/connection-factory.util"
+import ConnectionFactory from "../../utils/connection-factory.util"
 import FindUserByIdService from "../../services/users/implementations/find-user-by-id.service"
 import GetSignedUserController from "../../controllers/users/implementations/get-signed-user.controller"
 import GetSignedUserUseCase from "../../use-cases/users/implementations/get-signed-user.use-case"
 import RequestValidator from "../../validators/request.validator"
 import UserDataAccess from "../../data-access/implementations/user.data-access"
-import { SignedUserType } from "../../types/user.types"
 
 export default class GetSignedUserWrapper implements IControllerWrapper<void, SignedUserType> {
   private connection: Connection
@@ -27,7 +29,10 @@ export default class GetSignedUserWrapper implements IControllerWrapper<void, Si
     const userDataAccess = new UserDataAccess(this.connection)
     const findUserByIdService = new FindUserByIdService(userDataAccess)
     const authenticationTokenDecoderService = new AuthenticationTokenDecoderService()
-    const signedUseCase = new GetSignedUserUseCase(findUserByIdService, authenticationTokenDecoderService)
+    const signedUseCase = new GetSignedUserUseCase(
+      findUserByIdService,
+      authenticationTokenDecoderService
+    )
     this.getSignedUserController = new GetSignedUserController(signedUseCase)
     this.authenticationTokenDecoderService = new AuthenticationTokenDecoderService()
   }

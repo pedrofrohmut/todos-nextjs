@@ -1,11 +1,10 @@
+import { RequestParamsType } from "../types/request.types"
 import { AuthenticationHeadersType } from "../types/user.types"
 
 export type WrapperResponse<T> = {
   status: number
   body?: T | string
 }
-
-export type RequestParamsType = { userId: string } & { taskId: string } & { todoId: string }
 
 export type WrapperRequest<T> = {
   headers?: AuthenticationHeadersType

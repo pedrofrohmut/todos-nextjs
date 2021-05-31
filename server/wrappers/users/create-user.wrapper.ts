@@ -4,15 +4,17 @@ import IControllerWrapper, {
 } from "../controller-wrapper.interface"
 import ICreateUserController from "../../controllers/users/create-user-controller.interface"
 
+import { Connection } from "../../types/connection.types"
+import { CreateUserType } from "../../types/user.types"
+
 import CreateUserController from "../../controllers/users/implementations/create-user.controller"
 import UserDataAccess from "../../data-access/implementations/user.data-access"
 import CreateUserService from "../../services/users/implementations/create-user.service"
 import FindUserByEmailService from "../../services/users/implementations/find-user-by-email.service"
 import GeneratePasswordHashService from "../../services/users/implementations/generate-password-hash.service"
 import CreateUserUseCase from "../../use-cases/users/implementations/create-user.use-case"
-import ConnectionFactory, { Connection } from "../../utils/connection-factory.util"
+import ConnectionFactory from "../../utils/connection-factory.util"
 import UserValidator from "../../validators/user.validator"
-import { CreateUserType } from "../../types/user.types"
 import RequestValidator from "../../validators/request.validator"
 
 export default class CreateUserWrapper implements IControllerWrapper<CreateUserType, void> {

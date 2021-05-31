@@ -1,5 +1,5 @@
 import { AuthenticationHeadersType } from "../../types/user.types"
-import { TaskIdParamsType } from "../controller.types"
+import { TaskIdParamsType } from "../../types/request.types"
 import { TaskType } from "../../types/task.types"
 
 export type FindTaskByIdRequestType = {

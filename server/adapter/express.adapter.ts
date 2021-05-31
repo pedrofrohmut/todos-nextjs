@@ -1,5 +1,8 @@
 import { NextApiRequest, NextApiResponse } from "next"
-import IControllerWrapper, { RequestParamsType } from "../wrappers/controller-wrapper.interface"
+
+import { RequestParamsType } from "../types/request.types"
+
+import IControllerWrapper from "../wrappers/controller-wrapper.interface"
 
 export default class ExpressAdapter {
   private readonly request: NextApiRequest

@@ -5,8 +5,10 @@ import IControllerWrapper, {
 } from "../controller-wrapper.interface"
 import IDeleteTaskController from "../../controllers/tasks/delete-task-controller.interface"
 
+import { Connection } from "../../types/connection.types"
+
 import AuthenticationTokenDecoderService from "../../services/users/implementations/authentication-token-decoder.service"
-import ConnectionFactory, { Connection } from "../../utils/connection-factory.util"
+import ConnectionFactory from "../../utils/connection-factory.util"
 import DeleteTaskByIdService from "../../services/tasks/implementations/delete-task-by-id.service"
 import DeleteTaskController from "../../controllers/tasks/implementations/delete-task.controller"
 import DeleteTaskUseCase from "../../use-cases/tasks/implementations/delete-task.use-case"

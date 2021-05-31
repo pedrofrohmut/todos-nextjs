@@ -5,9 +5,10 @@ import IControllerWrapper, {
   WrapperResponse
 } from "../controller-wrapper.interface"
 
+import { Connection } from "../../types/connection.types"
 import { CreateTaskType } from "../../types/task.types"
 
-import ConnectionFactory, { Connection } from "../../utils/connection-factory.util"
+import ConnectionFactory from "../../utils/connection-factory.util"
 import CreateTaskController from "../../controllers/tasks/implementations/create-task.controller"
 import CreateTaskService from "../../services/tasks/implementations/create-task.service"
 import CreateTaskUseCase from "../../use-cases/tasks/implementations/create-task.use-case"

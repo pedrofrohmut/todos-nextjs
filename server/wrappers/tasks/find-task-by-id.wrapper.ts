@@ -5,10 +5,11 @@ import IControllerWrapper, {
 } from "../controller-wrapper.interface"
 import IFindTaskByIdController from "../../controllers/tasks/find-task-by-id-controller.interface"
 
+import { Connection } from "../../types/connection.types"
 import { TaskType } from "../../types/task.types"
 
 import AuthenticationTokenDecoderService from "../../services/users/implementations/authentication-token-decoder.service"
-import ConnectionFactory, { Connection } from "../../utils/connection-factory.util"
+import ConnectionFactory from "../../utils/connection-factory.util"
 import FindTaskByIdController from "../../controllers/tasks/implementations/find-task-by-id.controller"
 import FindTaskByIdService from "../../services/tasks/implementations/find-task-by-id.service"
 import FindTaskByIdUseCase from "../../use-cases/tasks/implementations/find-task-by-id.use-case"

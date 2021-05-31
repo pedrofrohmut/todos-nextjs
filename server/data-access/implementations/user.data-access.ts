@@ -1,7 +1,8 @@
 import IUserDataAccess from "../user-data-access.interface"
-import { Connection } from "../../utils/connection-factory.util"
+
+import { Connection } from "../../types/connection.types"
 import { CreateUserDatabaseType, UserDatabaseType } from "../../types/user.types"
-import { UserSQLType } from "../sql.types"
+import { UserSQLType } from "../../types/sql.types"
 
 export default class UserDataAccess implements IUserDataAccess {
   private readonly connection: Connection
