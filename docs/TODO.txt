@@ -67,6 +67,23 @@ X - SERVER: All types moved to type files and not lost in classes
        of ports and adapters but must never breaks in the domain
 
 
+0 - Folder struct for server:
+    1 - domain:
+      1.1 - interfaces: (adapters, controllers, data-access, services, use-cases,
+        utils, controller-wrappers)
+      1.2 - entities
+      1.3 - errors (custom errors)
+      1.4 - types
+      1.5 - validators
+    2 - adapters
+    3 - controllers
+    4 - data-accessors
+    5 - services
+    6 - use-cases
+    7 - utils
+    8 - controller-wrappers
+
+
 0 - Review all tests: to see if there are
     X - No expects inside conditionals or catch blocks
     X - use try/catch form success tests too
